@@ -1,0 +1,16 @@
+{
+    "openrpcDocument": "openrpc.json",
+    "outDir": "build",
+    "components": [
+        {
+            "type": "client",
+            "name": "Hyperledger Besu Client",
+            "language": "typescript"
+        },
+        {
+            "type": "docs",
+            "name": "Hyperledger Besu",
+            "language": "gatsby"
+        }
+    ]
+}
