@@ -46,6 +46,36 @@
 			"params": []		
 		},
         {
+			"name": "clique_discard",
+			"summary": "Discards a proposal to add or remove a signer with the specified address.",
+			"params": []		
+		},
+        {
+			"name": "clique_getSigners",
+			"summary": "Lists signers for the specified block.",
+			"params": []	
+		},
+        {
+			"name": "clique_getSignerMetrics",
+			"summary": "Provides the following validator metrics for the specified range:\nNumber of blocks from each validator\nBlock number of the last block proposed by each validator (if any proposed in the specified range)\nAll validators present in the last block",
+			"params": []		
+		},
+        {
+			"name": "clique_getSignersAtHash",
+			"summary": "Lists signers for the specified block.",
+			"params": []	
+		},
+        {
+			"name": "clique_proposals",
+			"summary": "Returns current proposals.",
+			"params": []		
+		},
+        {
+			"name": "clique_propose",
+			"summary": "Proposes to add or remove a signer with the specified address.",
+			"params": []	
+		},
+        {
 			"name": "eth_accounts",
 			"summary": "Returns a list of account addresses a client owns.",
 			"params": []	
