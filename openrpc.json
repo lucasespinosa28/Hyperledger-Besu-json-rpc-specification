@@ -6,28 +6,14 @@
     },
     "methods": [
         {
-			"name": "eth_protocolVersion1",
-			"summary": "Returns the current ethereum protocol version.",
-			"params": [],
-			"result": {
-				"name": "Protocol version",
-				"schema": {
-					"title": "version",
-					"type": "string"
-				}
-			}
+			"name": "eth_accounts",
+			"summary": "Returns a list of account addresses a client owns.",
+			"params": []	
 		},
         {
-			"name": "eth_protocolVersion2",
-			"summary": "Returns the current ethereum protocol version.",
-			"params": [],
-			"result": {
-				"name": "Protocol version",
-				"schema": {
-					"title": "version",
-					"type": "string"
-				}
-			}
+			"name": "eth_blockNumber",
+			"summary": "Returns the index corresponding to the block number of the current chain head.",
+			"params": []		
 		}
     ]
   }
