@@ -76,6 +76,66 @@
 			"params": []	
 		},
         {
+			"name": "debug_accountRange",
+			"summary": "Retesteth uses debug_accountRange to implement debugging.\nReturns the accounts for a specified block.",
+			"params": []	
+		},
+        {
+			"name": "debug_batchSendRawTransaction",
+			"summary": "Sends a list of signed transactions. This is used to quickly load a network with a lot of transactions. This does the same thing as calling eth_sendRawTransaction multiple times.",
+			"params": []	
+		},
+        {
+			"name": "debug_getBadBlocks",
+			"summary": "Returns a list of invalid blocks. This is used to detect and analyze consensus flaws.",
+			"params": []		
+		},
+        {
+			"name": "debug_standardTraceBlockToFile",
+			"summary": "Generates files containing the block trace. A separate file is generated for each transaction in the block.",
+			"params": []		
+		},
+        {
+			"name": "debug_standardTraceBadBlockToFile",
+			"summary": "Generates files containing the block trace of invalid blocks. A separate file is generated for each transaction in the block.",
+			"params": []		
+		},
+        {
+			"name": "debug_storageRangeAt",
+			"summary": "Remix uses debug_storageRangeAt to implement debugging. Use the Debugger tab in Remix instead of calling debug_storageRangeAt directly.\nReturns the contract storage for the specified range.",
+			"params": []		
+		},
+        {
+			"name": "debug_metrics",
+			"summary": "Returns metrics providing information on the internal operation of Besu.",
+			"params": []		
+		},
+        {
+			"name": "debug_traceTransaction",
+			"summary": "Reruns the transaction with the same state as when the transaction executed.",
+			"params": []		
+		},
+        {
+			"name": "debug_traceBlock",
+			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
+			"params": []		
+		},
+        {
+			"name": "debug_traceBlockByHash",
+			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
+			"params": []		
+		},
+        {
+			"name": "debug_traceBlockByNumber",
+			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
+			"params": []		
+		},
+        {
+			"name": "eea_sendRawTransaction",
+			"summary": "Distributes the private transaction, generates the privacy marker transaction and submits it to the transaction pool, and returns the transaction hash of the privacy marker transaction.",
+			"params": []	
+		},
+        {
 			"name": "eth_accounts",
 			"summary": "Returns a list of account addresses a client owns.",
 			"params": []	
