@@ -6,6 +6,46 @@
     },
     "methods": [
         {
+			"name": "admin_addPeer",
+			"summary": "Adds a static node.",
+			"params": []	
+		},
+        {
+			"name": "admin_changeLogLevel",
+			"summary": "Changes the log level without restarting Besu. You can change the log level for all logs, or you can change the log level for specific packages or classes.",
+			"params": []		
+		},
+        {
+			"name": "admin_generateLogBloomCache",
+			"summary": "Generates cached log bloom indexes for blocks. APIs such as eth_getLogs and eth_getFilterLogs use the cache for improved performance.",
+			"params": []		
+		},
+        {
+			"name": "admin_logsRemoveCache",
+			"summary": "Removes cache files for the specified range of blocks.",
+			"params": []		
+		},
+        {
+			"name": "admin_logsRepairCache",
+			"summary": "Repairs cached logs by fixing all segments starting with the specified block number.",
+			"params": []	
+		},
+        {
+			"name": "admin_nodeInfo",
+			"summary": "Returns networking information about the node. The information includes general information about the node and specific information from each running Ethereum sub-protocol (for example, eth).",
+			"params": []		
+		},
+        {
+			"name": "admin_peers",
+			"summary": "Returns networking information about connected remote nodes.",
+			"params": []		
+		},
+        {
+			"name": "admin_removePeer",
+			"summary": "Removes a static node.",
+			"params": []		
+		},
+        {
 			"name": "eth_accounts",
 			"summary": "Returns a list of account addresses a client owns.",
 			"params": []	
