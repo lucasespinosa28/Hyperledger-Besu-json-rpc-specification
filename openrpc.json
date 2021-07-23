@@ -396,18 +396,48 @@
 			"params": []		
 		},
         {
-			"name": "miner_stop",
-			"summary": "Stops the mining process on the client.",
+			"name": "net_services",
+			"summary": "Returns enabled services (for example, jsonrpc) and the host and port for each service.",
 			"params": []		
 		},
         {
-			"name": "miner_stop",
-			"summary": "Stops the mining process on the client.",
+			"name": "net_version",
+			"summary": "Returns the network ID.",
 			"params": []		
 		},
         {
-			"name": "miner_stop",
-			"summary": "Stops the mining process on the client.",
+			"name": "perm_addAccountsToAllowlist",
+			"summary": "Adds accounts (participants) to the accounts permission list.",
+			"params": []		
+		},
+        {
+			"name": "perm_addNodesToAllowlist",
+			"summary": "Adds nodes to the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_getAccountsAllowlist",
+			"summary": "Lists accounts (participants) in the accounts permissions list.",
+			"params": []		
+		},
+        {
+			"name": "perm_getNodesAllowlist",
+			"summary": "Lists nodes in the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_reloadPermissionsFromFile",
+			"summary": "Reloads the accounts and nodes allowlists from the permissions configuration file.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeAccountsFromAllowlist",
+			"summary": "Removes accounts (participants) from the accounts permissions list.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
 			"params": []		
 		},
     ]
