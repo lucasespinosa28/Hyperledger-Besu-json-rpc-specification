@@ -574,7 +574,6 @@
 		"params": []
 	  },
 	  {
-		"tag": "Rpc",
 		"name": "rpc_modules",
 		"summary": "Lists enabled APIs and the version of each.",
 		"params": [],
