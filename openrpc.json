@@ -1,610 +1,548 @@
 {
-    "openrpc": "1.2.4",
-    "info": {
-      "title": "",
-      "version": "1.0.0"
-    },
-    "methods": [
-        {
-			"name": "admin_addPeer",
-			"summary": "Adds a static node.",
-			"params": []	
-		},
-        {
-			"name": "admin_changeLogLevel",
-			"summary": "Changes the log level without restarting Besu. You can change the log level for all logs, or you can change the log level for specific packages or classes.",
-			"params": []		
-		},
-        {
-			"name": "admin_generateLogBloomCache",
-			"summary": "Generates cached log bloom indexes for blocks. APIs such as eth_getLogs and eth_getFilterLogs use the cache for improved performance.",
-			"params": []		
-		},
-        {
-			"name": "admin_logsRemoveCache",
-			"summary": "Removes cache files for the specified range of blocks.",
-			"params": []		
-		},
-        {
-			"name": "admin_logsRepairCache",
-			"summary": "Repairs cached logs by fixing all segments starting with the specified block number.",
-			"params": []	
-		},
-        {
-			"name": "admin_nodeInfo",
-			"summary": "Returns networking information about the node. The information includes general information about the node and specific information from each running Ethereum sub-protocol (for example, eth).",
-			"params": []		
-		},
-        {
-			"name": "admin_peers",
-			"summary": "Returns networking information about connected remote nodes.",
-			"params": []		
-		},
-        {
-			"name": "admin_removePeer",
-			"summary": "Removes a static node.",
-			"params": []		
-		},
-        {
-			"name": "clique_discard",
-			"summary": "Discards a proposal to add or remove a signer with the specified address.",
-			"params": []		
-		},
-        {
-			"name": "clique_getSigners",
-			"summary": "Lists signers for the specified block.",
-			"params": []	
-		},
-        {
-			"name": "clique_getSignerMetrics",
-			"summary": "Provides the following validator metrics for the specified range:\nNumber of blocks from each validator\nBlock number of the last block proposed by each validator (if any proposed in the specified range)\nAll validators present in the last block",
-			"params": []		
-		},
-        {
-			"name": "clique_getSignersAtHash",
-			"summary": "Lists signers for the specified block.",
-			"params": []	
-		},
-        {
-			"name": "clique_proposals",
-			"summary": "Returns current proposals.",
-			"params": []		
-		},
-        {
-			"name": "clique_propose",
-			"summary": "Proposes to add or remove a signer with the specified address.",
-			"params": []	
-		},
-        {
-			"name": "debug_accountRange",
-			"summary": "Retesteth uses debug_accountRange to implement debugging.\nReturns the accounts for a specified block.",
-			"params": []	
-		},
-        {
-			"name": "debug_batchSendRawTransaction",
-			"summary": "Sends a list of signed transactions. This is used to quickly load a network with a lot of transactions. This does the same thing as calling eth_sendRawTransaction multiple times.",
-			"params": []	
-		},
-        {
-			"name": "debug_getBadBlocks",
-			"summary": "Returns a list of invalid blocks. This is used to detect and analyze consensus flaws.",
-			"params": []		
-		},
-        {
-			"name": "debug_standardTraceBlockToFile",
-			"summary": "Generates files containing the block trace. A separate file is generated for each transaction in the block.",
-			"params": []		
-		},
-        {
-			"name": "debug_standardTraceBadBlockToFile",
-			"summary": "Generates files containing the block trace of invalid blocks. A separate file is generated for each transaction in the block.",
-			"params": []		
-		},
-        {
-			"name": "debug_storageRangeAt",
-			"summary": "Remix uses debug_storageRangeAt to implement debugging. Use the Debugger tab in Remix instead of calling debug_storageRangeAt directly.\nReturns the contract storage for the specified range.",
-			"params": []		
-		},
-        {
-			"name": "debug_metrics",
-			"summary": "Returns metrics providing information on the internal operation of Besu.",
-			"params": []		
-		},
-        {
-			"name": "debug_traceTransaction",
-			"summary": "Reruns the transaction with the same state as when the transaction executed.",
-			"params": []		
-		},
-        {
-			"name": "debug_traceBlock",
-			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
-			"params": []		
-		},
-        {
-			"name": "debug_traceBlockByHash",
-			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
-			"params": []		
-		},
-        {
-			"name": "debug_traceBlockByNumber",
-			"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
-			"params": []		
-		},
-        {
-			"name": "eea_sendRawTransaction",
-			"summary": "Distributes the private transaction, generates the privacy marker transaction and submits it to the transaction pool, and returns the transaction hash of the privacy marker transaction.",
-			"params": []	
-		},
-        {
-			"name": "eth_accounts",
-			"summary": "Returns a list of account addresses a client owns.",
-			"params": []	
-		},
-        {
-			"name": "eth_blockNumber",
-			"summary": "Returns the index corresponding to the block number of the current chain head.",
-			"params": []		
-		},
-        {
-			"name": "eth_call",
-			"summary": "Invokes a contract function locally and does not change the state of the blockchain.",
-			"params": []		
-		},
-        {
-			"name": "eth_chainId",
-			"summary": "Returns the chain ID.",
-			"params": []		
-		},
-        {
-			"name": "eth_coinbase",
-			"summary": "Returns the client coinbase address. The coinbase address is the account to pay mining rewards to.",
-			"params": []		
-		},
-        {
-			"name": "eth_estimateGas",
-			"summary": "Returns an estimate of the gas required for a transaction to complete. The estimation process does not use gas and the transaction is not added to the blockchain. The resulting estimate can be greater than the amount of gas the transaction ends up using, for reasons including EVM mechanics and node performance.",
-			"params": []		
-		},
-        {
-			"name": "eth_gasPrice",
-			"summary": "Returns a percentile gas unit price for the most recent blocks, in Wei. By default, the last 100 blocks are examined and the 50th percentile gas unit price (that is, the median value) is returned.",
-			"params": []		
-		},
-        {
-			"name": "eth_getBalance",
-			"summary": "Returns the account balance of the specified address.",
-			"params": []		
-		},
-        {
-			"name": "eth_getBlockByHash",
-			"summary": "Returns information about the block matching the specified block hash.",
-			"params": []		
-		},
-        {
-			"name": "eth_getBlockByNumber",
-			"summary": "Returns information about the block matching the specified block number.",
-			"params": []		
-		},
-        {
-			"name": "eth_getBlockTransactionCountByHash",
-			"summary": "Returns the number of transactions in the block matching the specified block hash.",
-			"params": []		
-		},
-        {
-			"name": "eth_getBlockTransactionCountByNumber",
-			"summary": "Returns the number of transactions in a block matching the specified block number.",
-			"params": []		
-		},
-        {
-			"name": "eth_getCode",
-			"summary": "Returns the code of the smart contract at the specified address. Besu stores compiled smart contract code as a hexadecimal value.",
-			"params": []		
-		},
-        {
-			"name": "eth_getFilterChanges",
-			"summary": "Polls the specified filter and returns an array of changes that have occurred since the last poll.",
-			"params": []		
-		},
-        {
-			"name": "eth_getFilterLogs",
-			"summary": "Returns an array of logs for the specified filter.",
-			"params": []		
-		},
-        {
-			"name": "eth_getLogs",
-			"summary": "Returns an array of logs matching a specified filter object.",
-			"params": []		
-		},
-        {
-			"name": "eth_getMinerDataByBlockHash",
-			"summary": "Returns miner data for the specified block.",
-			"params": []		
-		},
-        {
-			"name": "eth_getMinerDataByBlockNumber",
-			"summary": "Returns miner data for the specified block.",
-			"params": []		
-		},
-        {
-			"name": "eth_getProof",
-			"summary": "Returns the account and storage values of the specified account, including the Merkle proof.\nThe API allows IoT devices or mobile apps which are unable to run light clients to verify responses from untrusted sources, by using a trusted block hash.",
-			"params": []		
-		},
-        {
-			"name": "eth_getStorageAt",
-			"summary": "Returns the value of a storage position at a specified address.",
-			"params": []		
-		},
-        {
-			"name": "eth_getTransactionByBlockHashAndIndex",
-			"summary": "Returns transaction information for the specified block hash and transaction index position.",
-			"params": []		
-		},
-        {
-			"name": "eth_getTransactionByBlockNumberAndIndex",
-			"summary": "Returns transaction information for the specified block number and transaction index position.",
-			"params": []		
-		},
-        {
-			"name": "eth_getTransactionByHash",
-			"summary": "Returns transaction information for the specified transaction hash.",
-			"params": []		
-		},
-        {
-			"name": "eth_getTransactionCount",
-			"summary": "Returns the number of transactions sent from a specified address. Use the pending tag to get the next account nonce not used by any pending transactions.",
-			"params": []		
-		},
-        {
-			"name": "eth_getTransactionReceipt",
-			"summary": "Returns the receipt of a transaction by transaction hash. Receipts for pending transactions are not available.",
-			"params": []		
-		},
-        {
-			"name": "eth_getUncleByBlockHashAndIndex",
-			"summary": "Returns uncle specified by block hash and index.",
-			"params": []		
-		},
-        {
-			"name": "eth_getUncleByBlockNumberAndIndex",
-			"summary": "Returns uncle specified by block number and index.",
-			"params": []		
-		},
-        {
-			"name": "eth_getUncleCountByBlockHash",
-			"summary": "Returns the number of uncles in a block from a block matching the given block hash.",
-			"params": []		
-		},
-        {
-			"name": "eth_getUncleCountByBlockNumber",
-			"summary": "Returns the number of uncles in a block matching the specified block number.",
-			"params": []		
-		},
-        {
-			"name": "eth_getWork",
-			"summary": "Returns the hash of the current block, the seed hash, and the required target boundary condition.",
-			"params": []		
-		},
-        {
-			"name": "eth_hashrate",
-			"summary": "Returns the number of hashes per second with which the node is mining.",
-			"params": []		
-		},
-        {
-			"name": "eth_mining",
-			"summary": "Whether the client is actively mining new blocks. Besu pauses mining while the client synchronizes with the network regardless of command settings or methods called.",
-			"params": []		
-		},
-        {
-			"name": "eth_newBlockFilter",
-			"summary": "Creates a filter to retrieve new block hashes. To poll for new blocks, use eth_getFilterChanges.",
-			"params": []		
-		},
-        {
-			"name": "eth_newFilter",
-			"summary": "Creates a log filter. To poll for logs associated with the created filter, use eth_getFilterChanges. To get all logs associated with the filter, use eth_getFilterLogs.",
-			"params": []		
-		},
-        {
-			"name": "eth_protocolVersion",
-			"summary": "Returns current Ethereum protocol version.",
-			"params": []		
-		},
-        {
-			"name": "eth_sendRawTransaction",
-			"summary": "Sends a signed transaction. A transaction can send ether, deploy a contract, or interact with a contract.",
-			"params": []		
-		},
-        {
-			"name": "eth_submitHashrate",
-			"summary": "Submits the mining hashrate. This is used by mining software such as Ethminer.",
-			"params": []		
-		},
-        {
-			"name": "eth_submitWork",
-			"summary": "Submits a proof of work (Ethash) solution. This is used by mining software such as Ethminer.",
-			"params": []		
-		},
-        {
-			"name": "eth_syncing",
-			"summary": "Returns an object with data about the synchronization status, or false if not synchronizin.",
-			"params": []		
-		},
-        {
-			"name": "eth_uninstallFilter",
-			"summary": "Uninstalls a filter with the specified ID. When a filter is no longer required, call this method.",
-			"params": []		
-		},
-        {
-			"name": "ibft_discardValidatorVote",
-			"summary": "Discards a proposal to add or remove a validator with the specified address.",
-			"params": []		
-		},
-        {
-			"name": "ibft_getPendingVotes",
-			"summary": "Returns votes cast in the current epoch..",
-			"params": []		
-		},
-        {
-			"name": "ibft_getSignerMetrics",
-			"summary": "Provides the following validator metrics for the specified range:",
-			"params": []		
-		},
-        {
-			"name": "ibft_getValidatorsByBlockHash",
-			"summary": "Lists the validators defined in the specified block.",
-			"params": []		
-		},
-        {
-			"name": "ibft_getValidatorsByBlockNumber",
-			"summary": "Lists the validators defined in the specified block.",
-			"params": []		
-		},
-        {
-			"name": "ibft_proposeValidatorVote",
-			"summary": "Proposes to add or remove a validator with the specified address.",
-			"params": []		
-		},
-        {
-			"name": "miner_changeTargetGasLimit",
-			"summary": "Updates the target gas limit set using the --target-gas-limit command line option.",
-			"params": []		
-		},
-        {
-			"name": "miner_start",
-			"summary": "Starts the mining process. To start mining, you must first specify a miner coinbase using the --miner-coinbase command line option.",
-			"params": []		
-		},
-        {
-			"name": "miner_stop",
-			"summary": "Stops the mining process on the client.",
-			"params": []		
-		},
-        {
-			"name": "net_enode",
-			"summary": "Returns the enode URL.",
-			"params": []		
-		},
-        {
-			"name": "net_listening",
-			"summary": "Whether the client is actively listening for network connections.",
-			"params": []		
-		},
-        {
-			"name": "net_peerCount",
-			"summary": "Returns the number of peers currently connected to the client.",
-			"params": []		
-		},
-        {
-			"name": "net_services",
-			"summary": "Returns enabled services (for example, jsonrpc) and the host and port for each service.",
-			"params": []		
-		},
-        {
-			"name": "net_version",
-			"summary": "Returns the network ID.",
-			"params": []		
-		},
-        {
-			"name": "perm_addAccountsToAllowlist",
-			"summary": "Adds accounts (participants) to the accounts permission list.",
-			"params": []		
-		},
-        {
-			"name": "perm_addNodesToAllowlist",
-			"summary": "Adds nodes to the nodes allowlist.",
-			"params": []		
-		},
-        {
-			"name": "perm_getAccountsAllowlist",
-			"summary": "Lists accounts (participants) in the accounts permissions list.",
-			"params": []		
-		},
-        {
-			"name": "perm_getNodesAllowlist",
-			"summary": "Lists nodes in the nodes allowlist.",
-			"params": []		
-		},
-        {
-			"name": "perm_reloadPermissionsFromFile",
-			"summary": "Reloads the accounts and nodes allowlists from the permissions configuration file.",
-			"params": []		
-		},
-        {
-			"name": "perm_removeAccountsFromAllowlist",
-			"summary": "Removes accounts (participants) from the accounts permissions list.",
-			"params": []		
-		},
-        {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
-			"params": []		
-		},
-        {
-			"name": "plugins_reloadPluginConfig",
-			"summary": "Reloads specified plugin configuration.",
-			"params": []		
-		},
-        {
-			"name": "priv_call",
-			"summary": "Invokes a private contract function locally and does not change the privacy group state.",
-			"params": []		
-		},
-        {
-			"name": "priv_createPrivacyGroup",
-			"summary": "Creates a group of nodes, specified by their Orion public key.",
-			"params": []		
-		},
-        {
-			"name": "priv_debugGetStateRoot",
-			"summary": "Returns the state root of the specified privacy group at the specified block.",
-			"params": []		
-		},
-        {
-			"name": "priv_deletePrivacyGroup",
-			"summary": "Deletes the specified privacy group.",
-			"params": []		
-		},
-        {
-			"name": "priv_distributeRawTransaction",
-			"summary": "Distributes a signed, RLP encoded private transaction.",
-			"params": []		
-		},
-        {
-			"name": "priv_findPrivacyGroup",
-			"summary": "Returns a list of privacy groups containing only the listed members. For example, if the listed members are A and B, a privacy group containing A, B, and C is not returned.",
-			"params": []		
-		},
-        {
-			"name": "priv_getCode",
-			"summary": "Returns the code of the private smart contract at the specified address. Compiled smart contract code is stored as a hexadecimal value.",
-			"params": []		
-		},
-        {
-			"name": "priv_getEeaTransactionCount",
-			"summary": "Returns the private transaction count for the specified account and group of sender and recipients.",
-			"params": []		
-		},
-        {
-			"name": "priv_getFilterChanges",
-			"summary": "Polls the specified filter for a private contract and returns an array of changes that have occurred since the last poll.",
-			"params": []		
-		},
-        {
-			"name": "priv_getFilterLogs",
-			"summary": "Returns an array of logs for the specified filter for a private contract.",
-			"params": []		
-		},
-        {
-			"name": "priv_getLogs",
-			"summary": "Returns an array of logs matching a specified filter object.",
-			"params": []		
-		},
-        {
-			"name": "priv_getPrivacyPrecompileAddress",
-			"summary": "Returns the address of the privacy precompiled contract. The address is derived and based on the value of the privacy-flexible-groups-enabled option.",
-			"params": []		
-		},
-        {
-			"name": "priv_getPrivateTransaction",
-			"summary": "Returns the private transaction if you are a participant, otherwise, null.",
-			"params": []		
-		},
-        {
-			"name": "priv_getTransactionCount",
-			"summary": "Returns the private transaction count for specified account and privacy group.",
-			"params": []		
-		},
-        {
-			"name": "priv_getTransactionReceipt",
-			"summary": "Returns information about the private transaction after mining the transaction. Receipts for pending transactions are not available.",
-			"params": []		
-		},
-        {
-			"name": "priv_newFilter",
-			"summary": "Creates a log filter for a private contract. To poll for logs associated with the created filter, use priv_getFilterChanges. To get all logs associated with the filter, use priv_getFilterLogs.",
-			"params": []		
-		},
-        {
-			"name": "priv_uninstallFilter",
-			"summary": "Uninstalls a filter for a private contract with the specified ID. When a filter is no longer required, call this method.",
-			"params": []		
-		},
-        {
-			"name": "qbft_discardValidatorVote",
-			"summary": "Discards a proposal to add or remove a validator with the specified address.",
-			"params": []		
-		},
-        {
-			"name": "qbft_getPendingVotes",
-			"summary": "Returns votes cast in the current epoch.",
-			"params": []		
-		},
-        {
-			"name": "qbft_getSignerMetrics",
-			"summary": "Provides the following validator metrics for the specified range:",
-			"params": []		
-		},
-        {
-			"name": "qbft_getValidatorsByBlockHash",
-			"summary": "Lists the validators defined in the specified block.",
-			"params": []		
-		},
-        {
-			"name": "qbft_getValidatorsByBlockNumber",
-			"summary": "Lists the validators defined in the specified block.",
-			"params": []		
-		},
-        {
-			"name": "qbft_proposeValidatorVote",
-			"summary": "Proposes to add or remove a validator with the specified address.",
-			"params": []		
-		},
-        {
-			"name": "trace_block",
-			"summary": "Provides transaction processing of type trace for the specified block.",
-			"params": []		
-		},
-        {
-			"name": "trace_replayBlockTransactions",
-			"summary": "Provides transaction processing tracing per block.",
-			"params": []		
-		},
-        {
-			"name": "trace_transaction",
-			"summary": "Provides transaction processing of type trace for the specified transaction.",
-			"params": []		
-		},
-        {
-			"name": "txpool_besuPendingTransactions",
-			"summary": "Lists pending transactions that match the supplied filter conditions.",
-			"params": []		
-		},
-        {
-			"name": "txpool_besuStatistics",
-			"summary": "Lists statistics about the node transaction pool.",
-			"params": []		
-		},
-        {
-			"name": "txpool_besuTransactions",
-			"summary": "Lists transactions in the node transaction pool.",
-			"params": []		
-		},
-        {
-			"name": "web3_clientVersion",
-			"summary": "Returns the current client version.",
-			"params": []		
-		},
-        {
-			"name": "web3_sha3",
-			"summary": "Returns a SHA3 hash of the specified data. The result value is a Keccak-256 hash, not the standardized SHA3-256.",
-			"params": []		
-		},
-        {
-			"name": "rpc_modules",
-			"summary": "Lists enabled APIs and the version of each.",
-			"params": []		
-		}
-    ]
-  }
-  
+	"openrpc": "1.0.0-rc1",
+	"info": {
+	  "title": "Simple Math",
+	  "description": "A simple math example",
+	  "version": "1.0.0"
+	},
+   "methods": [{
+	  "name": "admin_addPeer",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_changeLogLevel",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_generateLogBloomCache",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_logsRepairCache",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_nodeInfo",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_peers",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "admin_removePeer",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_discard",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_getSignerMetrics",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_getSigners",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_getSignersAtHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_proposals",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "clique_propose",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_accountRange",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_metrics",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_storageRangeAt",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_traceBlock",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_traceBlockByHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_traceBlockByNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "debug_traceTransaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eea_sendRawTransaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_accounts",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_blockNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_call",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_chainId",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_coinbase",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_estimateGas",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_gasPrice",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getBalance",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getBlockByHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getBlockByNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getBlockTransactionCountByHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getBlockTransactionCountByNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getCode",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getFilterChanges",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getFilterLogs",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getLogs",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getMinerDataByBlockHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getMinerDataByBlockNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getProof",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getStorageAt",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getTransactionByBlockHashAndIndex",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getTransactionByBlockNumberAndIndex",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getTransactionByHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getTransactionCount",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getTransactionReceipt",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getUncleByBlockHashAndIndex",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getUncleByBlockNumberAndIndex",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getUncleCountByBlockHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getUncleCountByBlockNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_getWork",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_hashrate",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_mining",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_newBlockFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_newFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_newPendingTransactionFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_protocolVersion",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_sendRawTransaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_submitHashrate",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_submitWork",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_syncing",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "eth_uninstallFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_discardValidatorVote",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_getPendingVotes",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_getSignerMetrics",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_getValidatorsByBlockHash",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_getValidatorsByBlockNumber",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "ibft_proposeValidatorVote",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "miner_start",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "miner_stop",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "rpc_modules",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "net_version",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "net_listening",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "net_peerCount",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "net_enode",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "net_services",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_addAccountsToAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_addNodesToAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_getAccountsAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_getNodesAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_reloadPermissionsFromFile",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_removeAccountsFromAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "perm_removeNodesFromAllowlist",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "plugins_reloadPluginConfig",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_call",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_createPrivacyGroup",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_deletePrivacyGroup",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_distributeRawTransaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_findPrivacyGroup",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getCode",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getEeaTransactionCount",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getFilterChanges",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getFilterLogs",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getLogs",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getPrivacyPrecompileAddress",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getPrivateTransaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getTransactionCount",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_getTransactionReceipt",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_newFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "priv_uninstallFilter",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "trace_replayBlockTransactions",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "trace_block",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "trace_transaction",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "txpool_besuPendingTransactions",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "txpool_besuStatistics",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "txpool_besuTransactions",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "web3_clientVersion",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  },{
+	  "name": "web3_sha3",
+	  "description": "Returns the version of the current client",
+	  "summary": "current client version",
+	  "params": []
+  }]}
