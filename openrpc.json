@@ -516,110 +516,95 @@
 			"params": []		
 		},
         {
-			"name": "priv_getTransactionCount",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "priv_getTransactionReceipt",
+			"summary": "Returns information about the private transaction after mining the transaction. Receipts for pending transactions are not available.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "priv_newFilter",
+			"summary": "Creates a log filter for a private contract. To poll for logs associated with the created filter, use priv_getFilterChanges. To get all logs associated with the filter, use priv_getFilterLogs.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "priv_uninstallFilter",
+			"summary": "Uninstalls a filter for a private contract with the specified ID. When a filter is no longer required, call this method.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_discardValidatorVote",
+			"summary": "Discards a proposal to add or remove a validator with the specified address.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_getPendingVotes",
+			"summary": "Returns votes cast in the current epoch.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_getSignerMetrics",
+			"summary": "Provides the following validator metrics for the specified range:",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_getValidatorsByBlockHash",
+			"summary": "Lists the validators defined in the specified block.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_getValidatorsByBlockNumber",
+			"summary": "Lists the validators defined in the specified block.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "qbft_proposeValidatorVote",
+			"summary": "Proposes to add or remove a validator with the specified address.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "trace_block",
+			"summary": "Provides transaction processing of type trace for the specified block.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "trace_replayBlockTransactions",
+			"summary": "Provides transaction processing tracing per block.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "trace_transaction",
+			"summary": "Provides transaction processing of type trace for the specified transaction.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "txpool_besuPendingTransactions",
+			"summary": "Lists pending transactions that match the supplied filter conditions.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "txpool_besuStatistics",
+			"summary": "Lists statistics about the node transaction pool.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "txpool_besuTransactions",
+			"summary": "Lists transactions in the node transaction pool.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "web3_clientVersion",
+			"summary": "Returns the current client version.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "web3_sha3",
+			"summary": "Returns a SHA3 hash of the specified data. The result value is a Keccak-256 hash, not the standardized SHA3-256.",
 			"params": []		
 		},
         {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
+			"name": "rpc_modules",
+			"summary": "Lists enabled APIs and the version of each.",
 			"params": []		
-		},
-        {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
-			"params": []		
-		},
-        {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
-			"params": []		
-		},
-        {
-			"name": "perm_removeNodesFromAllowlist",
-			"summary": "Removes nodes from the nodes allowlist.",
-			"params": []		
-		},
+		}
     ]
   }
   
