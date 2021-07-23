@@ -38,13 +38,7 @@
 			  "result": {
 				"name": "Result",
 				"description": "Boolean - true if peer added or false if peer already a static node",
-				"value": [
-				  {
-					"jsonrpc": "2.0",
-					"id": 1,
-					"result": true
-				  }
-				]
+				"value": true
 			  }
 			}
 		  ]
