@@ -5,576 +5,807 @@
 	  "description": "A simple math example",
 	  "version": "1.0.0"
 	},
-   "methods": [{
-	  "name": "admin_addPeer",
-	  "summary": "Adds a static node.",
-	  "params": [
+	"methods": [
+	  {
+		"name": "admin_addPeer",
+		"summary": "Adds a static node.",
+		"params": [
 		  {
-			  "name":"enode",
-			  "description": "enode: string - enode URL of peer to add",
-			  "schema": {
+			"name": "enode",
+			"required": true,
+			"description": "enode: string - enode URL of peer to add",
+			"schema": {
 			  "type": "string",
-			  "format":"url"
+			  "format": "url"
 			}
 		  }
-	  	],
-		"result":{
-			"name":"Peer",
-			"description": "result: boolean - true if peer added or false if peer already a static nodes",
-			"schema": {
-				"type": "boolean"
-			}
+		],
+		"result": {
+		  "name": "Peer",
+		  "description": "result: boolean - true if peer added or false if peer already a static nodes",
+		  "schema": {
+			"type": "boolean"
+		  }
 		},
 		"examples": [
-			{
-			  "name": "enode",
-			  "description": "String - enode URL of peer to add",
-			  "params": [
-				{
-				  "name": "enode",
-				  "value": "enode://f59c0ab603377b6ec88b89d5bb41b98fc385030ab1e4b03752db6f7dab364559d92c757c13116ae6408d2d33f0138e7812eb8b696b2a22fe3332c4b5127b22a3@127.0.0.1:30304"
-				}
-			  ],
-			  "result": {
-				"name": "Result",
-				"description": "Boolean - true if peer added or false if peer already a static node",
-				"value": true
+		  {
+			"name": "enode",
+			"description": "String - enode URL of peer to add",
+			"params": [
+			  {
+				"name": "enode",
+				"value": "enode://f59c0ab603377b6ec88b89d5bb41b98fc385030ab1e4b03752db6f7dab364559d92c757c13116ae6408d2d33f0138e7812eb8b696b2a22fe3332c4b5127b22a3@127.0.0.1:30304"
+			  }
+			],
+			"result": {
+			  "name": "Result",
+			  "description": "Boolean - true if peer added or false if peer already a static node",
+			  "value": true
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "admin_changeLogLevel",
+		"description": "Changes the log level without restarting Besu. You can change the log level for all logs, or you can change the log level for specific packages or classes.\nYou can specify only one log level per RPC call.",
+		"summary": "Changes the log level without restarting Besu.",
+		"params": [
+		  {
+			"name": "level",
+			"required": true,
+			"description": "String-log level",
+			"schema": {
+			  "type": "string",
+			  "format": "url"
+			}
+		  },
+		  {
+			"name": "log_filter",
+			"description": "array - (optional) packages or classes for which to change the log level",
+			"schema": {
+			  "type": "array",
+			  "item": {
+				"title": "filter",
+				"type": "string"
 			  }
 			}
-		  ]
-  },{
-	  "name": "admin_changeLogLevel",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "admin_generateLogBloomCache",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "admin_logsRepairCache",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "admin_nodeInfo",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "admin_peers",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "admin_removePeer",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_discard",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_getSignerMetrics",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_getSigners",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_getSignersAtHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_proposals",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "clique_propose",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_accountRange",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_metrics",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_storageRangeAt",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_traceBlock",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_traceBlockByHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_traceBlockByNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "debug_traceTransaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eea_sendRawTransaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_accounts",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_blockNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_call",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_chainId",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_coinbase",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_estimateGas",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_gasPrice",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getBalance",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getBlockByHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getBlockByNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getBlockTransactionCountByHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getBlockTransactionCountByNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getCode",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getFilterChanges",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getFilterLogs",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getLogs",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getMinerDataByBlockHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getMinerDataByBlockNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getProof",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getStorageAt",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getTransactionByBlockHashAndIndex",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getTransactionByBlockNumberAndIndex",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getTransactionByHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getTransactionCount",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getTransactionReceipt",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getUncleByBlockHashAndIndex",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getUncleByBlockNumberAndIndex",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getUncleCountByBlockHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getUncleCountByBlockNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_getWork",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_hashrate",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_mining",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_newBlockFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_newFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_newPendingTransactionFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_protocolVersion",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_sendRawTransaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_submitHashrate",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_submitWork",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_syncing",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "eth_uninstallFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_discardValidatorVote",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_getPendingVotes",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_getSignerMetrics",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_getValidatorsByBlockHash",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_getValidatorsByBlockNumber",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "ibft_proposeValidatorVote",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "miner_start",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "miner_stop",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "rpc_modules",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "net_version",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "net_listening",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "net_peerCount",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "net_enode",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "net_services",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_addAccountsToAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_addNodesToAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_getAccountsAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_getNodesAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_reloadPermissionsFromFile",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_removeAccountsFromAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "perm_removeNodesFromAllowlist",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "plugins_reloadPluginConfig",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_call",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_createPrivacyGroup",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_deletePrivacyGroup",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_distributeRawTransaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_findPrivacyGroup",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getCode",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getEeaTransactionCount",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getFilterChanges",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getFilterLogs",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getLogs",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getPrivacyPrecompileAddress",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getPrivateTransaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getTransactionCount",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_getTransactionReceipt",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_newFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "priv_uninstallFilter",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "trace_replayBlockTransactions",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "trace_block",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "trace_transaction",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "txpool_besuPendingTransactions",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "txpool_besuStatistics",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "txpool_besuTransactions",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "web3_clientVersion",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  },{
-	  "name": "web3_sha3",
-	  "description": "Returns the version of the current client",
-	  "summary": "current client version",
-	  "params": []
-  }]}
+		  }
+		],
+		"result": {
+		  "name": "Log Changed",
+		  "description": "result: string - Success if the log level has changed, otherwise error",
+		  "schema": {
+			"type": "boolean"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "Log level ",
+			"description": "String - enode URL of peer to add",
+			"params": [
+			  {
+				"name": "Log level",
+				"value": "WARN"
+			  }
+			],
+			"result": {
+			  "name": "Result",
+			  "description": "Success if the log level has changed, otherwise error",
+			  "value": true
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "admin_generateLogBloomCache",
+		"description": "Generates cached log bloom indexes for blocks. APIs such as eth_getLogs and eth_getFilterLogs use the cache for improved performance.",
+		"summary": "Generates cached log bloom indexes for blocks",
+		"params": [
+		  {
+			"name": "startBlock",
+			"required": true,
+			"description": "String - block to start generating indexes",
+			"schema": {
+			  "type": "string"
+			}
+		  },
+		  {
+			"name": "startBlock",
+			"required": true,
+			"description": "String - block to stop generating indexes",
+			"schema": {
+			  "type": "string"
+			}
+		  }
+		],
+		"result": {
+		  "name": "Log bloom index details",
+		  "description": "result: string - Success if the log level has changed, otherwise error",
+		  "schema": {
+			"type": "object",
+			"properties": {
+			  "startBlock": {
+				"type": "integer"
+			  },
+			  "endBlock": {
+				"type": "string"
+			  },
+			  "currentBlock": {
+				"type": "string"
+			  },
+			  "indexing": {
+				"type": "boolean"
+			  },
+			  "requestAccepted": {
+				"type": "boolean"
+			  }
+			}
+		  }
+		},
+		"examples": [
+		  {
+			"name": "Log level ",
+			"description": "String - enode URL of peer to add",
+			"params": [
+				{
+					"name": "startBlock",
+					"value": "0x0"
+				},
+				{
+					"name": "startBlock",
+					"value": "0x10000"
+				}
+			  ],
+			"result": [
+				{
+					"name":"startBlock", 
+					"value":"0x0"
+				},{
+					"name":"endBlock", 
+					"value":"0x10000"
+				},{
+					"name":"currentBlock", 
+					"value":"0x0"
+				},{
+					"name":"indexing", 
+					"value":true
+				},{
+					"name":"requestAccepted", 
+					"value":true
+				}
+			]
+		  }
+		]
+	  },
+	  {
+		"name": "admin_logsRepairCache",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "admin_nodeInfo",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "admin_peers",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "admin_removePeer",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_discard",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_getSignerMetrics",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_getSigners",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_getSignersAtHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_proposals",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "clique_propose",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_accountRange",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_metrics",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_storageRangeAt",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_traceBlock",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_traceBlockByHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_traceBlockByNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "debug_traceTransaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eea_sendRawTransaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_accounts",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_blockNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_call",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_chainId",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_coinbase",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_estimateGas",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_gasPrice",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getBalance",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getBlockByHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getBlockByNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getBlockTransactionCountByHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getBlockTransactionCountByNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getCode",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getFilterChanges",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getFilterLogs",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getLogs",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getMinerDataByBlockHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getMinerDataByBlockNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getProof",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getStorageAt",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getTransactionByBlockHashAndIndex",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getTransactionByBlockNumberAndIndex",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getTransactionByHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getTransactionCount",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getTransactionReceipt",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getUncleByBlockHashAndIndex",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getUncleByBlockNumberAndIndex",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getUncleCountByBlockHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getUncleCountByBlockNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_getWork",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_hashrate",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_mining",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_newBlockFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_newFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_newPendingTransactionFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_protocolVersion",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_sendRawTransaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_submitHashrate",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_submitWork",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_syncing",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "eth_uninstallFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_discardValidatorVote",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_getPendingVotes",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_getSignerMetrics",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_getValidatorsByBlockHash",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_getValidatorsByBlockNumber",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "ibft_proposeValidatorVote",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "miner_start",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "miner_stop",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "rpc_modules",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "net_version",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "net_listening",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "net_peerCount",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "net_enode",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "net_services",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_addAccountsToAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_addNodesToAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_getAccountsAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_getNodesAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_reloadPermissionsFromFile",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_removeAccountsFromAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "perm_removeNodesFromAllowlist",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "plugins_reloadPluginConfig",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_call",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_createPrivacyGroup",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_deletePrivacyGroup",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_distributeRawTransaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_findPrivacyGroup",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getCode",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getEeaTransactionCount",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getFilterChanges",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getFilterLogs",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getLogs",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getPrivacyPrecompileAddress",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getPrivateTransaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getTransactionCount",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_getTransactionReceipt",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_newFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "priv_uninstallFilter",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "trace_replayBlockTransactions",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "trace_block",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "trace_transaction",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "txpool_besuPendingTransactions",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "txpool_besuStatistics",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "txpool_besuTransactions",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "web3_clientVersion",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  },
+	  {
+		"name": "web3_sha3",
+		"description": "Returns the version of the current client",
+		"summary": "current client version",
+		"params": []
+	  }
+	]
+  }
