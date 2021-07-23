@@ -440,6 +440,11 @@
 			"summary": "Removes nodes from the nodes allowlist.",
 			"params": []		
 		},
+        {
+			"name": "plugins_reloadPluginConfig",
+			"summary": "Reloads specified plugin configuration.",
+			"params": []		
+		},
     ]
   }
   
