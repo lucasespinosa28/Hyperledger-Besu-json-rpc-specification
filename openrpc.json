@@ -147,27 +147,27 @@
 			"name": "Log level ",
 			"description": "String - enode URL of peer to add",
 			"params": [
-				{
-					"name": "startBlock",
-					"value": "0x0"
-				},
-				{
-					"name": "startBlock",
-					"value": "0x10000"
-				}
-			  ],
+			  {
+				"name": "startBlock",
+				"value": "0x0"
+			  },
+			  {
+				"name": "startBlock",
+				"value": "0x10000"
+			  }
+			],
 			"result": {
-				"name": "Log bloom",
-				"value": [
-					{
-						"startBlock": "0x0",
-						"endBlock": "0x10000",
-						"currentBlock": "0x0",
-						"indexing": true,
-						"requestAccepted": true
-					}
-				]
-			}			
+			  "name": "Log bloom",
+			  "value": [
+				{
+				  "startBlock": "0x0",
+				  "endBlock": "0x10000",
+				  "currentBlock": "0x0",
+				  "indexing": true,
+				  "requestAccepted": true
+				}
+			  ]
+			}
 		  }
 		]
 	  },
@@ -790,16 +790,63 @@
 		"params": []
 	  },
 	  {
+		"tag":"web3",
 		"name": "web3_clientVersion",
 		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
+		"summary": "Returns the current client version.",
+		"params": [],
+		"result": {
+			"name": "Current client version",
+			"schema": {
+			  "type": "string"
+			}
+		},
+		"examples": [
+			{
+			  "result": {
+				"name": "besu version",
+				"value": "besu/<version>"
+			  }
+			}
+		  ]
 	  },
 	  {
+		"tag":"web3",
 		"name": "web3_sha3",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
+		"description": "Returns a SHA3 hash of the specified data. The result value is a Keccak-256 hash, not the standardized SHA3-256.",
+		"summary": "Returns a SHA3 hash of the specified data.",
+		"params": [
+			{
+			  "name": "SHA3",
+			  "required": true,
+			  "description": "data to convert to a SHA3 hash",
+			  "schema": {
+				"type": "string"
+			  }
+			}
+		  ],
+		  "result": {
+			"name": "SHA3 input data",
+			"schema": {
+			  "type": "string"
+			}
+		},
+		"examples": [
+			{
+				"name": "SHA3",
+				"description": "Data to convert to a SHA3 hash",
+				"params": [
+				  {
+					"name": "Data",
+					"value": "0x68656c6c6f20776f726c00"
+				  }
+				],
+				"result": {
+					"name": "SHA3 result of the input data",
+					"value": "0x5e39a0a66544c0668bde22d61c47a8710000ece931f13b84d3b2feb44ec96d3f"
+			  }
+			}
+		  ]
 	  }
 	]
   }
