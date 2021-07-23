@@ -334,7 +334,52 @@
 			"name": "eth_uninstallFilter",
 			"summary": "Uninstalls a filter with the specified ID. When a filter is no longer required, call this method.",
 			"params": []		
-		}
+		},
+        {
+			"name": "ibft_discardValidatorVote",
+			"summary": "Discards a proposal to add or remove a validator with the specified address.",
+			"params": []		
+		},
+        {
+			"name": "ibft_getPendingVotes",
+			"summary": "Returns votes cast in the current epoch..",
+			"params": []		
+		},
+        {
+			"name": "ibft_getSignerMetrics",
+			"summary": "Provides the following validator metrics for the specified range:",
+			"params": []		
+		},
+        {
+			"name": "ibft_getValidatorsByBlockHash",
+			"summary": "Lists the validators defined in the specified block.",
+			"params": []		
+		},
+        {
+			"name": "ibft_getValidatorsByBlockNumber",
+			"summary": "Lists the validators defined in the specified block.",
+			"params": []		
+		},
+        {
+			"name": "ibft_proposeValidatorVote",
+			"summary": "Proposes to add or remove a validator with the specified address.",
+			"params": []		
+		},
+        {
+			"name": "miner_changeTargetGasLimit",
+			"summary": "Updates the target gas limit set using the --target-gas-limit command line option.",
+			"params": []		
+		},
+        {
+			"name": "miner_start",
+			"summary": "Starts the mining process. To start mining, you must first specify a miner coinbase using the --miner-coinbase command line option.",
+			"params": []		
+		},
+        {
+			"name": "miner_stop",
+			"summary": "Stops the mining process on the client.",
+			"params": []		
+		},
     ]
   }
   
