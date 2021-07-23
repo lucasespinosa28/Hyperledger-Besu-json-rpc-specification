@@ -445,6 +445,181 @@
 			"summary": "Reloads specified plugin configuration.",
 			"params": []		
 		},
+        {
+			"name": "priv_call",
+			"summary": "Invokes a private contract function locally and does not change the privacy group state.",
+			"params": []		
+		},
+        {
+			"name": "priv_createPrivacyGroup",
+			"summary": "Creates a group of nodes, specified by their Orion public key.",
+			"params": []		
+		},
+        {
+			"name": "priv_debugGetStateRoot",
+			"summary": "Returns the state root of the specified privacy group at the specified block.",
+			"params": []		
+		},
+        {
+			"name": "priv_deletePrivacyGroup",
+			"summary": "Deletes the specified privacy group.",
+			"params": []		
+		},
+        {
+			"name": "priv_distributeRawTransaction",
+			"summary": "Distributes a signed, RLP encoded private transaction.",
+			"params": []		
+		},
+        {
+			"name": "priv_findPrivacyGroup",
+			"summary": "Returns a list of privacy groups containing only the listed members. For example, if the listed members are A and B, a privacy group containing A, B, and C is not returned.",
+			"params": []		
+		},
+        {
+			"name": "priv_getCode",
+			"summary": "Returns the code of the private smart contract at the specified address. Compiled smart contract code is stored as a hexadecimal value.",
+			"params": []		
+		},
+        {
+			"name": "priv_getEeaTransactionCount",
+			"summary": "Returns the private transaction count for the specified account and group of sender and recipients.",
+			"params": []		
+		},
+        {
+			"name": "priv_getFilterChanges",
+			"summary": "Polls the specified filter for a private contract and returns an array of changes that have occurred since the last poll.",
+			"params": []		
+		},
+        {
+			"name": "priv_getFilterLogs",
+			"summary": "Returns an array of logs for the specified filter for a private contract.",
+			"params": []		
+		},
+        {
+			"name": "priv_getLogs",
+			"summary": "Returns an array of logs matching a specified filter object.",
+			"params": []		
+		},
+        {
+			"name": "priv_getPrivacyPrecompileAddress",
+			"summary": "Returns the address of the privacy precompiled contract. The address is derived and based on the value of the privacy-flexible-groups-enabled option.",
+			"params": []		
+		},
+        {
+			"name": "priv_getPrivateTransaction",
+			"summary": "Returns the private transaction if you are a participant, otherwise, null.",
+			"params": []		
+		},
+        {
+			"name": "priv_getTransactionCount",
+			"summary": "Returns the private transaction count for specified account and privacy group.",
+			"params": []		
+		},
+        {
+			"name": "priv_getTransactionCount",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
+        {
+			"name": "perm_removeNodesFromAllowlist",
+			"summary": "Removes nodes from the nodes allowlist.",
+			"params": []		
+		},
     ]
   }
   
