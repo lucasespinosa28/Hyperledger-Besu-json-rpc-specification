@@ -810,9 +810,6 @@
 		"params": []
 	  },
 	  {
-		"tags": {
-		  "name": "Web3"
-		},
 		"name": "web3_clientVersion",
 		"description": "Returns the version of the current client",
 		"summary": "Returns the current client version.",
@@ -835,9 +832,6 @@
 		]
 	  },
 	  {
-		"tags": {
-		  "name": "Web3"
-		},
 		"name": "web3_sha3",
 		"description": "Returns a SHA3 hash of the specified data. The result value is a Keccak-256 hash, not the standardized SHA3-256.",
 		"summary": "Returns a SHA3 hash of the specified data.",
