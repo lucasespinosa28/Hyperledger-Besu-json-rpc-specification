@@ -574,6 +574,32 @@
       "params": []
     },
     {
+		"tag": "Rpc",
+		"name": "rpc_modules",
+		"summary": "Lists enabled APIs and the version of each.",
+		"params": [],
+		"result": {
+		  "name": "Map of strings to strings",
+		  "schema": {
+			"type": "string"
+		  }
+		},
+		"examples": [
+		  {
+			"result": {
+			  "name": "APIs versions",
+			  "value": [
+				{
+				  "web3": "1.0",
+				  "eth": "1.0",
+				  "net": "1.0"
+				}
+			  ]
+			}
+		  }
+		]
+	  },
+    {
       "name": "net_version",
       "description": "Returns the version of the current client",
       "summary": "current client version",
@@ -838,32 +864,6 @@
           "result": {
             "name": "SHA3 result of the input data",
             "value": "0x5e39a0a66544c0668bde22d61c47a8710000ece931f13b84d3b2feb44ec96d3f"
-          }
-        }
-      ]
-    },
-    {
-      "tag": "Rpc",
-      "name": "rpc_modules",
-      "summary": "Lists enabled APIs and the version of each.",
-      "params": [],
-      "result": {
-        "name": "Map of strings to strings",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "examples": [
-        {
-          "result": {
-            "name": "Log bloom",
-            "value": [
-              {
-                "web3": "1.0",
-                "eth": "1.0",
-                "net": "1.0"
-              }
-            ]
           }
         }
       ]
