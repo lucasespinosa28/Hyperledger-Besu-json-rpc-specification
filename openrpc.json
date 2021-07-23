@@ -380,6 +380,36 @@
 			"summary": "Stops the mining process on the client.",
 			"params": []		
 		},
+        {
+			"name": "net_enode",
+			"summary": "Returns the enode URL.",
+			"params": []		
+		},
+        {
+			"name": "net_listening",
+			"summary": "Whether the client is actively listening for network connections.",
+			"params": []		
+		},
+        {
+			"name": "net_peerCount",
+			"summary": "Returns the number of peers currently connected to the client.",
+			"params": []		
+		},
+        {
+			"name": "miner_stop",
+			"summary": "Stops the mining process on the client.",
+			"params": []		
+		},
+        {
+			"name": "miner_stop",
+			"summary": "Stops the mining process on the client.",
+			"params": []		
+		},
+        {
+			"name": "miner_stop",
+			"summary": "Stops the mining process on the client.",
+			"params": []		
+		},
     ]
   }
   
