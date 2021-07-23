@@ -17,14 +17,37 @@
 			  "format":"url"
 			}
 		  }
-	  ],
-	   "result":{
-		   "name":"Peer",
-		   "description": "result: boolean - true if peer added or false if peer already a static nodes",
-		   "schema": {
-			  "type": "boolean"
+	  	],
+		"result":{
+			"name":"Peer",
+			"description": "result: boolean - true if peer added or false if peer already a static nodes",
+			"schema": {
+				"type": "boolean"
 			}
-	   }
+		},
+		"examples": [
+			{
+			  "name": "enode",
+			  "description": "String - enode URL of peer to add",
+			  "params": [
+				{
+				  "name": "enode",
+				  "value": "enode://f59c0ab603377b6ec88b89d5bb41b98fc385030ab1e4b03752db6f7dab364559d92c757c13116ae6408d2d33f0138e7812eb8b696b2a22fe3332c4b5127b22a3@127.0.0.1:30304"
+				}
+			  ],
+			  "result": {
+				"name": "Result",
+				"description": "Boolean - true if peer added or false if peer already a static node",
+				"value": [
+				  {
+					"jsonrpc": "2.0",
+					"id": 1,
+					"result": true
+				  }
+				]
+			  }
+			}
+		  ]
   },{
 	  "name": "admin_changeLogLevel",
 	  "description": "Returns the version of the current client",
