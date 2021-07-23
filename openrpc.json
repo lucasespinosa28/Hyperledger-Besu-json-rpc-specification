@@ -156,24 +156,18 @@
 					"value": "0x10000"
 				}
 			  ],
-			"result": [
-				{
-					"name":"startBlock", 
-					"value":"0x0"
-				},{
-					"name":"endBlock", 
-					"value":"0x10000"
-				},{
-					"name":"currentBlock", 
-					"value":"0x0"
-				},{
-					"name":"indexing", 
-					"value":true
-				},{
-					"name":"requestAccepted", 
-					"value":true
-				}
-			]
+			"result": {
+				"name": "Log bloom",
+				"value": [
+					{
+						"startBlock": "0x0",
+						"endBlock": "0x10000",
+						"currentBlock": "0x0",
+						"indexing": true,
+						"requestAccepted": true
+					}
+				]
+			}			
 		  }
 		]
 	  },
