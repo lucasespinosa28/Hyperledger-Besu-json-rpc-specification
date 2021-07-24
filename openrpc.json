@@ -176,6 +176,30 @@
 		"description": "Returns the version of the current client",
 		"summary": "current client version",
 		"params": [],
+		"result": {
+			"name": "Status of the repair request",
+			"description": "Started or Already runningr",
+			"schema": {
+			  "type": "object",
+			  "properties": {
+				"startBlock": {
+				  "type": "integer"
+				},
+				"endBlock": {
+				  "type": "string"
+				},
+				"currentBlock": {
+				  "type": "string"
+				},
+				"indexing": {
+				  "type": "boolean"
+				},
+				"requestAccepted": {
+				  "type": "boolean"
+				}
+			  }
+			}
+		  },
 		"examples": [
 			{
 			  "name": "Repairs cached logs",
@@ -231,6 +255,18 @@
 		"description": "Returns the version of the current client",
 		"summary": "current client version",
 		"params": [],
+		"result": {
+			"name": "node object with the following fields",
+			"value": [
+			  {
+				"enode": "0x0",
+				"endBlock": "0x10000",
+				"currentBlock": "0x0",
+				"indexing": true,
+				"requestAccepted": true
+			  }
+			]
+		},
 		"examples": [
 			{
 			  "name": "Returns networking information about the node",
@@ -926,5 +962,10 @@
 		  }
 		]
 	  }
-	]
+	],
+	"components": {
+		"schemas": {
+
+		}
+	}
   }
