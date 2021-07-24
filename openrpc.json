@@ -1,971 +1,1583 @@
 {
-	"openrpc": "1.0.0-rc1",
+	"openrpc": "1.2.4",
 	"info": {
-	  "title": "Simple Math",
-	  "description": "A simple math example",
-	  "version": "1.0.0"
+		"title": "Hyperledger Besu JSON-RPC Specification",
+		"description": "A specification of the standard interface for Hyperledger Besu clients.",
+		"license": {
+			"name": "CC0-1.0",
+			"url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+		},
+		"version": "0.0.1"
 	},
 	"methods": [
-	  {
-		"name": "admin_addPeer",
-		"summary": "Adds a static node.",
-		"params": [
-		  {
-			"name": "enode",
-			"required": true,
-			"description": "enode: string - enode URL of peer to add",
-			"schema": {
-			  "type": "string",
-			  "format": "url"
-			}
-		  }
-		],
-		"result": {
-		  "name": "Peer",
-		  "description": "result: boolean - true if peer added or false if peer already a static nodes",
-		  "schema": {
-			"type": "boolean"
-		  }
-		},
-		"examples": [
-		  {
-			"name": "enode",
-			"description": "String - enode URL of peer to add",
-			"params": [
-			  {
-				"name": "enode",
-				"value": "enode://f59c0ab603377b6ec88b89d5bb41b98fc385030ab1e4b03752db6f7dab364559d92c757c13116ae6408d2d33f0138e7812eb8b696b2a22fe3332c4b5127b22a3@127.0.0.1:30304"
-			  }
-			],
+		{
+			"name": "web3_clientVersion",
+			"description": "Returns the version of the current client",
+			"summary": "current client version",
+			"params": [],
 			"result": {
-			  "name": "Result",
-			  "description": "Boolean - true if peer added or false if peer already a static node",
-			  "value": true
-			}
-		  }
-		]
-	  },
-	  {
-		"name": "admin_changeLogLevel",
-		"description": "Changes the log level without restarting Besu. You can change the log level for all logs, or you can change the log level for specific packages or classes.\nYou can specify only one log level per RPC call.",
-		"summary": "Changes the log level without restarting Besu.",
-		"params": [
-		  {
-			"name": "level",
-			"required": true,
-			"description": "String-log level",
-			"schema": {
-			  "type": "string",
-			  "format": "url"
-			}
-		  },
-		  {
-			"name": "log_filter",
-			"description": "array - (optional) packages or classes for which to change the log level",
-			"schema": {
-			  "type": "array",
-			  "item": {
-				"title": "filter",
+			  "name": "clientVersion",
+			  "description": "client version",
+			  "schema": {
+				"title": "clientVersion",
 				"type": "string"
 			  }
-			}
-		  }
-		],
-		"result": {
-		  "name": "Log Changed",
-		  "description": "result: string - Success if the log level has changed, otherwise error",
-		  "schema": {
-			"type": "boolean"
-		  }
-		},
-		"examples": [
-		  {
-			"name": "Log level ",
-			"description": "String - enode URL of peer to add",
-			"params": [
+			},
+			"examples": [
 			  {
-				"name": "Log level",
-				"value": "WARN"
-			  }
-			],
-			"result": {
-			  "name": "Result",
-			  "description": "Success if the log level has changed, otherwise error",
-			  "value": true
-			}
-		  }
-		]
-	  },
-	  {
-		"name": "admin_generateLogBloomCache",
-		"description": "Generates cached log bloom indexes for blocks. APIs such as eth_getLogs and eth_getFilterLogs use the cache for improved performance.",
-		"summary": "Generates cached log bloom indexes for blocks",
-		"params": [
-		  {
-			"name": "startBlock",
-			"required": true,
-			"description": "String - block to start generating indexes",
-			"schema": {
-			  "type": "string"
-			}
-		  },
-		  {
-			"name": "startBlock",
-			"required": true,
-			"description": "String - block to stop generating indexes",
-			"schema": {
-			  "type": "string"
-			}
-		  }
-		],
-		"result": {
-		  "name": "Log bloom index details",
-		  "description": "result: string - Success if the log level has changed, otherwise error",
-		  "schema": {
-			"type": "object",
-			"properties": {
-			  "startBlock": {
-				"type": "integer"
-			  },
-			  "endBlock": {
-				"type": "string"
-			  },
-			  "currentBlock": {
-				"type": "string"
-			  },
-			  "indexing": {
-				"type": "boolean"
-			  },
-			  "requestAccepted": {
-				"type": "boolean"
-			  }
-			}
-		  }
-		},
-		"examples": [
-		  {
-			"name": "Log level ",
-			"description": "String - enode URL of peer to add",
-			"params": [
-			  {
-				"name": "startBlock",
-				"value": "0x0"
-			  },
-			  {
-				"name": "startBlock",
-				"value": "0x10000"
-			  }
-			],
-			"result": {
-			  "name": "Log bloom",
-			  "value": [
-				{
-				  "startBlock": "0x0",
-				  "endBlock": "0x10000",
-				  "currentBlock": "0x0",
-				  "indexing": true,
-				  "requestAccepted": true
-				}
-			  ]
-			}
-		  }
-		]
-	  },
-	  {
-		"name": "admin_logsRepairCache",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": [],
-		"result": {
-			"name": "Status of the repair request",
-			"description": "Started or Already runningr",
-			"schema": {
-			  "type": "object",
-			  "properties": {
-				"startBlock": {
-				  "type": "integer"
-				},
-				"endBlock": {
-				  "type": "string"
-				},
-				"currentBlock": {
-				  "type": "string"
-				},
-				"indexing": {
-				  "type": "boolean"
-				},
-				"requestAccepted": {
-				  "type": "boolean"
-				}
-			  }
-			}
-		  },
-		"examples": [
-			{
-			  "name": "Repairs cached logs",
-			  "params": [
-				{
-				  "name": "startBlock",
-				  "value": "1200"
-				}
-			  ],
+			  "name": "Current client",
+			  "params": [],
 			  "result": {
-				"name": "Log bloom",
-				"value": [
+				"name": "node version",
+				"value": "<node>/<version>"
+			  }
+			  }
+			]
+		  },
+		  {
+			"name": "web3_sha3",
+			"summary": "Hashes data",
+			"description": "Hashes data using the Keccak-256 algorithm",
+			"params": [
+			  {
+				"name": "data",
+				"description": "data to hash using the Keccak-256 algorithm",
+				"summary": "data to hash",
+				"schema": {
+				  "title": "data",
+				  "type": "string",
+				  "pattern": "^0x[a-fA-F\\d]+$"
+				}
+			  }
+			],
+			"result": {
+			  "name": "hashedData",
+			  "description": "Keccak-256 hash of the given data",
+			  "schema": {
+				"$ref": "#/components/schemas/Keccak"
+			  }
+			},
+			"examples": [
+			  {
+				"name": "sha3Example",
+				"params": [
 				  {
-					"enode": "enode://87ec35d558352cc55cd1bf6a472557797f91287b78fe5e86760219124563450ad1bb807e4cc61e86c574189a851733227155551a14b9d0e1f62c5e11332a18a3@[::]:30303",
-					"listenAddr": "[::]:30303",
-					"name": "besu/v1.0.1-dev-0d2294a5/osx-x86_64/oracle-java-1.8",
-					"id": "87ec35d558352cc55cd1bf6a472557797f91287b78fe5e86760219124563450ad1bb807e4cc61e86c574189a851733227155551a14b9d0e1f62c5e11332a18a3",
-					"ports":{
-						"discovery": 30303,
-						"listener": 30303
-					},
-					"protocols": {
-						"eth": {
-							"config": {
-								"chainId": 2018,
-								"homesteadBlock": 0,
-								"daoForkBlock": 0,
-								"daoForkSupport": true,
-								"eip150Block": 0,
-								"eip155Block": 0,
-								"eip158Block": 0,
-								"byzantiumBlock": 0,
-								"constantinopleBlock": 0,
-								"constantinopleFixBlock": 0,
-								"ethash": {
-									"fixeddifficulty": 100
-								}
-							},
-							"difficulty": 78536,
-							"genesis": "0x43ee12d45470e57c86a0dfe008a5b847af9e372d05e8ba8f01434526eb2bea0f",
-							"head": "0xc6677651f16d07ae59cab3a5e1f0b814ed2ec27c00a93297b2aa2e29707844d9",
-							"network": 2018
-						}
+					"name": "sha3ParamExample",
+					"value": "0x68656c6c6f20776f726c64"
+				  }
+				],
+				"result": {
+				  "name": "sha3ResultExample",
+				  "value": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+				}
+			  }
+			]
+		  },
+		{
+			"name": "eth_protocolVersion",
+			"summary": "Returns the current ethereum protocol version.",
+			"params": [],
+			"result": {
+				"name": "Protocol version",
+				"schema": {
+					"title": "version",
+					"type": "string"
+				}
+			}
+		},
+		{
+			"name": "eth_syncing",
+			"summary": "Returns an object with data about the sync status or false.",
+			"params": [],
+			"result": {
+				"name": "Syncing status",
+				"schema": {
+					"$ref": "#/components/schemas/SyncingStatus"
+				}
+			}
+		},
+		{
+			"name": "eth_coinbase",
+			"summary": "Returns the client coinbase address.",
+			"params": [],
+			"result": {
+				"name": "Coinbase address",
+				"schema": {
+					"$ref": "#/components/schemas/address"
+				}
+			}
+		},
+		{
+			"name": "eth_mining",
+			"summary": "Returns whether the client is actively mining new blocks.",
+			"params": [],
+			"result": {
+				"name": "Mining status",
+				"schema": {
+					"title": "miningStatus",
+					"type": "boolean"
+				}
+			}
+		},
+		{
+			"name": "eth_hashrate",
+			"summary": "Returns the number of hashes per second that the node is mining with.",
+			"params": [],
+			"result": {
+				"name": "Mining status",
+				"schema": {
+					"title": "Hashrate",
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_gasPrice",
+			"summary": "Returns the current price per gas in wei.",
+			"params": [],
+			"result": {
+				"name": "Gas price",
+				"schema": {
+					"title": "Gas price",
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_accounts",
+			"summary": "Returns a list of addresses owned by client.",
+			"params": [],
+			"result": {
+				"name": "Accounts",
+				"schema": {
+					"title": "Accounts",
+					"type": "array",
+					"items": {
+						"$ref": "#/components/schemas/address"
 					}
+				}
+			}
+		},
+		{
+			"name": "eth_blockNumber",
+			"summary": "Returns the number of most recent block.",
+			"params": [],
+			"result": {
+				"name": "Block number",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_getBalance",
+			"summary": "Returns the balance of the account of given address.",
+			"params": [
+				{
+					"name": "Address",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "Block",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/BlockNumberOrTag"
+					}
+				}
+			],
+			"result": {
+				"name": "Block number",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_getStorage",
+			"summary": "Returns the value from a storage position at a given address.",
+			"params": [
+				{
+					"name": "Address",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "Storage slot",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/uint256"
+					}
+				},
+				{
+					"name": "Block",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/BlockNumberOrTag"
+					}
+				}
+			],
+			"result": {
+				"name": "Value",
+				"schema": {
+					"$ref": "#/components/schemas/bytes"
+				}
+			}
+		},
+		{
+			"name": "eth_getTransactionCount",
+			"summary": "Returns the number of transactions sent from an address.",
+			"params": [
+				{
+					"name": "Address",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "Block",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/BlockNumberOrTag"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction count",
+				"schema": {
+					"title": "Transaction count",
+					"type": "array",
+					"items": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			}
+		},
+		{
+			"name": "eth_getBlockTransactionCountByNumber",
+			"summary": "Returns the number of transactions in a block matching the given block number.",
+			"params": [
+				{
+					"name": "Block number",
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction count",
+				"schema": {
+					"title": "Transaction count",
+					"type": "array",
+					"items": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			}
+		},
+		{
+			"name": "eth_getUncleCountByBlockNumber",
+			"summary": "Returns the number of transactions in a block matching the given block number.",
+			"params": [
+				{
+					"name": "Block number",
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Uncle count",
+				"schema": {
+					"title": "Uncle count",
+					"type": "array",
+					"items": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			}
+		},
+		{
+			"name": "eth_getCode",
+			"summary": "Returns code at a given address.",
+			"params": [
+				{
+					"name": "Address",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "Block",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/BlockNumberOrTag"
+					}
+				}
+			],
+			"result": {
+				"name": "Bytecode",
+				"schema": {
+					"$ref": "#/components/schemas/bytes"
+				}
+			}
+		},
+		{
+			"name": "eth_sign",
+			"summary": "Returns an EIP-191 signature over the provided data.",
+			"params": [
+				{
+					"name": "Address",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "Message",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes"
+					}
+				}
+			],
+			"result": {
+				"name": "Signature",
+				"schema": {
+					"$ref": "#/components/schemas/bytes65"
+				}
+			}
+		},
+		{
+			"name": "eth_signTransaction",
+			"summary": "Returns an RLP encoded transaction signed by the specified account.",
+			"params": [
+				{
+					"name": "Transaction",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/TransactionWithSender"
+					}
+				}
+			],
+			"result": {
+				"name": "Encoded transaction",
+				"schema": {
+					"$ref": "#/components/schemas/bytes"
+				}
+			}
+		},
+		{
+			"name": "eth_sendTransaction",
+			"summary": "Signs and submits a transaction.",
+			"params": [
+				{
+					"name": "Transaction",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/TransactionWithSender"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"schema": {
+					"$ref": "#/components/schemas/hash32"
+				}
+			}
+		},
+		{
+			"name": "eth_sendRawTransaction",
+			"summary": "Submits a raw transaction.",
+			"params": [
+				{
+					"name": "Transaction",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"schema": {
+					"$ref": "#/components/schemas/hash32"
+				}
+			}
+		},
+		{
+			"name": "eth_call",
+			"summary": "Executes a new message call immediately without creating a transaction on the block chain.",
+			"params": [
+				{
+					"name": "Transaction",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/TransactionWithSender"
+					}
+				}
+			],
+			"result": {
+				"name": "Return data",
+				"schema": {
+					"$ref": "#/components/schemas/bytes"
+				}
+			}
+		},
+		{
+			"name": "eth_chainId",
+			"summary": "Returns the currently configured chain id",
+			"description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md).",
+			"params": [],
+			"result": {
+			  "name": "chainId",
+			  "description": "hex format integer of the current chain id. Defaults are ETC=61, ETH=1, Morden=62.",
+			  "schema": {
+				"title": "chainId",
+				"type": "string",
+				"pattern": "^0x[a-fA-F\\d]+$"
+			  }
+			}		
+		  },
+		{
+			"name": "eth_estimateGas",
+			"summary": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.",
+			"params": [
+				{
+					"name": "Transaction",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/TransactionWithSender"
+					}
+				}
+			],
+			"result": {
+				"name": "Gas used",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_getBlockByHash",
+			"summary": "Returns information about a block by hash.",
+			"params": [
+				{
+					"name": "Block hash",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+			],
+			"result": {
+				"name": "Block information",
+				"schema": {
+					"$ref": "#/components/schemas/Block"
+				}
+			}
+		},
+		{
+			"name": "eth_getBlockByNumber",
+			"summary": "Returns information about a block by number.",
+			"params": [
+				{
+					"name": "Block number",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Block information",
+				"schema": {
+					"$ref": "#/components/schemas/Block"
+				}
+			}
+		},
+		{
+			"name": "eth_getTransactionByHash",
+			"summary": "Returns the information about a transaction requested by transaction hash.",
+			"params": [
+				{
+					"name": "Transaction hash",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction information",
+				"schema": {
+					"$ref": "#/components/schemas/TransactionInfo"
+				}
+			}
+		},
+		{
+			"name": "eth_getTransactionByBlockHashAndIndex",
+			"summary": "Returns information about a transaction by block hash and transaction index position.",
+			"params": [
+				{
+					"name": "Block hash",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				},
+				{
+					"name": "Transaction index",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction information",
+				"schema": {
+					"$ref": "#/components/schemas/TransactionInfo"
+				}
+			}
+		},
+		{
+			"name": "eth_getTransactionByBlockNumberAndIndex",
+			"summary": "Returns information about a transaction by block number and transaction index position.",
+			"params": [
+				{
+					"name": "Block number",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				},
+				{
+					"name": "Transaction index",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction information",
+				"schema": {
+					"$ref": "#/components/schemas/TransactionInfo"
+				}
+			}
+		},
+		{
+			"name": "eth_getTransactionReceipt",
+			"summary": "Returns the receipt of a transaction by transaction hash.",
+			"params": [
+				{
+					"name": "Transaction hash",
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+			],
+			"result": {
+				"name": "Receipt Information",
+				"schema": {
+					"$ref": "#/components/schemas/ReceiptInfo"
+				}
+			}
+		},
+		{
+			"name": "eth_getUncleByBlockHashAndIndex",
+			"summary": "Returns information about a uncle of a block by hash and uncle index position.",
+			"params": [
+			  {
+				"$ref": "#/components/contentDescriptors/BlockHash"
+			  },
+			  {
+				"name": "index",
+				"description": "The ordering in which a uncle is included within its block.",
+				"required": true,
+				"schema": {
+				  "$ref": "#/components/schemas/Integer"
+				}
+			  }
+			],
+			"result": {
+			  "name": "uncle",
+			  "schema": {
+				"$ref": "#/components/schemas/BlockOrNull"
+			  }
+			}
+		  },
+		  {
+			"name": "eth_getUncleByBlockNumberAndIndex",
+			"summary": "Returns information about a uncle of a block by hash and uncle index position.",
+			"params": [
+			  {
+				"name": "uncleBlockNumber",
+				"description": "The block in which the uncle was included",
+				"required": true,
+				"schema": {
+				  "$ref": "#/components/schemas/BlockNumber"
+				}
+			  },
+			  {
+				"name": "index",
+				"description": "The ordering in which a uncle is included within its block.",
+				"required": true,
+				"schema": {
+				  "$ref": "#/components/schemas/Integer"
+				}
+			  }
+			],
+			"result": {
+			  "name": "uncleResult",
+			  "description": "returns an uncle block or null",
+			  "schema": {
+				"$ref": "#/components/schemas/BlockOrNull"
+			  }
+			},
+			"examples": [
+			  {
+				"name": "nullResultExample",
+				"params": [
+				  {
+					"name": "uncleBlockNumberExample",
+					"value": "0x0"
+				  },
+				  {
+					"name": "uncleBlockNumberIndexExample",
+					"value": "0x0"
+				  }
+				],
+				"result": {
+				  "name": "nullResultExample",
+				  "value": null
+				}
+			  }
+			]
+		  },
+		  {
+			"name": "eth_getUncleCountByBlockHash",
+			"summary": "Returns the number of uncles in a block from a block matching the given block hash.",
+			"params": [
+			  {
+				"$ref": "#/components/contentDescriptors/BlockHash"
+			  }
+			],
+			"result": {
+			  "name": "uncleCountResult",
+			  "description": "The Number of total uncles in the given block",
+			  "schema": {
+				"$ref": "#/components/schemas/IntegerOrNull"
+			  }
+			}
+		  },
+		{
+			"name": "eth_newFilter",
+			"summary": "Creates a filter object, based on filter options, to notify when the state changes (logs).",
+			"params": [
+				{
+					"name": "Filter",
+					"schema": {
+						"$ref": "#/components/schemas/Filter"
+					}
+				}
+			],
+			"result": {
+				"name": "Filter Identifier",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_newBlockFilter",
+			"summary": "Creates a filter in the node, to notify when a new block arrives.",
+			"params": [],
+			"result": {
+				"name": "Filter Identifier",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_newPendingTransactionFilter",
+			"summary": "Creates a filter in the node, to notify when new pending transactions arrive.",
+			"params": [],
+			"result": {
+				"name": "Filter Identifier",
+				"schema": {
+					"$ref": "#/components/schemas/uint"
+				}
+			}
+		},
+		{
+			"name": "eth_uninstallFilter",
+			"summary": "Uninstalls a filter with given id.",
+			"params": [
+				{
+					"name": "Filter Identifier",
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Success",
+				"schema": {
+					"type": "boolean"
+				}
+			}
+		},
+		{
+			"name": "eth_getFilterChanges",
+			"summary": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
+			"params": [
+				{
+					"name": "Filter Identifier",
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Log objects",
+				"schema": {
+					"$ref": "#/components/schemas/FilterResults"
+				}
+			}
+		},
+		{
+			"name": "eth_getFilterLogs",
+			"summary": "Returns an array of all logs matching filter with given id.",
+			"params": [
+				{
+					"name": "Filter Identifier",
+					"schema": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			],
+			"result": {
+				"name": "Log objects",
+				"schema": {
+					"$ref": "#/components/schemas/FilterResults"
+				}
+			}
+		},
+		{
+			"name": "eth_getLogs",
+			"summary": "Returns an array of all logs matching filter with given id.",
+			"params": [
+				{
+					"name": "Filter",
+					"schema": {
+						"$ref": "#/components/schemas/Filter"
+					}
+				}
+			],
+			"result": {
+				"name": "Log objects",
+				"schema": {
+					"$ref": "#/components/schemas/FilterResults"
+				}
+			}
+		},
+		{
+			"name": "eth_getProof",
+			"summary": "Returns the account- and storage-values of the specified account including the Merkle-proof.",
+			"params": [
+			  {
+				"name": "address",
+				"description": "The address of the account or contract",
+				"required": true,
+				"schema": {
+				  "$ref": "#/components/schemas/Address"
+				}
+			  },
+			  {
+				"name": "storageKeys",
+				"required": true,
+				"schema": {
+				  "title": "storageKeys",
+				  "description": "A storage key is indexed from the solidity compiler by the order it is declared. For mappings it uses the keccak of the mapping key with its position (and recursively for X-dimensional mappings)",
+				  "items": {
+					"$ref": "#/components/schemas/StorageProofKey"
+				  }
+				}
+			  },
+			  {
+				"$ref": "#/components/contentDescriptors/BlockNumber"
+			  }
+			],
+			"result": {
+			  "name": "account",
+			  "schema": {
+				"title": "proofAccountOrNull",
+				"oneOf": [
+				  {
+					"title": "proofAccount",
+					"type": "object",
+					"description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+					"properties": {
+					  "address": {
+						"title": "proofAccountAddress",
+						"description": "The address of the account or contract of the request",
+						"$ref": "#/components/schemas/Address"
+					  },
+					  "accountProof": {
+						"$ref": "#/components/schemas/ProofNodes"
+					  },
+					  "balance": {
+						"title": "proofAccountBalance",
+						"description": "The Ether balance of the account or contract of the request",
+						"$ref": "#/components/schemas/Integer"
+					  },
+					  "codeHash": {
+						"title": "proofAccountCodeHash",
+						"description": "The code hash of the contract of the request (keccak(NULL) if external account)",
+						"$ref": "#/components/schemas/Keccak"
+					  },
+					  "nonce": {
+						"title": "proofAccountNonce",
+						"description": "The transaction count of the account or contract of the request",
+						"$ref": "#/components/schemas/Nonce"
+					  },
+					  "storageHash": {
+						"title": "proofAccountStorageHash",
+						"description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)",
+						"$ref": "#/components/schemas/Keccak"
+					  },
+					  "storageProof": {
+						"$ref": "#/components/schemas/StorageProof"
+					  }
+					}
+				  },
+				  {
+					"$ref": "#/components/schemas/Null"
 				  }
 				]
 			  }
 			}
-		  ]
-	  },
-	  {
-		"name": "admin_nodeInfo",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": [],
-		"result": {
-			"name": "node object with the following fields",
-			"value": [
-			  {
-				"enode": "0x0",
-				"endBlock": "0x10000",
-				"currentBlock": "0x0",
-				"indexing": true,
-				"requestAccepted": true
-			  }
-			]
-		},
-		"examples": [
-			{
-			  "name": "Returns networking information about the node",
-			  "result": {
-				"name": "Status",
-				"description": "status of the repair request; Started or Already running",
-				"value": "Started"
-			  }
-			}
-		  ]
-	  },
-	  {
-		"name": "admin_peers",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "admin_removePeer",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_discard",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_getSignerMetrics",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_getSigners",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_getSignersAtHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_proposals",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "clique_propose",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_accountRange",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_metrics",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_storageRangeAt",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_traceBlock",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_traceBlockByHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_traceBlockByNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "debug_traceTransaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eea_sendRawTransaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_accounts",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_blockNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_call",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_chainId",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_coinbase",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_estimateGas",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_gasPrice",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getBalance",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getBlockByHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getBlockByNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getBlockTransactionCountByHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getBlockTransactionCountByNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getCode",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getFilterChanges",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getFilterLogs",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getLogs",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getMinerDataByBlockHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getMinerDataByBlockNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getProof",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getStorageAt",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getTransactionByBlockHashAndIndex",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getTransactionByBlockNumberAndIndex",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getTransactionByHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getTransactionCount",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getTransactionReceipt",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getUncleByBlockHashAndIndex",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getUncleByBlockNumberAndIndex",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getUncleCountByBlockHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getUncleCountByBlockNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_getWork",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_hashrate",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_mining",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_newBlockFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_newFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_newPendingTransactionFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_protocolVersion",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_sendRawTransaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_submitHashrate",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_submitWork",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_syncing",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "eth_uninstallFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_discardValidatorVote",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_getPendingVotes",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_getSignerMetrics",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_getValidatorsByBlockHash",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_getValidatorsByBlockNumber",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "ibft_proposeValidatorVote",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "miner_start",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "miner_stop",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "rpc_modules",
-		"summary": "Lists enabled APIs and the version of each.",
-		"params": [],
-		"result": {
-		  "name": "Map of strings to strings",
-		  "schema": {
-			"type": "string"
-		  }
-		},
-		"examples": [
+		  },
 		  {
-			"result": {
-			  "name": "APIs versions",
-			  "value": [
-				{
-				  "web3": "1.0",
-				  "eth": "1.0",
-				  "net": "1.0"
-				}
-			  ]
-			}
-		  }
-		]
-	  },
-	  {
-		"name": "net_version",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "net_listening",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "net_peerCount",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "net_enode",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "net_services",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_addAccountsToAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_addNodesToAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_getAccountsAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_getNodesAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_reloadPermissionsFromFile",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_removeAccountsFromAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "perm_removeNodesFromAllowlist",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "plugins_reloadPluginConfig",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_call",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_createPrivacyGroup",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_deletePrivacyGroup",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_distributeRawTransaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_findPrivacyGroup",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getCode",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getEeaTransactionCount",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getFilterChanges",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getFilterLogs",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getLogs",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getPrivacyPrecompileAddress",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getPrivateTransaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getTransactionCount",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_getTransactionReceipt",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_newFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "priv_uninstallFilter",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "trace_replayBlockTransactions",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "trace_block",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "trace_transaction",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "txpool_besuPendingTransactions",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "txpool_besuStatistics",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "txpool_besuTransactions",
-		"description": "Returns the version of the current client",
-		"summary": "current client version",
-		"params": []
-	  },
-	  {
-		"name": "web3_clientVersion",
-		"description": "Returns the version of the current client",
-		"summary": "Returns the current client version.",
-		"params": [],
-		"result": {
-		  "name": "Current client version",
-		  "schema": {
-			"type": "string"
-		  }
-		},
-		"examples": [
-		  {
-			"name": "Current client",
-			"params": [],
-			"result": {
-			  "name": "besu version",
-			  "value": "besu/<version>"
-			}
-		  }
-		]
-	  },
-	  {
-		"name": "web3_sha3",
-		"description": "Returns a SHA3 hash of the specified data. The result value is a Keccak-256 hash, not the standardized SHA3-256.",
-		"summary": "Returns a SHA3 hash of the specified data.",
-		"params": [
-		  {
-			"name": "SHA3",
-			"required": true,
-			"description": "data to convert to a SHA3 hash",
-			"schema": {
-			  "type": "string"
-			}
-		  }
-		],
-		"result": {
-		  "name": "SHA3 input data",
-		  "schema": {
-			"type": "string"
-		  }
-		},
-		"examples": [
-		  {
-			"name": "SHA3",
-			"description": "Data to convert to a SHA3 hash",
+			"name": "eth_getStorageAt",
+			"summary": "Gets a storage value from a contract address, a position, and an optional blockNumber",
 			"params": [
 			  {
-				"name": "Data",
-				"value": "0x68656c6c6f20776f726c00"
+				"$ref": "#/components/contentDescriptors/Address"
+			  },
+			  {
+				"$ref": "#/components/contentDescriptors/Position"
+			  },
+			  {
+				"$ref": "#/components/contentDescriptors/BlockNumber"
 			  }
 			],
 			"result": {
-			  "name": "SHA3 result of the input data",
-			  "value": "0x5e39a0a66544c0668bde22d61c47a8710000ece931f13b84d3b2feb44ec96d3f"
+			  "name": "dataWord",
+			  "schema": {
+				"$ref": "#/components/schemas/DataWord"
+			  }
 			}
-		  }
-		]
-	  }
+		  },
+		{
+			"name": "eth_getBlockTransactionCountByHash",
+			"summary": "Returns the number of transactions in a block from a block matching the given block hash.",
+			"params": [
+				{
+					"name": "Block hash",
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction count",
+				"schema": {
+					"title": "Transaction count",
+					"type": "array",
+					"items": {
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			}
+		},
+		{
+			"name": "eth_getMinerDataByBlockNumber",
+			"summary": "Returns miner data for the specified block.",
+			"params": [
+				{
+					"name": "Block hash",
+					"schema": {
+						"$ref": "#/components/schemas/BlockNumberOrTag"
+					}
+				}
+			],
+			"result": {
+				"name": "Miner data object",
+				"schema": {
+					"title": "result",
+					"type": "object"
+				  }
+			}
+		},
+		{
+			"name": "eth_getMinerDataByBlockHash",
+			"summary": "Returns miner data for the specified block.",
+			"params": [
+				{
+					"name": "Block hash",
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+			],
+			"result": {
+				"name": "Miner data object",
+				"schema": {
+					"title": "result",
+					"type": "object"
+				  }
+			}
+		},
+		{
+			"name": "eth_getWork",
+			"summary": "Returns the hash of the current block, the seedHash, and the boundary condition to be met (“target”).",
+			"params": [],
+			"result": {
+				"name": "Current work",
+				"schema": {
+					"type": "array",
+					"items": [
+						{
+							"title": "PoW hash",
+							"$ref": "#/components/schemas/bytes32"
+						},
+						{
+							"title": "seed hash",
+							"$ref": "#/components/schemas/bytes32"
+						},
+						{
+							"title": "difficulty",
+							"$ref": "#/components/schemas/bytes32"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "eth_submitWork",
+			"summary": "Used for submitting a proof-of-work solution.",
+			"params": [
+				{
+					"name": "PoW hash",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes32"
+					}
+				},
+				{
+					"name": "seed hash",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes32"
+					}
+				},
+				{
+					"name": "difficulty",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes32"
+					}
+				}
+			],
+			"result": {
+				"name": "Success",
+				"schema": {
+					"type": "boolean"
+				}
+			}
+		},
+		{
+			"name": "eth_submitHashrate",
+			"summary": "Used for submitting mining hashrate.",
+			"params": [
+				{
+					"name": "Hashrate",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes32"
+					}
+				},
+				{
+					"name": "ID",
+					"required": true,
+					"schema": {
+						"$ref": "#/components/schemas/bytes32"
+					}
+				}
+			],
+			"result": {
+				"name": "Success",
+				"schema": {
+					"type": "boolean"
+				}
+			}
+		}
 	],
 	"components": {
 		"schemas": {
-
+			"address": {
+				"title": "hex encoded address",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{40}$"
+			},
+			"addresses": {
+				"title": "hex encoded address",
+				"type": "array",
+				"items": { "$ref": "#/components/schemas/address" }
+			},
+			"byte": {
+				"title": "hex encoded byte",
+				"type": "string",
+				"pattern": "^0x([a-fA-F0-9]?){1,2}$"
+			},
+			"bytes": {
+				"title": "hex encoded bytes",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]+$"
+			},
+			"bytes32": {
+				"title": "32 hex encoded bytes",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{64}$"
+			},
+			"bytes256": {
+				"title": "256 hex encoded bytes",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{512}$"
+			},
+			"bytes65": {
+				"title": "65 hex encoded bytes",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{512}$"
+			},
+			"uint": {
+				"title": "hex encoded unsigned integer",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]+$"
+			},
+			"uint256": {
+				"title": "hex encoded unsigned integer",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{64}$"
+			},
+			"hash32": {
+				"title": "32 byte hex value",
+				"type": "string",
+				"pattern": "^0x[0-9a-f]{64}$"
+			},
+			"BlockTag": {
+				"title": "Block tag",
+				"type": "string",
+				"enum": ["earliest", "latest", "pending"]
+			},
+			"BlockNumberOrTag": {
+				"title": "Block number or tag",
+				"oneOf": [
+					{
+						"title": "Block number",
+						"$ref": "#/components/schemas/uint"
+					},
+					{
+						"title": "Block tag",
+						"$ref": "#/components/schemas/BlockTag"
+					}
+				]
+			},
+			"SyncingStatus": {
+				"title": "Syncing status",
+				"oneOf": [
+					{
+						"title": "Syncing progress",
+						"type": "object",
+						"properties": {
+							"startingBlock": {
+								"title": "Starting block",
+								"$ref": "#/components/schemas/uint"
+							},
+							"currentBlock": {
+								"title": "Current block",
+								"$ref": "#/components/schemas/uint"
+							},
+							"highestBlock": {
+								"title": "Highest block",
+								"$ref": "#/components/schemas/uint"
+							}
+						}
+					},
+					{
+						"title": "Not syncing",
+						"description": "Should always return false if not syncing.",
+						"type": "boolean"
+					}
+				]
+			},
+			"FilterResults": {
+				"title": "Filter results",
+				"oneOf": [
+					{
+						"title": "new block hashes",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/hash32"
+						}
+					},
+					{
+						"title": "new transaction hashes",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/hash32"
+						}
+					},
+					{
+						"title": "new logs",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Log"
+						}
+					}
+				]
+			},
+			"Header": {
+				"title": "Header object",
+				"type": "object",
+				"required": [
+					"parentHash",
+					"sha3Uncles",
+					"miner",
+					"stateRoot",
+					"transactionsRoot",
+					"receiptRoot",
+					"bloom",
+					"totalDifficulty",
+					"number",
+					"gasLimit",
+					"gasUsed",
+					"timestamp",
+					"extraData",
+					"mixHash",
+					"nonce"
+				],
+				"properties": {
+					"parentHash": {
+						"title": "Parent block hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"sha3Uncles": {
+						"title": "Ommers hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"miner": {
+						"title": "Coinbase",
+						"$ref": "#/components/schemas/address"
+					},
+					"stateRoot": {
+						"title": "State root",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"transactionsRoot": {
+						"title": "Transactions root",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"receiptRoot": {
+						"title": "Receipts root",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"bloom": {
+						"title": "Bloom filter",
+						"$ref": "#/components/schemas/bytes256"
+					},
+					"totalDifficulty": {
+						"title": "Difficulty",
+						"$ref": "#/components/schemas/bytes"
+					},
+					"number": {
+						"title": "Number",
+						"$ref": "#/components/schemas/uint"
+					},
+					"gasLimit": {
+						"title": "Gas limit",
+						"$ref": "#/components/schemas/uint"
+					},
+					"gasUsed": {
+						"title": "Gas used",
+						"$ref": "#/components/schemas/uint"
+					},
+					"timestamp": {
+						"title": "Timestamp",
+						"$ref": "#/components/schemas/uint"
+					},
+					"extraData": {
+						"title": "Extra data",
+						"$ref": "#/components/schemas/bytes"
+					},
+					"mixHash": {
+						"title": "Mix hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"nonce": {
+						"title": "nonce",
+						"$ref": "#/components/schemas/bytes"
+					},
+					"baseFeePerGas": {
+						"title": "Base fee per gas",
+						"$ref": "#/components/schemas/uint"
+					}
+				}
+			},
+			"Block": {
+				"title": "Block object",
+				"type": "object",
+				"required": ["transactions", "uncles"],
+				"allOf": [
+					{ "$ref": "#/components/schemas/Header" },
+					{ 
+						"title": "transactions",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/hash32"
+						}
+					},
+					{
+						"title": "uncles",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/hash32"
+						}
+					}
+				]
+			},
+			"AccessListEntry": {
+				"title": "Access list entry",
+				"type": "object",
+				"properties": {
+					"address": {
+						"$ref": "#/components/schemas/address"
+					},
+					"storageKeys": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/hash32"
+						}
+					}
+				}
+			},
+			"AccessList": {
+				"title": "Access list",
+				"type": "object",
+				"items": {
+					"$ref": "#/components/schemas/AccessListEntry"
+				}
+			},
+			"SignedTransaction": {
+				"title": "Signed transaction object",
+				"type": "object",
+				"allOf": [
+					{ "$ref": "#/components/schemas/Transaction" },
+					{
+						"required": ["v", "r", "s"],
+						"properties": {
+							"v": {
+								"title": "v",
+								"$ref": "#/components/schemas/uint"
+							},
+							"r": {
+								"title": "r",
+								"$ref": "#/components/schemas/uint"
+							},
+							"s": {
+								"title": "s",
+								"$ref": "#/components/schemas/uint"
+							}
+						}
+					}
+				]
+			},
+			"TransactionWithSender": {
+				"title": "Transaction object with sender",
+				"type": "object",
+				"allOf": [
+					{
+						"required": ["from"],
+						"properties": {
+							"from": {
+								"title": "from",
+								"$ref": "#/components/schemas/address"
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/Transaction" }	
+				]
+			},
+			"Transaction": {
+				"type": "object",
+				"title": "Transaction object",
+				"allOf": [
+					{
+						"required": ["nonce", "gas", "value", "input"],
+						"properties": {
+							"type": {
+								"title": "type",
+								"$ref": "#/components/schemas/byte"
+							},
+							"nonce": {
+								"title": "nonce",
+								"$ref": "#/components/schemas/uint"
+							},
+							"to": {
+								"title": "to address",
+								"$ref": "#/components/schemas/address"
+							},
+							"gas": {
+								"title": "gas limit",
+								"$ref": "#/components/schemas/uint"
+							},
+							"value": {
+								"title": "value",
+								"$ref": "#/components/schemas/uint"
+							},
+							"input": {
+								"title": "input data",
+								"$ref": "#/components/schemas/bytes"
+							},
+							"accessList": {
+								"title": "accessList",
+								"description": "EIP-2930 access list",
+								"$ref": "#/components/schemas/AccessList"
+							}
+						}
+					},
+					{
+						"oneOf": [
+							{
+								"title": "EIP-1559 fee market parameters",
+								"type": "object",
+								"description": "EIP-1559 dynamic fee transactions have two fee parameters.",
+								"required": [
+									"maxFeePerGas",
+									"maxPriorityFeePerGas"
+								],
+								"properties": {
+									"maxPriorityFeePerGas": {
+										"title": "max priority fee per gas",
+										"description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+										"$ref": "#/components/schemas/uint"
+									},
+									"maxFeePerGas": {
+										"title": "max fee per gas",
+										"description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+										"$ref": "#/components/schemas/uint"
+									}
+								}
+							},
+							{
+								"title": "Legacy fee market parameters",
+								"type": "object",
+								"description": "Legacy transactions and EIP-2930 access list transaction include this parameter.",
+								"required": ["gasPrice"],
+								"properties": {
+									"gasPrice": {
+										"title": "gas price",
+										"description": "The gas price willing to be paid by the sender in wei",
+										"$ref": "#/components/schemas/uint"
+									}
+								}
+							}
+						]
+					}
+				]
+			},
+			"TransactionInfo": {
+				"type": "object",
+				"title": "Transaction information",
+				"allOf": [
+					{
+						"title": "Contextual information",
+						"required": ["blockHash", "blockNumber", "from", "hash", "transactionIndex"],
+						"properties": {
+							"blockHash": {
+								"title": "block hash",
+								"$ref": "#/components/schemas/hash32"
+							},
+							"blockNumber": {
+								"title": "block number",
+								"$ref": "#/components/schemas/uint"
+							},
+							"from": {
+								"title": "from address",
+								"$ref": "#/components/schemas/address"
+							},
+							"hash": {
+								"title": "transaction hash",
+								"$ref": "#/components/schemas/hash32"
+							},
+							"transactionIndex": {
+								"title": "transaction index",
+								"$ref": "#/components/schemas/uint"
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/SignedTransaction"}
+				]
+			},
+			"Filter": {
+				"title": "filter",
+				"type": "object",
+				"properties": {
+					"fromBlock": {
+						"title": "from block",
+						"$ref": "#/components/schemas/uint"
+					},
+					"toBlock": {
+						"title": "to block",
+						"$ref": "#/components/schemas/uint"
+					},
+					"address": {
+						"title": "Address(es)",
+						"oneOf": [
+							{
+								"title": "Address",
+								"$ref": "#/components/schemas/address"
+							},
+							{	
+								"title": "Addresses",
+								"$ref": "#/components/schemas/addresses"
+							}
+						]
+					},
+					"topics": {
+						"title": "Topics",
+						"$ref": "#/components/schemas/Topics"
+					}
+				}
+			},
+			"Topic": {
+				"title": "Topic",
+				"$ref": "#/components/schemas/uint256"
+			},
+			"Topics": {
+				"title": "Topics",
+				"type": "array",
+				"items": {
+					"$ref": "#/components/schemas/Topic"
+				}
+			},
+			"Log": {
+				"title": "log",
+				"type": "object",
+				"properties": {
+					"removed": {
+						"title": "removed",
+						"type": "boolean"
+					},
+					"logIndex": {
+						"title": "log index",
+						"$ref": "#/components/schemas/uint"
+					},
+					"transactionIndex": {
+						"title": "transaction index",
+						"$ref": "#/components/schemas/uint"
+					},
+					"transactionHash": {
+						"title": "transaction hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"blockHash": {
+						"title": "block hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"blockNumber": {
+						"title": "block number",
+						"$ref": "#/components/schemas/uint"
+					},
+					"address": {
+						"title": "address",
+						"$ref": "#/components/schemas/address"
+					},
+					"data": {
+						"title": "data",
+						"$ref": "#/components/schemas/bytes"
+					},
+					"topics": {
+						"title": "topics",
+						"$ref": "#/components/schemas/Topics"
+					}
+				}
+			},
+			"ReceiptInfo": {
+				"type": "object",
+				"title": "Receipt info",
+				"required": [
+					"transactionHash", "transactionIndex", "value", "input"],
+				"properties": {
+					"transactionHash": {
+						"title": "transaction hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"transactionIndex": {
+						"title": "transaction index",
+						"$ref": "#/components/schemas/uint"
+					},
+					"blockHash": {
+						"title": "block hash",
+						"$ref": "#/components/schemas/hash32"
+					},
+					"blockNumber": {
+						"title": "block number",
+						"$ref": "#/components/schemas/uint"
+					},
+					"from": {
+						"title": "from",
+						"$ref": "#/components/schemas/address"
+					},
+					"to": {
+						"title": "to",
+						"$ref": "#/components/schemas/address"
+					},
+					"cumulativeGasUsed": {
+						"title": "accessList",
+						"$ref": "#/components/schemas/uint"
+					},
+					"gasUsed": {
+						"title": "gasUsed",
+						"$ref": "#/components/schemas/uint"
+					},
+					"contractAddress": {
+						"title": "contract address",
+						"$ref": "#/components/schemas/address"
+					},
+					"logs": {
+						"title": "logs",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Log"
+						}
+					},
+					"logsBloom": {
+						"title": "logs bloom",
+						"$ref": "#/components/schemas/bytes256"
+					}
+				}
+			}
 		}
 	}
-  }
+}
