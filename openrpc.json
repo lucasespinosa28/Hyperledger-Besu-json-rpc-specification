@@ -1186,6 +1186,12 @@
 						"title": "Ommers hash",
 						"$ref": "#/components/schemas/hash32"
 					},
+					"Keccak": {
+						"title": "keccak",
+						"type": "string",
+						"description": "Hex representation of a Keccak 256 hash",
+						"pattern": "^0x[a-fA-F\\d]{64}$"
+					  },
 					"miner": {
 						"title": "Coinbase",
 						"$ref": "#/components/schemas/address"
