@@ -2120,7 +2120,7 @@
 		  "name": " list of log objects",
 		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
 		  "schema": {
-			"$ref": "#/components/schemas/Logs"
+			"$ref": "#/components/contentDescriptors/Logs"
 		  }
 		}
 	  },
@@ -2147,7 +2147,7 @@
 		  "name": " list of log objects",
 		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
 		  "schema": {
-			"$ref": "#/components/schemas/Logs"
+			"$ref": "#/components/contentDescriptors/Logs"
 		  }
 		}
 	  },
