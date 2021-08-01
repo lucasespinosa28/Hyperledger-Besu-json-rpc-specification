@@ -1,13 +1,13 @@
 
 module.exports = {
-  pathPrefix: "",
+  pathPrefix: "/Hyperledger-Besu-json-rpc-specification",
   siteMetadata: {
     title: 'hyperledger besu JSON-RPC Specification',
     description: 'A specification of the standard interface for Hyperledger Besu clients.',
     logoUrl: 'https://raw.githubusercontent.com/open-rpc/design/master/icons/open-rpc-logo-noText/open-rpc-logo-noText%20(PNG)/256x256.png',
     primaryColor: '#3f51b5', //material-ui primary color
     secondaryColor: '#f50057', //material-ui secondary color
-    author: '',
+    author: 'Lucas Espinosa',
     menuLinks: [
       {
         name: 'home',
@@ -16,7 +16,7 @@ module.exports = {
       },
       {
         name: 'API Documentation',
-        link: '/api-documentation'
+        link: '/Hyperledger-Besu-json-rpc-specification/api-documentation'
       }
     ],
     footerLinks: [
