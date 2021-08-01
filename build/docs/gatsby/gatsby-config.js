@@ -16,7 +16,7 @@ module.exports = {
       },
       {
         name: 'API Documentation',
-        link: '/Hyperledger-Besu-json-rpc-specification/api-documentation'
+        link: '/api-documentation'
       }
     ],
     footerLinks: [
