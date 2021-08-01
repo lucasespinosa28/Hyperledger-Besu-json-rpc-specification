@@ -33,7 +33,7 @@ module.exports = {
       options: {
         name: 'pristine-site',
         short_name: 'pristine-site',
-        start_url: '/',
+        start_url: '/api-documentation',
         background_color: 'transparent',
         theme_color: '#3f51b5',
         display: 'minimal-ui',
