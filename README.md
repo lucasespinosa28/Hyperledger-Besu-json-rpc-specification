@@ -4,6 +4,10 @@
 
 [View the Documentation](https://lucasespinosa28.github.io/Hyperledger-Besu-json-rpc-specification/api-documentation/).
 
+## Overview
+
+This repository is the home of the  Hyperledger-Besu [OpenRPC](https://spec.open-rpc.org) document that describes the JSON-RPC basic interface to be implemented by client developers. It contains the tooling and scripts to automate producing artifacts for consuming the JSON-RPC API (docs, clients, etc).
+
 ## Fullnode⚠
 To use the documentation you need to run a full node
 
@@ -12,10 +16,6 @@ This command will run a full node com basic methods enabled
 
 You want to use method PRIV you'll need to the enable private transaction in your node
 [Documentation to enable privacy](https://besu.hyperledger.org/en/stable/Reference/CLI/CLI-Syntax/#privacy-enabled)
-
-## Overview
-
-This repository is the home of the  Hyperledger-Besu [OpenRPC](https://spec.open-rpc.org) document that describes the JSON-RPC basic interface to be implemented by client developers. It contains the tooling and scripts to automate producing artifacts for consuming the JSON-RPC API (docs, clients, etc).
 
 ## Specification
 
