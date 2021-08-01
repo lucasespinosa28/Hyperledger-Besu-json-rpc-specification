@@ -1,7 +1,7 @@
 {
 	"openrpc": "1.2.4",
 	"info": {
-	  "title": "Hyperledger Besu JSON-RPC Specification",
+	  "title": "hyperledger besu JSON-RPC Specification",
 	  "description": "A specification of the standard interface for Hyperledger Besu clients.",
 	  "license": {
 		"name": "CC0-1.0",

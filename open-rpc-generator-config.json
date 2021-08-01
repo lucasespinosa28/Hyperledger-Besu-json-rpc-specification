@@ -1,15 +1,20 @@
 {
     "openrpcDocument": "openrpc.json",
-    "outDir": "./",
+    "outDir": "./build",
     "components": [
         {
             "type": "client",
-            "name": "Hyperledger Besu Client",
+            "name": "hyperledger-besu-json-rpc",
             "language": "typescript"
         },
         {
+            "type": "client",
+            "name": "hyperledger-besu-json-rpc",
+            "language": "rust"
+        },
+        {
             "type": "docs",
-            "name": "Hyperledger Besu",
+            "name": "hyperledger-besu-rpc-specification-website",
             "language": "gatsby"
         }
     ]
