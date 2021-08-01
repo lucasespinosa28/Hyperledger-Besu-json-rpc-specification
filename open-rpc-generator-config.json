@@ -1,6 +1,6 @@
 {
     "openrpcDocument": "openrpc.json",
-    "outDir": "build",
+    "outDir": "./",
     "components": [
         {
             "type": "client",

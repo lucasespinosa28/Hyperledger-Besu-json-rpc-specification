@@ -7,8 +7,14 @@
 		"name": "CC0-1.0",
 		"url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
 	  },
-	  "version": "0.0.2"
+	  "version": "0.0.4"
 	},
+	"servers": [
+	  {
+		"name": "default local node",
+		"url": "http://localhost:8545"
+	  }
+	],
 	"methods": [
 	  {
 		"name": "web3_clientVersion",
@@ -29,7 +35,7 @@
 			"params": [],
 			"result": {
 			  "name": "node version",
-			  "value": "<node>/<version>"
+			  "value": "besu/v21.7.1/linux-x86_64/adoptopenjdk-java-11"
 			}
 		  }
 		]
@@ -63,12 +69,12 @@
 			"params": [
 			  {
 				"name": "sha3ParamExample",
-				"value": "0x68656c6c6f20776f726c64"
+				"value": "0x68656c6c6f20776f726c00"
 			  }
 			],
 			"result": {
 			  "name": "sha3ResultExample",
-			  "value": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+			  "value": "0x5e39a0a66544c0668bde22d61c47a8710000ece931f13b84d3b2feb44ec96d3f"
 			}
 		  }
 		]
@@ -87,11 +93,27 @@
 		  }
 		],
 		"result": {
-		  "name": "true if peer added or false if peer already a static node",
+		  "name": "addPeerResult",
+		  "description": "true if peer added or false if peer already a static node",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
+		},
+		"examples": [
+			{
+			  "name": "addPeerExample",
+			  "params": [
+				{
+				  "name": "enodeURL",
+				  "value": "enode://c93f69ddd83d3db3e93e5165d60b4f5d93a9731df776beee94c5f8a0c770e41bdea69094136402db0cef7af63f0aa636ff676d4a88c6d37276dfa4160c21ed5f@127.0.0.1:30303"
+				}
+			  ],
+			  "result": {
+				"name": "addPeerResultExample",
+				"value": true
+			  }
+			}
+		  ]
 	  },
 	  {
 		"name": "admin_changeLogLevel",
@@ -106,9 +128,8 @@
 			}
 		  },
 		  {
-			"name": "level",
-			"required": true,
-			"description": "log level",
+			"name": "log_filter",
+			"description": "(optional) packages or classes for which to change the log level",
 			"schema": {
 			  "type": "array",
 			  "items": {
@@ -118,59 +139,208 @@
 		  }
 		],
 		"result": {
-		  "name": "Success if the log level has changed, otherwise error",
+		  "name": "changeLogLevelResult",
+		  "description": "Success if the log level has changed, otherwise error",
 		  "schema": {
-			"$ref": "#/components/contentDescriptors/Logs"
+			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "changeLogLevelExample",
+			"params": [
+			  {
+				"name": "level",
+				"value": "DEBUG"
+			  }
+			],
+			"result": {
+			  "name": "changeLogLevelResultExample",
+			  "value": "Success"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "admin_nodeInfo",
 		"summary": "Returns networking information about the node. The information includes general information about the node and specific information from each running Ethereum sub-protocol (for example, eth).",
 		"params": [],
 		"result": {
-		  "name": "node object",
+		  "name": "nodeInfoResult",
+		  "description": "node object",
 		  "schema": {
-			"type": "object"
+			"type": "object",
+			"properties": {
+			  "enode": {
+				"type": "string"
+			  },
+			  "listenAddr": {
+				"type": "string"
+			  },
+			  "ip": {
+				"type": "string"
+			  },
+			  "name": {
+				"type": "string"
+			  },
+			  "id": {
+				"type": "string"
+			  },
+			  "ports": {
+				"properties": {
+				  "discovery": {
+					"type": "number"
+				  },
+				  "listener": {
+					"type": "number"
+				  }
+				}
+			  },
+			  "protocols": {
+				"type": "object",
+				"properties": {
+				  "eth": {
+					"type": "object",
+					"properties": {
+					  "config": {
+						"type": "object",
+						"properties": {
+						  "chainId": {
+							"type": "number"
+						  },
+						  "petersburgBlock": {
+							"type": "number"
+						  },
+						  "contractSizeLimit": {
+							"type": "number"
+						  },
+						  "ethash": {
+							"type": "object",
+							"properties": {
+							  "fixeddifficulty": {
+								"type": "number"
+							  }
+							}
+						  }
+						}
+					  },
+					  "difficulty": {
+						"type": "number"
+					  },
+					  "genesis": {
+						"type": "string"
+					  },
+					  "head": {
+						"type": "string"
+					  },
+					  "network": {
+						"type": "number"
+					  }
+					}
+				  }
+				}
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "nodeInfoExample",
+			"params": [],
+			"result": {
+			  "name": "nodeInfoResultExample",
+			  "value": {
+				"enode": "enode://f7226276f9dcfed1ffae8055261d96c4a61ac32769f50ea1955995f9a584b3a5792451931754258625a43c9b4132eb455347b183fdebe98abb90ab00d7c917b2@127.0.0.1:30303",
+				"listenAddr": "127.0.0.1:30303",
+				"ip": "127.0.0.1",
+				"name": "besu/v21.7.1/linux-x86_64/adoptopenjdk-java-11",
+				"id": "f7226276f9dcfed1ffae8055261d96c4a61ac32769f50ea1955995f9a584b3a5792451931754258625a43c9b4132eb455347b183fdebe98abb90ab00d7c917b2",
+				"ports": {
+				  "discovery": 30303,
+				  "listener": 30303
+				},
+				"protocols": {
+				  "eth": {
+					"config": {
+					  "chainId": 1337,
+					  "petersburgBlock": 0,
+					  "contractSizeLimit": 2147483647,
+					  "ethash": {
+						"fixeddifficulty": 100
+					  }
+					},
+					"difficulty": 5551236,
+					"genesis": "0xa08d1edb37ba1c62db764ef7c2566cbe368b850f5b3762c6c24114a3fd97b87f",
+					"head": "0xc3a8a3d54dc136d3189f89dbc2949252e17d8b921bb729851fe8cc4e7e491f81",
+					"network": 2018
+				  }
+				}
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "admin_peers",
 		"summary": "Returns networking information about connected remote nodes.",
 		"params": [],
 		"result": {
-		  "name": "list of objects returned for each remote node, with the following fields.",
+		  "name": "peersResult",
+		  "description": "list of objects returned for each remote node, with the following fields.",
 		  "schema": {
 			"type": "object"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "peersExample",
+			"params": [],
+			"result": {
+			  "name": "peersResultExample",
+			  "value": []
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "admin_generateLogBloomCache",
 		"summary": "Generates cached log bloom indexes for blocks. APIs such as eth_getLogs and eth_getFilterLogs use the cache for improved performance.",
 		"params": [
 		  {
-			"name": "startBlock",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
-			}
+			"$ref": "#/components/contentDescriptors/startBlock"
 		  },
 		  {
-			"name": "endBlock",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
-			}
+			"$ref": "#/components/contentDescriptors/endBlock"
 		  }
 		],
 		"result": {
-		  "name": "log bloom index details",
-		  "schema": {
-			"$ref": "#/components/contentDescriptors/Logbloom"
+		  "$ref": "#/components/contentDescriptors/Logbloom"
+		},
+		"examples": [
+		  {
+			"name": "generateLogBloomCacheExample",
+			"params": [
+			  {
+				"name": "startBlock",
+				"value": "0x0"
+			  },
+			  {
+				"name": "endBlock",
+				"value": "0x10000"
+			  }
+			],
+			"result": {
+			  "name": "generateLogBloomCacheResultExample",
+			  "value": {
+				"startBlock": "0x0",
+				"endBlock": "0x10000",
+				"currentBlock": "0xd37f",
+				"requestAccepted": true,
+				"caching": true
+			  }
+			}
 		  }
-		}
+		]
 	  },
 	  {
 		"name": "admin_logsRemoveCache",
@@ -180,19 +350,20 @@
 			"name": "fromBlock",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
+			  "$ref": "#/components/schemas/BlockNumber"
 			}
 		  },
 		  {
 			"name": "toBlock",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
+			  "$ref": "#/components/schemas/BlockNumber"
 			}
 		  }
 		],
 		"result": {
-		  "name": "Cache Removed status or error",
+		  "name": "logsRemoveCacheResult",
+		  "description": "Cache Removed status or error",
 		  "schema": {
 			"type": "object",
 			"properties": {
@@ -201,22 +372,40 @@
 			  }
 			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "logsRemoveCacheExample",
+			"params": [
+			  {
+				"name": "fromBlock",
+				"value": "1"
+			  },
+			  {
+				"name": "toBlock",
+				"value": "100"
+			  }
+			],
+			"result": {
+			  "name": "logsRemoveCacheResultExample",
+			  "value": {
+				"Status": "Cache Removed"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "admin_logsRepairCache",
 		"summary": "Removes cache files for the specified range of blocks.",
 		"params": [
 		  {
-			"name": "startBlock",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
-			}
+			"$ref": "#/components/contentDescriptors/startBlock"
 		  }
 		],
 		"result": {
-		  "name": "status of the repair request; Started or Already running",
+		  "name": "logsRepairCacheResult",
+		  "description": "status of the repair request; Started or Already running",
 		  "schema": {
 			"type": "object",
 			"properties": {
@@ -225,7 +414,24 @@
 			  }
 			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "logsRepairCacheExample",
+			"params": [
+			  {
+				"name": "startBlock",
+				"value": "1200"
+			  }
+			],
+			"result": {
+			  "name": "logsRepairCacheResultExample",
+			  "value": {
+				"Status": "Already running"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "admin_removePeer",
@@ -241,11 +447,27 @@
 		  }
 		],
 		"result": {
-		  "name": "true if peer removed or false if peer not a static node",
+		  "name": "removePeerResult",
+		  "description": "true if peer removed or false if peer not a static node",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "removePeerExample",
+			"params": [
+			  {
+				"name": "startenodeURLBlock",
+				"value": "enode://f59c0ab603377b6ec88b89d5bb41b98fc385030ab1e4b03752db6f7dab364559d92c757c13116ae6408d2d33f0138e7812eb8b696b2a22fe3332c4b5127b22a3@127.0.0.1:30304"
+			  }
+			],
+			"result": {
+			  "name": "removePeerResultExample",
+			  "value": false
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_accountRange",
@@ -285,11 +507,54 @@
 		  }
 		],
 		"result": {
-		  "name": "account details object with the following fields:",
+		  "name": "accountRangeResult",
+		  "description": "account details object with the following fields:",
 		  "schema": {
-			"type": "object"
+			"type": "object",
+			"properties": {
+			  "addressMap": {
+				"type": "object"
+			  },
+			  "nextKey": {
+				"type": "string"
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "accountRangeExample",
+			"params": [
+			  {
+				"name": "blockHashOrNumber",
+				"value": "12345"
+			  },
+			  {
+				"name": "txIndex",
+				"value": 0
+			  },
+			  {
+				"name": "address",
+				"value": "0"
+			  },
+			  {
+				"name": "limit",
+				"value": 5
+			  }
+			],
+			"result": {
+			  "name": "accountRangeResultExample",
+			  "value": {
+				"addressMap": {
+				  "0x984f41eb67eb23e42139410eade1008a90b01a018ce2577fea44262c6fc16ce3": "0x0000000000000000000000000000000000000000",
+				  "0xe52111628d5433237c36e91f159620decfa7747d736dee9676f3afc40471618a": "0x0000000000000000000000000000000000000000",
+				  "0xbcdea13f0e9ff4fa520c658f547404b4762de6e62f6475f0eb4d1568015570ff": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
+				},
+				"nextKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_batchSendRawTransaction",
@@ -300,31 +565,119 @@
 			"required": true,
 			"description": "signed transaction data array",
 			"schema": {
-			  "$ref": "#/components/schemas/Bytes"
+			  "type": "array",
+			  "items": {
+				"$ref": "#/components/schemas/Bytes"
+			  }
 			}
 		  }
 		],
 		"result": {
-		  "name": "eachTransaction",
+		  "name": "batchSendRawTransactionResult",
 		  "description": "object returned for each transaction.",
 		  "schema": {
-			"type": "object"
+			"type": "array",
+			"items": {
+			  "oneOf": [
+				{
+				  "type": "object",
+				  "properties": {
+					"index": {
+					  "type": "number"
+					},
+					"success": {
+					  "type": "boolean"
+					}
+				  }
+				},
+				{
+				  "type": "object",
+				  "properties": {
+					"index": {
+					  "type": "number"
+					},
+					"success": {
+					  "type": "boolean"
+					},
+					"errorMessage": {
+					  "type": "string"
+					}
+				  }
+				}
+			  ]
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "batchSendRawTransactionExample",
+			"params": [
+			  {
+				"name": "RawTransactions1",
+				"value": "0xf868808203e882520894627306090abab3a6e1400e9345bc60c78a8bef57872386f26fc10000801ba0ac74ecfa0e9b85785f042c143ead4780931234cc9a032fce99fab1f45e0d90faa02fd17e8eb433d4ca47727653232045d4f81322619c0852d3fe8ddcfcedb66a43"
+			  },
+			  {
+				"name": "RawTransactions2",
+				"value": "0x416"
+			  },
+			  {
+				"name": "RawTransactions3",
+				"value": "0xf868018203e882520894627306090abab3a6e1400e9345bc60c78a8bef57872386f26fc10000801ca0b24ea1bee8fe36984c36acbf80979a4509f23fc17141851e08d505c0df158aa0a00472a05903d4cd7a811bd4d5c59cc105d93f5943f3393f253e92e65fc36e7ce0"
+			  },
+			  {
+				"name": "RawTransactions4",
+				"value": "0xf868808203e882520894627306090abab3a6e1400e9345bc60c78a8bef5787470de4df820000801ca0f7936b4de04792e3c65095cfbfd1399d231368f5f05f877588c0c8509f6c98c9a01834004dead527c8da1396eede42e1c60e41f38a77c2fd13a6e495479c729b99"
+			  }
+			],
+			"result": {
+			  "name": "batchSendRawTransactionResultExample",
+			  "value": [
+				{
+				  "index": 0,
+				  "success": true
+				},
+				{
+				  "index": 1,
+				  "success": false,
+				  "errorMessage": "Invalid raw transaction hex"
+				},
+				{
+				  "index": 2,
+				  "success": true
+				},
+				{
+				  "index": 3,
+				  "success": false,
+				  "errorMessage": "TRANSACTION_REPLACEMENT_UNDERPRICED"
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_getBadBlocks",
 		"summary": "Returns a list of invalid blocks. This is used to detect and analyze consensus flaws.",
 		"params": [],
 		"result": {
-		  "name": "list of block",
+		  "name": "getBadBlockResult",
 		  "schema": {
 			"type": "array",
 			"items": {
-			  "type": "object"
+			  "$ref": "#/components/schemas/Block"
 			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getBadBlocksExample",
+			"params": [],
+			"result": {
+			  "name": "getBadBlocksResultExample",
+			  "value": ""
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_standardTraceBlockToFile",
@@ -338,24 +691,41 @@
 			}
 		  },
 		  {
-			"name": "txHash",
+			"name": "Options",
 			"schema": {
-			  "$ref": "#/components/schemas/BlockHash"
-			}
-		  },
-		  {
-			"name": "disableMemory",
-			"schema": {
-			  "type": "boolean"
+			  "type": "object",
+			  "properties": {
+				"txHash": {
+				  "$ref": "#/components/schemas/BlockHash"
+				},
+				"disableMemory": {
+				  "type": "boolean"
+				}
+			  }
 			}
 		  }
 		],
 		"result": {
-		  "name": "location of the generated trace files",
+		  "name": "standardTraceBlockToFileResult",
 		  "schema": {
 			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "standardTraceBlockToFileExample",
+			"params": [
+			  {
+				"name": "blockHash",
+				"value": "0x6cacedb0ad16953d05bf266995c1e087b196d9411438934963c1fa9ba3be1ae0"
+			  }
+			],
+			"result": {
+			  "name": "standardTraceBlockToFileResultExample",
+			  "value": "/Users/me/mynode/goerli/data/traces/block_0x2dc0b6c4-4-0x4ff04c4a-1612820117332"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_standardTraceBadBlockToFile",
@@ -370,11 +740,27 @@
 		  }
 		],
 		"result": {
-		  "name": "location of the generated trace files",
+		  "name": "standardTraceBadBlockToFileResult",
+		  "description": "location of the generated trace files",
 		  "schema": {
 			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "standardTraceBlockToFileExample",
+			"params": [
+			  {
+				"name": "blockHash",
+				"value": "0x6cacedb0ad16953d05bf266995c1e087b196d9411438934963c1fa9ba3be1ae0"
+			  }
+			],
+			"result": {
+			  "name": "standardTraceBlockToFileResultExample",
+			  "value": "/Users/me/mynode/goerli/data/traces/block_0x53741e9e-0-0x407ec43d-1600951088172"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_storageRangeAt",
@@ -422,20 +808,69 @@
 		  }
 		],
 		"result": {
-		  "name": "location of the generated trace files",
+		  "name": "storageRangeAtResult",
+		  "description": "the contract storage for the specified range.",
 		  "schema": {
-			"type": "string"
+			"type": "object",
+			"properties": {
+			  "storage": {
+				"type": "object"
+			  },
+			  "nextKey": {
+				"type": "string"
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "storageRangeAtExample",
+			"params": [
+			  {
+				"name": "blockHash",
+				"value": "0x2b76b3a2fc44c0e21ea183d06c846353279a7acf12abcc6fb9d5e8fb14ae2f8c"
+			  },
+			  {
+				"name": "txIndex",
+				"value": 0
+			  },
+			  {
+				"name": "address",
+				"value": "0x0e0d2c8f7794e82164f11798276a188147fbd415"
+			  },
+			  {
+				"name": "startKey",
+				"value": "0x0000000000000000000000000000000000000000000000000000000000000000"
+			  },
+			  {
+				"name": "limit",
+				"value": 1
+			  }
+			],
+			"result": {
+			  "name": "storageRangeAtResultExample",
+			  "value": {
+				"storage": {
+				  "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563": {
+					"key": null,
+					"value": "0x0000000000000000000000000000000000000000000000000000000000000001"
+				  }
+				},
+				"nextKey": "0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_metrics",
 		"summary": "Returns metrics providing information on the internal operation of Besu.",
 		"params": [],
 		"result": {
-		  "name": "metrics object",
+		  "name": "metricsResult",
+		  "description": "metrics object",
 		  "schema": {
-			"type": "string"
+			"type": "object"
 		  }
 		}
 	  },
@@ -465,11 +900,48 @@
 		  }
 		],
 		"result": {
-		  "name": "trace",
+		  "name": "traceTransactionResult",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/TraceObject"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "traceTransactionExample",
+			"params": [
+			  {
+				"name": "transactionHash",
+				"value": "0x2cc6c94c21685b7e0f8ddabf277a5ccf98db157c62619cde8baea696a74ed18e"
+			  },
+			  {
+				"name": "options",
+				"value": {
+				  "disableStorage": true
+				}
+			  }
+			],
+			"result": {
+			  "name": "traceTransactionResultExample",
+			  "value": {
+				"gas": 21000,
+				"failed": false,
+				"returnValue": "",
+				"structLogs": [
+				  {
+					"pc": 0,
+					"op": "STOP",
+					"gas": 0,
+					"gasCost": 0,
+					"depth": 1,
+					"stack": [],
+					"memory": [],
+					"storage": null
+				  }
+				]
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_traceBlock",
@@ -479,7 +951,10 @@
 			"name": "RLP of the block",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/schemas/Bytes"
+			  "type": "array",
+			  "items": {
+				"$ref": "#/components/schemas/Bytes"
+			  }
 			}
 		  },
 		  {
@@ -501,11 +976,42 @@
 		  }
 		],
 		"result": {
-		  "name": "trace",
+		  "name": "traceBlockResult",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/TraceObject"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "traceBlockExample",
+			"params": [
+			  {
+				"name": "transactionHash",
+				"value": "0xf90277f90208a05a41d0e66b4120775176c09fcf39e7c0520517a13d2b57b18d33d342df038bfca01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794e6a7a1d47ff21b6321162aea7c6cb457d5476bcaa00e0df2706b0a4fb8bd08c9246d472abbe850af446405d9eba1db41db18b4a169a04513310fcb9f6f616972a3b948dc5d547f280849a87ebb5af0191f98b87be598a0fe2bf2a941abf41d72637e5b91750332a30283efd40c424dc522b77e6f0ed8c4b9010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000860153886c1bbd82b44382520b8252088455c426598b657468706f6f6c2e6f7267a0b48c515a9dde8d346c3337ea520aa995a4738bb595495506125449c1149d6cf488ba4f8ecd18aab215f869f86780862d79883d2000825208945df9b87991262f6ba471f09758cde1c0fc1de734827a69801ca088ff6cf0fefd94db46111149ae4bfc179e9b94721fffd821d38d16464b3f71d0a045e0aff800961cfce805daef7016b9b675c137a6a41a548f7b60a3484c06a33ac0"
+			  }
+			],
+			"result": {
+			  "name": "traceBlockResultExample",
+			  "value": {
+				"gas": 21000,
+				"failed": false,
+				"returnValue": "",
+				"structLogs": [
+				  {
+					"pc": 0,
+					"op": "STOP",
+					"gas": 0,
+					"gasCost": 0,
+					"depth": 1,
+					"stack": [],
+					"memory": [],
+					"storage": null
+				  }
+				]
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_traceBlockByHash",
@@ -537,21 +1043,52 @@
 		  }
 		],
 		"result": {
-		  "name": "list of trace",
+		  "name": "traceBlockByHashResult",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/TraceObject"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "traceBlockByHashExample",
+			"params": [
+			  {
+				"name": "blockHash",
+				"value": "0xaceb3b2c9b25b0589230873921eb894b28722011b8df63977145517d754875a5"
+			  }
+			],
+			"result": {
+			  "name": "traceBlockByHashResultExample",
+			  "value": {
+				"gas": 21000,
+				"failed": false,
+				"returnValue": "",
+				"structLogs": [
+				  {
+					"pc": 0,
+					"op": "STOP",
+					"gas": 0,
+					"gasCost": 0,
+					"depth": 1,
+					"stack": [],
+					"memory": [],
+					"storage": null
+				  }
+				]
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "debug_traceBlockByNumber",
 		"summary": "Returns full trace of all invoked opcodes of all transactions included in the block.",
 		"params": [
 		  {
-			"name": "blockHash",
+			"name": "blockNumber",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
+			  "$ref": "#/components/schemas/BlockNumber"
 			}
 		  },
 		  {
@@ -573,128 +1110,43 @@
 		  }
 		],
 		"result": {
-		  "name": "list of trace",
+		  "name": "traceBlockByHashResult",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/TraceObject"
 		  }
-		}
-	  },
-	  {
-		"name": "eth_protocolVersion",
-		"summary": "Returns the current ethereum protocol version.",
-		"params": [],
-		"result": {
-		  "name": "Protocol version",
-		  "schema": {
-			"title": "version",
-			"type": "string"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_syncing",
-		"summary": "Returns an object with data about the sync status or false.",
-		"params": [],
-		"result": {
-		  "name": "syncing",
-		  "schema": {
-			"title": "isSyncingResult",
-			"oneOf": [
+		},
+		"examples": [
+		  {
+			"name": "traceBlockByNumberExample",
+			"params": [
 			  {
-				"title": "syncingData",
-				"description": "An object with sync status data",
-				"type": "object",
-				"properties": {
-				  "startingBlock": {
-					"title": "syncingDataStartingBlock",
-					"description": "Block at which the import started (will only be reset, after the sync reached his head)",
-					"$ref": "#/components/schemas/Integer"
-				  },
-				  "currentBlock": {
-					"title": "syncingDataCurrentBlock",
-					"description": "The current block, same as eth_blockNumber",
-					"$ref": "#/components/schemas/Integer"
-				  },
-				  "highestBlock": {
-					"title": "syncingDataHighestBlock",
-					"description": "The estimated highest block",
-					"$ref": "#/components/schemas/Integer"
-				  },
-				  "knownStates": {
-					"title": "syncingDataKnownStates",
-					"description": "The known states",
-					"$ref": "#/components/schemas/Integer"
-				  },
-				  "pulledStates": {
-					"title": "syncingDataPulledStates",
-					"description": "The pulled states",
-					"$ref": "#/components/schemas/Integer"
-				  }
-				}
-			  },
-			  {
-				"type": "boolean"
+				"name": "BlocNumber",
+				"value": "0x1"
 			  }
-			]
+			],
+			"result": {
+			  "name": "traceBlockByNumberResultExample",
+			  "value": {
+				"pc": 0,
+				"op": "STOP",
+				"gas": 0,
+				"gasCost": 0,
+				"depth": 1,
+				"stack": [],
+				"memory": [],
+				"storage": null,
+				"reason": null
+			  }
+			}
 		  }
-		}
-	  },
-	  {
-		"name": "eth_coinbase",
-		"summary": "Returns the client coinbase address.",
-		"params": [],
-		"result": {
-		  "name": "Coinbase address",
-		  "schema": {
-			"$ref": "#/components/schemas/Address"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_mining",
-		"summary": "Returns whether the client is actively mining new blocks.",
-		"params": [],
-		"result": {
-		  "name": "Mining status",
-		  "schema": {
-			"title": "miningStatus",
-			"type": "boolean"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_hashrate",
-		"summary": "Returns the number of hashes per second that the node is mining with.",
-		"params": [],
-		"result": {
-		  "name": "hashesPerSecond",
-		  "description": "Integer of the number of hashes per second",
-		  "schema": {
-			"$ref": "#/components/schemas/Integer"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_gasPrice",
-		"summary": "Returns the current price per gas in wei",
-		"params": [],
-		"result": {
-		  "$ref": "#/components/contentDescriptors/GasPrice"
-		}
+		]
 	  },
 	  {
 		"name": "eth_accounts",
 		"summary": "Returns a list of addresses owned by client.",
 		"params": [],
 		"result": {
-		  "name": "Accounts",
-		  "schema": {
-			"title": "Accounts",
-			"type": "array",
-			"items": {
-			  "$ref": "#/components/schemas/Address"
-			}
-		  }
+		  "$ref": "#/components/contentDescriptors/Addresses"
 		}
 	  },
 	  {
@@ -703,7 +1155,159 @@
 		"params": [],
 		"result": {
 		  "$ref": "#/components/contentDescriptors/BlockNumber"
+		},
+		"examples": [
+		  {
+			"name": "blockNumberExample",
+			"params": [],
+			"result": {
+			  "name": "blockNumberResultExample",
+			  "value": "0x14a45"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_call",
+		"summary": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Transaction"
+		  },
+		  {
+			"$ref": "#/components/contentDescriptors/BlockNumber"
+		  }
+		],
+		"result": {
+		  "name": "returnValue",
+		  "description": "The return value of the executed contract",
+		  "schema": {
+			"$ref": "#/components/schemas/Bytes"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "callExample",
+			"params": [
+			  {
+				"name": "Transaction",
+				"value": {
+				  "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+				  "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+				  "gas": "0x76c0",
+				  "gasPrice": "0x9184e72a000",
+				  "value": "0x9184e72a",
+				  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+				}
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "callExampleResult",
+			  "value": "0x"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_chainId",
+		"summary": "Returns the currently configured chain id",
+		"description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md).",
+		"params": [],
+		"result": {
+		  "name": "chainId",
+		  "description": "hex format integer of the current chain id. Defaults are ETC=61, ETH=1, Morden=62.",
+		  "schema": {
+			"title": "chainId",
+			"type": "string",
+			"pattern": "^0x[a-fA-F\\d]+$"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "chainIdExample",
+			"params": [],
+			"result": {
+			  "name": "chainIdExampleResult",
+			  "value": "0x1"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_coinbase",
+		"summary": "Returns the client coinbase address.",
+		"params": [],
+		"result": {
+		  "name": "address",
+		  "description": "The address owned by the client that is used as default for things like the mining reward",
+		  "schema": {
+			"$ref": "#/components/schemas/Address"
+		  }
 		}
+	  },
+	  {
+		"name": "eth_estimateGas",
+		"summary": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Transaction"
+		  }
+		],
+		"result": {
+		  "name": "gasUsed",
+		  "description": "The amount of gas used",
+		  "schema": {
+			"$ref": "#/components/schemas/Integer"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "estimateGasExample",
+			"params": [
+			  {
+				"name": "Transaction",
+				"value": {
+				  "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+				  "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+				  "gas": "0x76c0",
+				  "gasPrice": "0x9184e72a000",
+				  "value": "0x9184e72a",
+				  "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
+				}
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "estimateGasExampleResult",
+			  "value": "0x5498"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_gasPrice",
+		"summary": "Returns the current price per gas in wei",
+		"params": [],
+		"result": {
+		  "$ref": "#/components/contentDescriptors/GasPrice"
+		},
+		"examples": [
+		  {
+			"name": "gasPriceExample",
+			"params": [],
+			"result": {
+			  "name": "gasPriceExampleResult",
+			  "value": "0x57b17e500"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getBalance",
@@ -730,190 +1334,26 @@
 		  "schema": {
 			"$ref": "#/components/schemas/IntegerOrNull"
 		  }
-		}
-	  },
-	  {
-		"name": "eth_getStorageAt",
-		"summary": "Gets a storage value from a contract address, a position, and an optional blockNumber",
-		"params": [
+		},
+		"examples": [
 		  {
-			"$ref": "#/components/contentDescriptors/Address"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/Position"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
-		  }
-		],
-		"result": {
-		  "name": "dataWord",
-		  "schema": {
-			"$ref": "#/components/schemas/DataWord"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getTransactionCount",
-		"summary": "Returns the number of transactions sent from an address",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/Address"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
-		  }
-		],
-		"result": {
-		  "name": "transactionCount",
-		  "schema": {
-			"title": "nonceOrNull",
-			"oneOf": [
+			"name": "getBalanceExample",
+			"params": [
 			  {
-				"$ref": "#/components/schemas/Nonce"
+				"name": "Address",
+				"value": "0xc94770007dda54cF92009BFF0dE90c06F603a09f"
 			  },
 			  {
-				"$ref": "#/components/schemas/Null"
+				"name": "BlockNumber",
+				"value": "latest"
 			  }
-			]
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getBlockTransactionCountByNumber",
-		"summary": "Returns the number of transactions in a block from a block matching the given block number.",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
-		  }
-		],
-		"result": {
-		  "name": "blockTransactionCountByHash",
-		  "description": "The Number of total transactions in the given block",
-		  "schema": {
-			"$ref": "#/components/schemas/IntegerOrNull"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getUncleCountByBlockNumber",
-		"summary": "Returns the number of transactions in a block matching the given block number.",
-		"params": [
-		  {
-			"name": "Block number",
-			"schema": {
-			  "$ref": "#/components/schemas/Uint"
+			],
+			"result": {
+			  "name": "getBalanceExampleResult",
+			  "value": "0x540x7c256203080098"
 			}
 		  }
-		],
-		"result": {
-		  "name": "Uncle count",
-		  "schema": {
-			"title": "Uncle count",
-			"type": "array",
-			"items": {
-			  "$ref": "#/components/schemas/Uint"
-			}
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getCode",
-		"summary": "Returns code at a given contract address",
-		"params": [
-		  {
-			"name": "address",
-			"required": true,
-			"description": "The address of the contract",
-			"schema": {
-			  "$ref": "#/components/schemas/Address"
-			}
-		  },
-		  {
-			"name": "blockNumber",
-			"description": "A BlockNumber of which the code existed",
-			"schema": {
-			  "$ref": "#/components/schemas/BlockNumber"
-			}
-		  }
-		],
-		"result": {
-		  "name": "bytes",
-		  "schema": {
-			"$ref": "#/components/schemas/Bytes"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_sendRawTransaction",
-		"summary": "Creates new message call transaction or a contract creation for signed transactions.",
-		"params": [
-		  {
-			"name": "signedTransactionData",
-			"required": true,
-			"description": "The signed transaction data",
-			"schema": {
-			  "$ref": "#/components/schemas/Bytes"
-			}
-		  }
-		],
-		"result": {
-		  "name": "transactionHash",
-		  "description": "The transaction hash, or the zero hash if the transaction is not yet available.",
-		  "schema": {
-			"$ref": "#/components/schemas/Keccak"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_call",
-		"summary": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/Transaction"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
-		  }
-		],
-		"result": {
-		  "name": "returnValue",
-		  "description": "The return value of the executed contract",
-		  "schema": {
-			"$ref": "#/components/schemas/Bytes"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_chainId",
-		"summary": "Returns the currently configured chain id",
-		"description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md).",
-		"params": [],
-		"result": {
-		  "name": "chainId",
-		  "description": "hex format integer of the current chain id. Defaults are ETC=61, ETH=1, Morden=62.",
-		  "schema": {
-			"title": "chainId",
-			"type": "string",
-			"pattern": "^0x[a-fA-F\\d]+$"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_estimateGas",
-		"summary": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/Transaction"
-		  }
-		],
-		"result": {
-		  "name": "gasUsed",
-		  "description": "The amount of gas used",
-		  "schema": {
-			"$ref": "#/components/schemas/Integer"
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "eth_getBlockByHash",
@@ -941,7 +1381,57 @@
 		  "schema": {
 			"$ref": "#/components/schemas/BlockOrNull"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getBlockByHashExample",
+			"params": [
+			  {
+				"name": "blockHash",
+				"value": "0xaf5526fcb88b2f0d163c9a78ee678bf95b20115dc3d4e2b7b1f5fc4a308724a0"
+			  },
+			  {
+				"name": "isTransactionsIncluded",
+				"value": true
+			  }
+			],
+			"result": {
+			  "name": "getBlockByHashExampleResult",
+			  "value": [
+				{
+				  "difficulty": "0xbfabcdbd93dda",
+				  "extraData": "0x737061726b706f6f6c2d636e2d6e6f64652d3132",
+				  "gasLimit": "0x79f39e",
+				  "gasUsed": "0x79ccd3",
+				  "hash": "0xb3b20624f8f0f86eb50dd04688409e5cea4bd02d700bf6e79e9384d47d6a5a35",
+				  "logsBloom": "0x4848112002a2020aaa0812180045840210020005281600c80104264300080008000491220144461026015300100000128005018401002090a824a4150015410020140400d808440106689b29d0280b1005200007480ca950b15b010908814e01911000054202a020b05880b914642a0000300003010044044082075290283516be82504082003008c4d8d14462a8800c2990c88002a030140180036c220205201860402001014040180002006860810ec0a1100a14144148408118608200060461821802c081000042d0810104a8004510020211c088200420822a082040e10104c00d010064004c122692020c408a1aa2348020445403814002c800888208b1",
+				  "miner": "0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c",
+				  "mixHash": "0x3d1fdd16f15aeab72e7db1013b9f034ee33641d92f71c0736beab4e67d34c7a7",
+				  "nonce": "0x4db7a1c01d8a8072",
+				  "number": "0x5bad55",
+				  "parentHash": "0x61a8ad530a8a43e3583f8ec163f773ad370329b2375d66433eb82f005e1d6202",
+				  "receiptsRoot": "0x5eced534b3d84d3d732ddbc714f5fd51d98a941b28182b6efe6df3a0fe90004b",
+				  "sha3Uncles": "0x8a562e7634774d3e3a36698ac4915e37fc84a2cd0044cb84fa5d80263d2af4f6",
+				  "size": "0x41c7",
+				  "stateRoot": "0xf5208fffa2ba5a3f3a2f64ebd5ca3d098978bedd75f335f56b705d8715ee2305",
+				  "timestamp": "0x5b541449",
+				  "totalDifficulty": "0x12ac11391a2f3872fcd",
+				  "transactions": [
+					"0x8784d99762bccd03b2086eabccee0d77f14d05463281e121a62abfebcf0d2d5f",
+					"0x311be6a9b58748717ac0f70eb801d29973661aaf1365960d159e4ec4f4aa2d7f",
+					"0xe42b0256058b7cad8a14b136a0364acda0b4c36f5b02dea7e69bfd82cef252a2",
+					"0x4eb05376055c6456ed883fc843bc43df1dcf739c321ba431d518aecd7f98ca11",
+					"0x241d89f7888fbcfadfd415ee967882fec6fdd67c07ca8a00f2ca4c910a84c7dd"
+				  ],
+				  "transactionsRoot": "0xf98631e290e88f58a46b7032f025969039aa9b5696498efc76baf436fa69b262",
+				  "uncles": [
+					"0x824cce7c7c2ec6874b9fa9a9a898eb5f27cbaf3991dfa81084c3af60d1db618c"
+				  ]
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getBlockByNumber",
@@ -965,19 +1455,254 @@
 		  "schema": {
 			"$ref": "#/components/schemas/BlockOrNull"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getBlockByNumberExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": "0x5BAD55"
+			  },
+			  {
+				"name": "includeTransactions",
+				"value": false
+			  }
+			],
+			"result": {
+			  "name": "getBlockByNumberExampleResult",
+			  "value": [
+				{
+				  "difficulty": "0xbfabcdbd93dda",
+				  "extraData": "0x737061726b706f6f6c2d636e2d6e6f64652d3132",
+				  "gasLimit": "0x79f39e",
+				  "gasUsed": "0x79ccd3",
+				  "hash": "0xb3b20624f8f0f86eb50dd04688409e5cea4bd02d700bf6e79e9384d47d6a5a35",
+				  "logsBloom": "0x4848112002a2020aaa0812180045840210020005281600c80104264300080008000491220144461026015300100000128005018401002090a824a4150015410020140400d808440106689b29d0280b1005200007480ca950b15b010908814e01911000054202a020b05880b914642a0000300003010044044082075290283516be82504082003008c4d8d14462a8800c2990c88002a030140180036c220205201860402001014040180002006860810ec0a1100a14144148408118608200060461821802c081000042d0810104a8004510020211c088200420822a082040e10104c00d010064004c122692020c408a1aa2348020445403814002c800888208b1",
+				  "miner": "0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c",
+				  "mixHash": "0x3d1fdd16f15aeab72e7db1013b9f034ee33641d92f71c0736beab4e67d34c7a7",
+				  "nonce": "0x4db7a1c01d8a8072",
+				  "number": "0x5bad55",
+				  "parentHash": "0x61a8ad530a8a43e3583f8ec163f773ad370329b2375d66433eb82f005e1d6202",
+				  "receiptsRoot": "0x5eced534b3d84d3d732ddbc714f5fd51d98a941b28182b6efe6df3a0fe90004b",
+				  "sha3Uncles": "0x8a562e7634774d3e3a36698ac4915e37fc84a2cd0044cb84fa5d80263d2af4f6",
+				  "size": "0x41c7",
+				  "stateRoot": "0xf5208fffa2ba5a3f3a2f64ebd5ca3d098978bedd75f335f56b705d8715ee2305",
+				  "timestamp": "0x5b541449",
+				  "totalDifficulty": "0x12ac11391a2f3872fcd",
+				  "transactions": [
+					"0x8784d99762bccd03b2086eabccee0d77f14d05463281e121a62abfebcf0d2d5f",
+					"0x311be6a9b58748717ac0f70eb801d29973661aaf1365960d159e4ec4f4aa2d7f",
+					"0xe42b0256058b7cad8a14b136a0364acda0b4c36f5b02dea7e69bfd82cef252a2"
+				  ],
+				  "transactionsRoot": "0xf98631e290e88f58a46b7032f025969039aa9b5696498efc76baf436fa69b262",
+				  "uncles": [
+					"0x824cce7c7c2ec6874b9fa9a9a898eb5f27cbaf3991dfa81084c3af60d1db618c"
+				  ]
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
-		"name": "eth_getTransactionByHash",
-		"summary": "Returns the information about a transaction requested by transaction hash.",
+		"name": "eth_getBlockTransactionCountByHash",
+		"summary": "Returns the number of transactions in a block from a block matching the given block hash.",
 		"params": [
 		  {
-			"$ref": "#/components/contentDescriptors/TransactionHash"
+			"$ref": "#/components/contentDescriptors/BlockHash"
 		  }
 		],
 		"result": {
-		  "$ref": "#/components/contentDescriptors/TransactionResult"
-		}
+		  "name": "blockTransactionCountByHash",
+		  "description": "The Number of total transactions in the given block",
+		  "schema": {
+			"$ref": "#/components/schemas/IntegerOrNull"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getBlockTransactionCountByHashExample",
+			"params": [
+			  {
+				"name": "BlockHash",
+				"value": "0xb3b20624f8f0f86eb50dd04688409e5cea4bd02d700bf6e79e9384d47d6a5a35"
+			  }
+			],
+			"result": {
+			  "name": "getBlockTransactionCountByHashExampleResult",
+			  "value": "0x50"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getBlockTransactionCountByNumber",
+		"summary": "Returns the number of transactions in a block from a block matching the given block number.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/BlockNumber"
+		  }
+		],
+		"result": {
+		  "name": "blockTransactionCountByHash",
+		  "description": "The Number of total transactions in the given block",
+		  "schema": {
+			"$ref": "#/components/schemas/IntegerOrNull"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getBlockTransactionCountByNumberExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": "0xC51AF5"
+			  }
+			],
+			"result": {
+			  "name": "getBlockTransactionCountByNumberExampleResult",
+			  "value": "0x82"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getCode",
+		"summary": "Returns code at a given contract address",
+		"params": [
+		  {
+			"name": "address",
+			"required": true,
+			"description": "The address of the contract",
+			"schema": {
+			  "$ref": "#/components/schemas/Address"
+			}
+		  },
+		  {
+			"name": "blockNumber",
+			"description": "A BlockNumber of which the code existed",
+			"schema": {
+			  "$ref": "#/components/schemas/BlockNumber"
+			}
+		  }
+		],
+		"result": {
+		  "name": "bytes",
+		  "schema": {
+			"$ref": "#/components/schemas/Bytes"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getCodeExample",
+			"params": [
+			  {
+				"name": "Address",
+				"value": "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d"
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "getCodeExampleResult",
+			  "value": "0x0x60606040..."
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getLogs",
+		"summary": "Returns an array of all logs matching a given filter object.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Filter"
+		  }
+		],
+		"result": {
+		  "$ref": "#/components/contentDescriptors/Logs"
+		},
+		"examples": [
+		  {
+			"name": "eth_getLogsExample",
+			"params": [
+			  {
+				"name": "Filter",
+				"value": {
+				  "address": "0xb59f67a8bff5d8cd03f6ac17265c550ed8f33907",
+				  "topics": [
+					"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+				  ],
+				  "blockHash": "0x8243343df08b9751f5ca0c5f8c9c0460d8a9b6351066fae0acbd4d3e776de8bb"
+				}
+			  }
+			],
+			"result": {
+			  "name": "Logs",
+			  "value": {
+				"address": "0xb59f67a8bff5d8cd03f6ac17265c550ed8f33907",
+				"blockHash": "0x8243343df08b9751f5ca0c5f8c9c0460d8a9b6351066fae0acbd4d3e776de8bb",
+				"blockNumber": "0x429d3b",
+				"data": "0x000000000000000000000000000000000000000000000000000000012a05f200",
+				"logIndex": "0x56",
+				"removed": false,
+				"topics": [
+				  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+				  "0x00000000000000000000000000b46c2526e227482e2ebb8f4c69e4674d262e75",
+				  "0x00000000000000000000000054a2d42a40f51259dedd1978f6c118a0f0eff078"
+				],
+				"transactionHash": "0xab059a62e22e230fe0f56d8555340a29b2e9532360368f810595453f6fdd213b",
+				"transactionIndex": "0xac"
+			  }
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getStorageAt",
+		"summary": "Gets a storage value from a contract address, a position, and an optional blockNumber",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Address"
+		  },
+		  {
+			"$ref": "#/components/contentDescriptors/Position"
+		  },
+		  {
+			"$ref": "#/components/contentDescriptors/BlockNumber"
+		  }
+		],
+		"result": {
+		  "name": "dataWord",
+		  "schema": {
+			"$ref": "#/components/schemas/DataWord"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getStorageAtExample",
+			"params": [
+			  {
+				"name": "Data",
+				"value": "0x295a70b2de5e3953354a6a8344e616ed314d7251"
+			  },
+			  {
+				"name": "Quantity",
+				"value": "0x0"
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "getStorageAtResultExample",
+			  "value": "0x0000000000000000000000000000000000000000000000000000000000000000"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getTransactionByBlockHashAndIndex",
@@ -1000,11 +1725,11 @@
 		},
 		"examples": [
 		  {
-			"name": "nullExample",
+			"name": "getTransactionByBlockHashAndIndexExample",
 			"params": [
 			  {
 				"name": "blockHashExample",
-				"value": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+				"value": "0xc0f4906fea23cf6f3cce98cb44e8e1449e455b28d684dfa9ff65426495584de6"
 			  },
 			  {
 				"name": "indexExample",
@@ -1012,8 +1737,24 @@
 			  }
 			],
 			"result": {
-			  "name": "nullResultExample",
-			  "value": null
+			  "name": "getTransactionByBlockHashAndIndexResultExample",
+			  "value": {
+				"blockHash": "0xc0f4906fea23cf6f3cce98cb44e8e1449e455b28d684dfa9ff65426495584de6",
+				"blockNumber": "0x1e8480",
+				"from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+				"gas": "0x51615",
+				"gasPrice": "0x6fc23ac00",
+				"hash": "0xc55e2b90168af6972193c1f86fa4d7d7b31a29c156665d15b9cd48618b5177ef",
+				"input": "0x",
+				"nonce": "0x1efc5",
+				"to": "0x104994f45d9d697ca104e5704a7b77d7fec3537c",
+				"transactionIndex": "0x0",
+				"value": "0x821878651a4d70000",
+				"type": "0x0",
+				"v": "0x1b",
+				"r": "0x51222d91a379452395d0abaff981af4cfcc242f25cfaf947dea8245a477731f9",
+				"s": "0x3a997c910b4701cca5d933fb26064ee5af7fe3236ff0ef2b58aa50b25aff8ca5"
+			  }
 			}
 		  }
 		]
@@ -1036,7 +1777,42 @@
 		],
 		"result": {
 		  "$ref": "#/components/contentDescriptors/TransactionResult"
-		}
+		},
+		"examples": [
+		  {
+			"name": "getTransactionByBlockNumberAndIndexExample",
+			"params": [
+			  {
+				"name": "blockNumber",
+				"value": "0xa1c0ff"
+			  },
+			  {
+				"name": "indexExample",
+				"value": "0x0"
+			  }
+			],
+			"result": {
+			  "name": "getTransactionByBlockNumberAndIndexResultExample",
+			  "value": {
+				"blockHash": "0xf345d6ac2cb6290489915178fef0b2fc7f5a7312dd06773c77532de6740b2b4d",
+				"blockNumber": "0xa1c0ff",
+				"from": "0x79c384ac9c32e90f00a214c77caac1392ec8cdea",
+				"gas": "0xafbe",
+				"gasPrice": "0x1270b01800",
+				"hash": "0x61b27f711f58ee3090c0976c7e90d2b7eafeb7b889f0db593234f04f8ce07f22",
+				"input": "0xa9059cbb0000000000000000000000004b1a99467a284cc690e3237bc69105956816f7620000000000000000000000000000000000000000000000000000001919617600",
+				"nonce": "0xa",
+				"to": "0xf9e5af7b42d31d51677c75bbbd37c1986ec79aee",
+				"transactionIndex": "0x0",
+				"value": "0x0",
+				"type": "0x0",
+				"v": "0x1b",
+				"r": "0x2123cdbd1130f726ebed55fd2295239778dd4161495d2733f374d7863fc42ab1",
+				"s": "0x1f08fd53ff2c3969b88d5e622561d62a799ae68e36f5142689dbfde44bbe1bed"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getTransactionByHash",
@@ -1048,7 +1824,83 @@
 		],
 		"result": {
 		  "$ref": "#/components/contentDescriptors/TransactionResult"
-		}
+		},
+		"examples": [
+		  {
+			"name": "getTransactionByHashExample",
+			"params": [
+			  {
+				"name": "TransactionHash",
+				"value": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44"
+			  }
+			],
+			"result": {
+			  "name": "getTransactionByHashResultExample",
+			  "value": {
+				"hash": "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b",
+				"blockHash": "0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2",
+				"blockNumber": "0x5daf3b",
+				"chainId": "0x1",
+				"from": "0xa7d9ddbe1f17865597fbd27ec712455208b6b76d",
+				"gas": "0xc350",
+				"gasPrice": "0x4a817c800",
+				"input": "0x68656c6c6f21",
+				"nonce": "0x15",
+				"r": "0x1b5e176d927f8e9ab405058b2d2457392da3e20f328b16ddabcebc33eaac5fea",
+				"s": "0x4ba69724e8f69de52f0125ad8b3c5c2cef33019bac3249e2c0a2192766d1721c",
+				"to": "0xf02c1c8e6114b1dbe8937a39260b5b0a374432bb",
+				"transactionIndex": "0x41",
+				"v": "0x25",
+				"value": "0xf3dbb76162000"
+			  }
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getTransactionCount",
+		"summary": "Returns the number of transactions sent from an address",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Address"
+		  },
+		  {
+			"$ref": "#/components/contentDescriptors/BlockNumber"
+		  }
+		],
+		"result": {
+		  "name": "transactionCount",
+		  "schema": {
+			"title": "nonceOrNull",
+			"oneOf": [
+			  {
+				"$ref": "#/components/schemas/Nonce"
+			  },
+			  {
+				"$ref": "#/components/schemas/Null"
+			  }
+			]
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getTransactionCountExample",
+			"params": [
+			  {
+				"name": "Address",
+				"value": "0x9d8f8572f345e1ae53db1dFA4a7fce49B467bD7f"
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "getTransactionCountResultExample",
+			  "value": "0x219"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getTransactionReceipt",
@@ -1072,7 +1924,52 @@
 			  }
 			]
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getTransactionReceiptExample",
+			"params": [
+			  {
+				"name": "TransactionHash",
+				"value": "0xab059a62e22e230fe0f56d8555340a29b2e9532360368f810595453f6fdd213b"
+			  }
+			],
+			"result": {
+			  "name": "getTransactionReceiptResultExample",
+			  "value": {
+				"transactionHash": "0xab059a62e22e230fe0f56d8555340a29b2e9532360368f810595453f6fdd213b",
+				"blockHash": "0x8243343df08b9751f5ca0c5f8c9c0460d8a9b6351066fae0acbd4d3e776de8bb",
+				"blockNumber": "0x429d3b",
+				"contractAddress": null,
+				"cumulativeGasUsed": "0x64b559",
+				"from": "0x00b46c2526e227482e2ebb8f4c69e4674d262e75",
+				"gasUsed": "0xcaac",
+				"logs": [
+				  {
+					"blockHash": "0x8243343df08b9751f5ca0c5f8c9c0460d8a9b6351066fae0acbd4d3e776de8bb",
+					"address": "0xb59f67a8bff5d8cd03f6ac17265c550ed8f33907",
+					"logIndex": "0x56",
+					"data": "0x000000000000000000000000000000000000000000000000000000012a05f200",
+					"removed": false,
+					"topics": [
+					  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+					  "0x00000000000000000000000000b46c2526e227482e2ebb8f4c69e4674d262e75",
+					  "0x00000000000000000000000054a2d42a40f51259dedd1978f6c118a0f0eff078"
+					],
+					"blockNumber": "0x429d3b",
+					"transactionIndex": "0xac",
+					"transactionHash": "0xab059a62e22e230fe0f56d8555340a29b2e9532360368f810595453f6fdd213b"
+				  }
+				],
+				"logsBloom": "0x00000000040000000000000000000000000000000000000000000000000000080000000010000000000000000000000000000000000040000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000010100000000000000000000000000004000000000000200000000000000000000000000000000000000000000",
+				"root": "0x3ccba97c7fcc7e1636ce2d44be1a806a8999df26eab80a928205714a878d5114",
+				"status": null,
+				"to": "0xb59f67a8bff5d8cd03f6ac17265c550ed8f33907",
+				"transactionIndex": "0xac"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getUncleByBlockHashAndIndex",
@@ -1095,7 +1992,45 @@
 		  "schema": {
 			"$ref": "#/components/schemas/BlockOrNull"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getUncleByBlockHashAndIndexExample",
+			"params": [
+			  {
+				"name": "BlockHash",
+				"value": "0xb3b20624f8f0f86eb50dd04688409e5cea4bd02d700bf6e79e9384d47d6a5a35"
+			  },
+			  {
+				"name": "index",
+				"value": "0x0"
+			  }
+			],
+			"result": {
+			  "name": "getUncleByBlockHashAndIndexResultExample",
+			  "value": {
+				"difficulty": "0xbf93da424b943",
+				"extraData": "0x65746865726d696e652d657539",
+				"gasLimit": "0x7a121d",
+				"gasUsed": "0x79ea62",
+				"hash": "0x824cce7c7c2ec6874b9fa9a9a898eb5f27cbaf3991dfa81084c3af60d1db618c",
+				"logsBloom": "0x0948432021200401804810002000000000381001001202440000010020000080a016262050e44850268052000400100505022305a64000054004200b0c04110000080c1055c42001054b804940a0401401008a00112d80082113400c10006580140005011a40220020000010001c0a00082300434002000050840010102082801c2000148540201004491814020480080111a0300600000003800640024200109c00202010044000880000106810a1a010000028a0100000422000140011000050a2a44b3080001060800000540c108102102600d000004730404a880100600021080100403000180000062642408b440060590400080101e046f08000000430",
+				"miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+				"mixHash": "0x0b15fe0a9aa789c167b0f5ade7b72969d9f2193014cb4e98382254f60ffb2f4a",
+				"nonce": "0xa212d6400b89b3f6",
+				"number": "0x5bad54",
+				"parentHash": "0x05e19fb68d9ec798073808e8b3170875cb327d4b6cde7d6f60fe194677bb26fd",
+				"receiptsRoot": "0x90807b32c4aa4610c57289de57fa68ba50ed53f14dd2c25f1862aa049029dcd6",
+				"sha3Uncles": "0xf763576c1ea6a8c61a206e16b1a2451bec5cba1c7545d7ff733a1e8c78715569",
+				"size": "0x216",
+				"stateRoot": "0xebc7a1603bfffe0a14bdb89f898e2f2824abb40f04579beb7b920c56d6e273c9",
+				"timestamp": "0x5b54143f",
+				"transactionsRoot": "0x7562cba41e067b364b933e7b566fb2444f6954fef3964a5a487d4cd79d97a56c",
+				"uncles": []
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_getUncleByBlockNumberAndIndex",
@@ -1127,20 +2062,39 @@
 		},
 		"examples": [
 		  {
-			"name": "nullResultExample",
+			"name": "getUncleByBlockNumberAndIndexExample",
 			"params": [
 			  {
-				"name": "uncleBlockNumberExample",
-				"value": "0x0"
+				"name": "BlockNumber",
+				"value": "0x29c"
 			  },
 			  {
-				"name": "uncleBlockNumberIndexExample",
+				"name": "index",
 				"value": "0x0"
 			  }
 			],
 			"result": {
-			  "name": "nullResultExample",
-			  "value": null
+			  "name": "getUncleByBlockNumberAndIndexResultExample",
+			  "value": {
+				"difficulty": "0x57f117f5c",
+				"extraData": "0x476574682f76312e302e302f77696e646f77732f676f312e342e32",
+				"gasLimit": "0x1388",
+				"gasUsed": "0x0",
+				"hash": "0x932bdf904546a2287a2c9b2ede37925f698a7657484b172d4e5184f80bdd464d",
+				"logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+				"miner": "0x5bf5e9cf9b456d6591073513de7fd69a9bef04bc",
+				"mixHash": "0x4500aa4ee2b3044a155252e35273770edeb2ab6f8cb19ca8e732771484462169",
+				"nonce": "0x24732773618192ac",
+				"number": "0x299",
+				"parentHash": "0xa779859b1ee558258b7008bbabff272280136c5dd3eb3ea3bfa8f6ae03bf91e5",
+				"receiptsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+				"sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+				"size": "0x21d",
+				"stateRoot": "0x2604fbf5183f5360da249b51f1b9f1e0f315d2ff3ffa1a4143ff221ad9ca1fec",
+				"timestamp": "0x55ba4827",
+				"transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+				"uncles": []
+			  }
 			}
 		  }
 		]
@@ -1159,110 +2113,49 @@
 		  "schema": {
 			"$ref": "#/components/schemas/IntegerOrNull"
 		  }
-		}
-	  },
-	  {
-		"name": "eth_newFilter",
-		"summary": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
-		"params": [
+		},
+		"examples": [
 		  {
-			"$ref": "#/components/contentDescriptors/Filter"
-		  }
-		],
-		"result": {
-		  "name": "filterId",
-		  "description": "The filter ID for use in `eth_getFilterChanges`",
-		  "schema": {
-			"$ref": "#/components/schemas/Integer"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_newBlockFilter",
-		"summary": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
-		"params": [],
-		"result": {
-		  "$ref": "#/components/contentDescriptors/FilterId"
-		}
-	  },
-	  {
-		"name": "eth_newPendingTransactionFilter",
-		"summary": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
-		"params": [],
-		"result": {
-		  "$ref": "#/components/contentDescriptors/FilterId"
-		}
-	  },
-	  {
-		"name": "eth_uninstallFilter",
-		"summary": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
-		"params": [
-		  {
-			"name": "filterId",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/schemas/FilterId"
+			"name": "getUncleCountByBlockHashExample",
+			"params": [
+			  {
+				"name": "BlockHash",
+				"value": "0xb3b20624f8f0f86eb50dd04688409e5cea4bd02d700bf6e79e9384d47d6a5a35"
+			  }
+			],
+			"result": {
+			  "name": "getUncleCountByBlockHashResultExample",
+			  "value": "0x1"
 			}
 		  }
-		],
-		"result": {
-		  "name": "filterUninstalledSuccess",
-		  "description": "returns true if the filter was successfully uninstalled, false otherwise.",
-		  "schema": {
-			"type": "boolean"
-		  }
-		}
+		]
 	  },
 	  {
-		"name": "eth_getFilterChanges",
-		"summary": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
+		"name": "eth_getUncleCountByBlockNumber",
+		"summary": "Returns the number of uncles in a block from a block matching the given block number.",
 		"params": [
 		  {
-			"name": "filterId",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/schemas/FilterId"
-			}
+			"$ref": "#/components/contentDescriptors/BlockNumber"
 		  }
 		],
 		"result": {
-		  "name": "logResult",
-		  "schema": {
-			"title": "logResult",
-			"type": "array",
-			"items": {
-			  "$ref": "#/components/schemas/Log"
+		  "$ref": "#/components/contentDescriptors/UncleCountResult"
+		},
+		"examples": [
+		  {
+			"name": "getUncleCountByBlockNumberExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": "0xe8"
+			  }
+			],
+			"result": {
+			  "name": "getUncleCountByBlockNumberResultExample",
+			  "value": "0x0"
 			}
 		  }
-		}
-	  },
-	  {
-		"name": "eth_getFilterLogs",
-		"summary": "Returns an array of all logs matching filter with given id.",
-		"params": [
-		  {
-			"name": "filterId",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/schemas/FilterId"
-			}
-		  }
-		],
-		"result": {
-		  "$ref": "#/components/contentDescriptors/Logs"
-		}
-	  },
-	  {
-		"name": "eth_getLogs",
-		"summary": "Returns an array of all logs matching a given filter object.",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/Filter"
-		  }
-		],
-		"result": {
-		  "$ref": "#/components/contentDescriptors/Logs"
-		}
+		]
 	  },
 	  {
 		"name": "eth_getProof",
@@ -1339,82 +2232,32 @@
 			  }
 			]
 		  }
-		}
-	  },
-	  {
-		"name": "eth_getStorageAt",
-		"summary": "Gets a storage value from a contract address, a position, and an optional blockNumber",
-		"params": [
+		},
+		"examples": [
 		  {
-			"$ref": "#/components/contentDescriptors/Address"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/Position"
-		  },
-		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
-		  }
-		],
-		"result": {
-		  "name": "dataWord",
-		  "schema": {
-			"$ref": "#/components/schemas/DataWord"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getBlockTransactionCountByHash",
-		"summary": "Returns the number of transactions in a block from a block matching the given block hash.",
-		"params": [
-		  {
-			"$ref": "#/components/contentDescriptors/BlockHash"
-		  }
-		],
-		"result": {
-		  "name": "blockTransactionCountByHash",
-		  "description": "The Number of total transactions in the given block",
-		  "schema": {
-			"$ref": "#/components/schemas/IntegerOrNull"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getMinerDataByBlockNumber",
-		"summary": "Returns miner data for the specified block.",
-		"params": [
-		  {
-			"name": "Block hash",
-			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockHash"
+			"name": "getProofExample",
+			"params": [
+			  {
+				"name": "Address",
+				"value": "0x7F0d15C7FAae65896648C8273B6d7E43f58Fa842"
+			  },
+			  {
+				"name": "StorageProofKey",
+				"value": [
+				  "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+				]
+			  },
+			  {
+				"name": "BlockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "getProofResultExample",
+			  "value": "0x0"
 			}
 		  }
-		],
-		"result": {
-		  "name": "Miner data object",
-		  "schema": {
-			"title": "result",
-			"type": "object"
-		  }
-		}
-	  },
-	  {
-		"name": "eth_getMinerDataByBlockHash",
-		"summary": "Returns miner data for the specified block.",
-		"params": [
-		  {
-			"name": "Block hash",
-			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockHash"
-			}
-		  }
-		],
-		"result": {
-		  "name": "Miner data object",
-		  "schema": {
-			"title": "result",
-			"type": "object"
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "eth_getWork",
@@ -1438,6 +2281,372 @@
 			]
 		  }
 		}
+	  },
+	  {
+		"name": "eth_hashrate",
+		"summary": "Returns the number of hashes per second that the node is mining with.",
+		"params": [],
+		"result": {
+		  "name": "hashesPerSecond",
+		  "description": "Integer of the number of hashes per second",
+		  "schema": {
+			"$ref": "#/components/schemas/Integer"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "hashrateExample",
+			"params": [],
+			"result": {
+			  "name": "hashrateResultExample",
+			  "value": "0x0"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_mining",
+		"summary": "Returns true if client is actively mining new blocks.",
+		"params": [],
+		"result": {
+		  "name": "mining",
+		  "description": "Whether or not the client is mining",
+		  "schema": {
+			"type": "boolean"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "miningExample",
+			"params": [],
+			"result": {
+			  "name": "miningResultExample",
+			  "value": false
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_newBlockFilter",
+		"summary": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
+		"params": [],
+		"result": {
+		  "$ref": "#/components/contentDescriptors/FilterId"
+		},
+		"examples": [
+		  {
+			"name": "newBlockFilterExample",
+			"params": [],
+			"result": {
+			  "name": "newBlockFilterResultExample",
+			  "value": "0x5e2fce0043c0ac9f1772609c2fc30d2c"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_newFilter",
+		"summary": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/Filter"
+		  }
+		],
+		"result": {
+		  "name": "filterId",
+		  "description": "The filter ID for use in `eth_getFilterChanges`",
+		  "schema": {
+			"$ref": "#/components/schemas/Integer"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "newFilterExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": 
+				  {
+					"fromBlock": "earliest",
+					"toBlock": "latest",
+					"topics": []
+				  }
+			  }
+			],
+			"result": {
+			  "name": "newFilterResultExample",
+			  "value": "0xe921d6875bf20243493e19945c503dc0"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getFilterChanges",
+		"summary": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
+		"params": [
+		  {
+			"name": "filterId",
+			"required": true,
+			"schema": {
+			  "$ref": "#/components/schemas/FilterId"
+			}
+		  }
+		],
+		"result": {
+		  "name": "logResult",
+		  "schema": {
+			"title": "logResult",
+			"type": "array",
+			"items": {
+			  "$ref": "#/components/schemas/Log"
+			}
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getFilterChangesExample",
+			"params": [
+			  {
+				"name": "filterId",
+				"value": "0xcf4e9670c19fc799f196f814ea8d7838"
+			  }
+			],
+			"result": {
+			  "name": "getFilterChangesResult",
+			  "value": [
+				{
+				  "address": "0xb5a5f22694352c15b00323844ad545abb2b11028",
+				  "blockHash": "0x99e8663c7b6d8bba3c7627a17d774238eae3e793dee30008debb2699666657de",
+				  "blockNumber": "0x5d12ab",
+				  "data": "0x0000000000000000000000000000000000000000000000a247d7a2955b61d000",
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "topics": [
+					"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+					"0x000000000000000000000000bdc0afe57b8e9468aa95396da2ab2063e595f37e",
+					"0x0000000000000000000000007503e090dc2b64a88f034fb45e247cbd82b8741e"
+				  ],
+				  "transactionHash": "0xa74c2432c9cf7dbb875a385a2411fd8f13ca9ec12216864b1a1ead3c99de99cd",
+				  "transactionIndex": "0x3"
+				},
+				{
+				  "address": "0xe38165c9f6deb144afc9c32c206b024817e1496d",
+				  "blockHash": "0x99e8663c7b6d8bba3c7627a17d774238eae3e793dee30008debb2699666657de",
+				  "blockNumber": "0x5d12ab",
+				  "data": "0x0000000000000000000000000000000000000000000000000000000025c6b720",
+				  "logIndex": "0x3",
+				  "removed": false,
+				  "topics": [
+					"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+					"0x00000000000000000000000080e73e47173b2d00b531bf83bc39e710157125c3",
+					"0x0000000000000000000000008f6cc93795969e5bbbf07c66dfee7d41ad24f1ef"
+				  ],
+				  "transactionHash": "0x9e8f1cb1facb9a11a1cf947634053a0b2d557399f926b12127aa10497a2f0153",
+				  "transactionIndex": "0x5"
+				}
+			  ]
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_getFilterLogs",
+		"summary": "Returns an array of all logs matching filter with given id.",
+		"params": [
+		  {
+			"name": "filterId",
+			"required": true,
+			"schema": {
+			  "$ref": "#/components/schemas/FilterId"
+			}
+		  }
+		],
+		"result": {
+		  "$ref": "#/components/contentDescriptors/Logs"
+		},
+		"examples": [
+		  {
+			"name": "getFilterChangesExample",
+			"params": [
+			  {
+				"name": "filterId",
+				"value": "0xcf4e9670c19fc799f196f814ea8d7838"
+			  }
+			],
+			"result": {
+			  "name": "getFilterChangesResult",
+			  "value": [
+				{
+				  "address": "0xb5a5f22694352c15b00323844ad545abb2b11028",
+				  "blockHash": "0x99e8663c7b6d8bba3c7627a17d774238eae3e793dee30008debb2699666657de",
+				  "blockNumber": "0x5d12ab",
+				  "data": "0x0000000000000000000000000000000000000000000000a247d7a2955b61d000",
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "topics": [
+					"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+					"0x000000000000000000000000bdc0afe57b8e9468aa95396da2ab2063e595f37e",
+					"0x0000000000000000000000007503e090dc2b64a88f034fb45e247cbd82b8741e"
+				  ],
+				  "transactionHash": "0xa74c2432c9cf7dbb875a385a2411fd8f13ca9ec12216864b1a1ead3c99de99cd",
+				  "transactionIndex": "0x3"
+				},
+				{
+				  "address": "0xe38165c9f6deb144afc9c32c206b024817e1496d",
+				  "blockHash": "0x99e8663c7b6d8bba3c7627a17d774238eae3e793dee30008debb2699666657de",
+				  "blockNumber": "0x5d12ab",
+				  "data": "0x0000000000000000000000000000000000000000000000000000000025c6b720",
+				  "logIndex": "0x3",
+				  "removed": false,
+				  "topics": [
+					"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+					"0x00000000000000000000000080e73e47173b2d00b531bf83bc39e710157125c3",
+					"0x0000000000000000000000008f6cc93795969e5bbbf07c66dfee7d41ad24f1ef"
+				  ],
+				  "transactionHash": "0x9e8f1cb1facb9a11a1cf947634053a0b2d557399f926b12127aa10497a2f0153",
+				  "transactionIndex": "0x5"
+				}
+			  ]
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_uninstallFilter",
+		"summary": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
+		"params": [
+		  {
+			"name": "filterId",
+			"required": true,
+			"schema": {
+			  "$ref": "#/components/schemas/FilterId"
+			}
+		  }
+		],
+		"result": {
+		  "name": "filterUninstalledSuccess",
+		  "description": "returns true if the filter was successfully uninstalled, false otherwise.",
+		  "schema": {
+			"type": "boolean"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "uninstallFilterExample",
+			"params": [
+			  {
+				"name": "FilterId",
+				"value": "0xe921d6875bf20243493e19945c503dc0"
+			  }
+			],
+			"result": {
+			  "name": "uninstallFilterResultExample",
+			  "value": true
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_newPendingTransactionFilter",
+		"summary": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
+		"params": [],
+		"result": {
+		  "$ref": "#/components/contentDescriptors/FilterId"
+		},
+		"examples": [
+		  {
+			"name": "newPendingTransactionFilterExample",
+			"params": [],
+			"result": {
+			  "name": "newPendingTransactionFilterResultExample",
+			  "value": "0xe921d6875bf20243493e19945c503dc0"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_sendRawTransaction",
+		"summary": "Creates new message call transaction or a contract creation for signed transactions.",
+		"params": [
+		  {
+			"name": "signedTransactionData",
+			"required": true,
+			"description": "The signed transaction data",
+			"schema": {
+			  "$ref": "#/components/schemas/Bytes"
+			}
+		  }
+		],
+		"result": {
+		  "name": "transactionHash",
+		  "description": "The transaction hash, or the zero hash if the transaction is not yet available.",
+		  "schema": {
+			"$ref": "#/components/schemas/Keccak"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "sendRawTransactionExample",
+			"params": [
+			  {
+				"name": "signedTransactionData",
+				"value": "0xf86a018203e882520894f17f52151ebef6c7334fad080c5704d77216b732896c6b935b8bbd400000801ba093129415f03b4794fd1512e79ee7f097e4271f66721020f8407aac92179893a5a0451b875d89721ec98be55201092980b0a87bb1c48507fccb86da713596b2a09e"
+			  }
+			],
+			"result": {
+			  "name": "sendRawTransactionResultExample",
+			  "value": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_submitHashrate",
+		"deprecated": true,
+		"summary": "Used for submitting mining hashrate.",
+		"params": [
+		  {
+			"name": "hashRate",
+			"required": true,
+			"schema": {
+			  "$ref": "#/components/schemas/DataWord"
+			}
+		  },
+		  {
+			"name": "id",
+			"required": true,
+			"description": "String identifying the client",
+			"schema": {
+			  "$ref": "#/components/schemas/DataWord"
+			}
+		  }
+		],
+		"result": {
+		  "name": "submitHashRateSuccess",
+		  "description": "whether of not submitting went through successfully",
+		  "schema": {
+			"type": "boolean"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "submitHashrateExample",
+			"params": [
+			  {
+				"name": "hashrate",
+				"value": "0x0000000000000000000000000000000000000000000000000000000000500000"
+			  },
+			  {
+				"name": "id",
+				"value": "0x59daa26581d0acd1fce254fb7e85952f4c09d0915afd33d3886cd914bc7d283c"
+			  }
+			],
+			"result": {
+			  "name": "submitHashrateResultExample",
+			  "value": true
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "eth_submitWork",
@@ -1480,7 +2689,7 @@
 			  {
 				"name": "powHashExample",
 				"description": "proof of work to submit",
-				"value": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22"
+				"value": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
 			  },
 			  {
 				"name": "mixHashExample",
@@ -1497,29 +2706,103 @@
 		]
 	  },
 	  {
-		"name": "eth_submitHashrate",
-		"deprecated": true,
-		"summary": "Used for submitting mining hashrate.",
+		"name": "eth_syncing",
+		"summary": "Returns an object with data about the sync status or false.",
+		"params": [],
+		"result": {
+		  "name": "syncing",
+		  "schema": {
+			"title": "isSyncingResult",
+			"oneOf": [
+			  {
+				"title": "syncingData",
+				"description": "An object with sync status data",
+				"type": "object",
+				"properties": {
+				  "startingBlock": {
+					"title": "syncingDataStartingBlock",
+					"description": "Block at which the import started (will only be reset, after the sync reached his head)",
+					"$ref": "#/components/schemas/Integer"
+				  },
+				  "currentBlock": {
+					"title": "syncingDataCurrentBlock",
+					"description": "The current block, same as eth_blockNumber",
+					"$ref": "#/components/schemas/Integer"
+				  },
+				  "highestBlock": {
+					"title": "syncingDataHighestBlock",
+					"description": "The estimated highest block",
+					"$ref": "#/components/schemas/Integer"
+				  },
+				  "knownStates": {
+					"title": "syncingDataKnownStates",
+					"description": "The known states",
+					"$ref": "#/components/schemas/Integer"
+				  },
+				  "pulledStates": {
+					"title": "syncingDataPulledStates",
+					"description": "The pulled states",
+					"$ref": "#/components/schemas/Integer"
+				  }
+				}
+			  },
+			  {
+				"type": "boolean"
+			  }
+			]
+		  }
+		},
+		"examples": [
+		  {
+			"name": "syncingExample",
+			"params": [],
+			"result": {
+			  "name": "syncingResultExample",
+			  "value": false
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "eth_subscribe",
+		"summary": "If successful this returns the subscription id. Subscriptions are creates with a regular RPC call with eth_subscribe as method and the subscription name as first parameter. ",
 		"params": [
 		  {
-			"name": "hashRate",
-			"required": true,
+			"name": "subscriptioName",
 			"schema": {
-			  "$ref": "#/components/schemas/DataWord"
+			  "type": "string"
 			}
 		  },
 		  {
-			"name": "id",
-			"required": true,
-			"description": "String identifying the client",
+			"name": "optionalArguments ",
 			"schema": {
-			  "$ref": "#/components/schemas/DataWord"
+			  "type": "array",
+			  "items": {
+				"type": "object"
+			  }
 			}
 		  }
 		],
 		"result": {
-		  "name": "submitHashRateSuccess",
-		  "description": "whether of not submitting went through successfully",
+		  "name": "subscribeExample",
+		  "schema": {
+			"type": "string"
+		  }
+		}
+	  },
+	  {
+		"name": "eth_unsubscribe",
+		"summary": "Subscriptions are cancelled with a regular RPC call with eth_unsubscribe as method and the subscription id as first parameter.",
+		"params": [
+		  {
+			"name": "subscriptionId",
+			"schema": {
+			  "type": "string"
+			}
+		  }
+		],
+		"result": {
+		  "name": "unsubscribeExample",
 		  "schema": {
 			"type": "boolean"
 		  }
@@ -1539,24 +2822,52 @@
 		  }
 		],
 		"result": {
-		  "name": "isDiscarded.",
+		  "name": "discardValidatorVoteResult",
 		  "description": "Indicates if the proposal is discarded",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "discardValidatorVoteExample",
+			"params": [
+			  {
+				"name": "Address",
+				"value": "0x42eb768f2244c8811c63729a21a3569731535f06"
+			  }
+			],
+			"result": {
+			  "name": "discardValidatorVoteResultExample",
+			  "value": true
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "ibft_getPendingVotes",
 		"summary": "Returns votes cast in the current epoch.",
 		"params": [],
 		"result": {
-		  "name": "addressesAndVote.",
+		  "name": "getPendingVotesResult",
 		  "description": "Map of strings to booleans - map of account addresses to corresponding boolean values indicating the vote for each account; if true, the vote is to add a validator. If false, the proposal is to remove a validator.",
 		  "schema": {
 			"type": "object"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getPendingVotesExample",
+			"params": [],
+			"result": {
+			  "name": "accountRangeExample",
+			  "value": {
+				"0xef1bfb6a12794615c9b0b5a21e6741f01e570185": true,
+				"0x42d4287eac8078828cf5f3486cfe601a275a49a5": true
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "ibft_getSignerMetrics",
@@ -1577,12 +2888,61 @@
 		  }
 		],
 		"result": {
-		  "name": "ArrayAddressAndProposed.",
+		  "name": "getSignerMetricsResult",
 		  "description": "list of validator objects",
 		  "schema": {
-			"type": "object"
+			"type": "array",
+			"items": {
+			  "type": "object",
+			  "properties": {
+				"address": {
+				  "type": "string"
+				},
+				"proposedBlockCount": {
+				  "type": "string"
+				},
+				"lastProposedBlockNumber": {
+				  "type": "string"
+				}
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "discardValidatorVoteExample",
+			"params": [
+			  {
+				"name": "fromBlockNumber",
+				"value": "1"
+			  },
+			  {
+				"name": "toBlockNumber",
+				"value": "100"
+			  }
+			],
+			"result": {
+			  "name": "discardValidatorVoteResultExample",
+			  "value": [
+				{
+				  "address": "0x7ffc57839b00206d1ad20c69a1981b489f772031",
+				  "proposedBlockCount": "0x21",
+				  "lastProposedBlockNumber": "0x61"
+				},
+				{
+				  "address": "0x42eb768f2244c8811c63729a21a3569731535f06",
+				  "proposedBlockCount": "0x21",
+				  "lastProposedBlockNumber": "0x63"
+				},
+				{
+				  "address": "0xb279182d99e65703f0076e4812653aab85fca0f0",
+				  "proposedBlockCount": "0x21",
+				  "lastProposedBlockNumber": "0x62"
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "ibft_getValidatorsByBlockHash",
@@ -1593,12 +2953,66 @@
 		  }
 		],
 		"result": {
-		  "name": "ListAddresses",
+		  "name": "getValidatorsByBlockHashResult",
 		  "description": "List of validator addresses.",
 		  "schema": {
 			"$ref": "#/components/schemas/Addresses"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getValidatorsByBlockHashExample",
+			"params": [
+			  {
+				"name": "BlockHash",
+				"value": "0x98b2ddb5106b03649d2d337d42154702796438b3c74fd25a5782940e84237a48"
+			  }
+			],
+			"result": {
+			  "name": "getValidatorsByBlockHashResultExample",
+			  "value": [
+				"0x42d4287eac8078828cf5f3486cfe601a275a49a5",
+				"0xb1b2bc9582d2901afdc579f528a35ca41403fa85",
+				"0xef1bfb6a12794615c9b0b5a21e6741f01e570185"
+			  ]
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "ibft_getValidatorsByBlockNumber",
+		"summary": "Lists the validators defined in the specified block.",
+		"params": [
+		  {
+			"$ref": "#/components/contentDescriptors/BlockNumber"
+		  }
+		],
+		"result": {
+		  "name": "getValidatorsByBlockNumberResult",
+		  "description": "List of validator addresses.",
+		  "schema": {
+			"$ref": "#/components/schemas/Addresses"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getValidatorsByBlockNumberExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": "0x09"
+			  }
+			],
+			"result": {
+			  "name": "getValidatorsByBlockNumberResultExample",
+			  "value": [
+				"0x42d4287eac8078828cf5f3486cfe601a275a49a5",
+				"0xb1b2bc9582d2901afdc579f528a35ca41403fa85",
+				"0xef1bfb6a12794615c9b0b5a21e6741f01e570185"
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "ibft_proposeValidatorVote",
@@ -1620,88 +3034,163 @@
 		  }
 		],
 		"result": {
-		  "name": "booleanResult",
+		  "name": "proposeValidatorVoteResult",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
-	  },
-	  {
-		"name": "ibft_getValidatorsByBlockNumber",
-		"summary": "Lists the validators defined in the specified block.",
-		"params": [
+		},
+		"examples": [
 		  {
-			"$ref": "#/components/contentDescriptors/BlockNumber"
+			"name": "getValidatorsByBlockNumberExample",
+			"params": [
+			  {
+				"name": "address",
+				"value": "42d4287eac8078828cf5f3486cfe601a275a49a5"
+			  },
+			  {
+				"name": "proposal",
+				"value": true
+			  }
+			],
+			"result": {
+			  "name": "getValidatorsByBlockNumberResultExample",
+			  "value": true
+			}
 		  }
-		],
-		"result": {
-		  "name": "ListAddresses",
-		  "description": "List of validator addresses.",
-		  "schema": {
-			"$ref": "#/components/schemas/Addresses"
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "net_enode",
 		"summary": "Returns the enode URL.",
 		"params": [],
 		"result": {
-		  "name": "EnodeURL.",
+		  "name": "enodeResult",
 		  "description": "Enode URL of the node.",
 		  "schema": {
 			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "enodeExample",
+			"params": [],
+			"result": {
+			  "name": "enodeResultExample",
+			  "value": "enode://6a63160d0ccef5e4986d270937c6c8d60a9a4d3b25471cda960900d037c61988ea14da67f69dbfb3497c465d0de1f001bb95598f74b68a39a5156a608c42fa1b@127.0.0.1:30303"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "net_listening",
 		"summary": "Whether the client is actively listening for network connections.",
 		"params": [],
 		"result": {
-		  "name": "clientIsActive",
+		  "name": "listeningResult",
 		  "description": "Indicates if the client is actively listening for network connections",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "listeningExample",
+			"params": [],
+			"result": {
+			  "name": "listeningResultExample",
+			  "value": true
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "net_peerCount",
 		"summary": "Returns the number of peers currently connected to the client.",
 		"params": [],
 		"result": {
-		  "name": "MumberPeers",
+		  "name": "peerCountResult",
 		  "description": "Mumber of connected peers in hexadecimal",
 		  "schema": {
 			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "peerCountExample",
+			"params": [],
+			"result": {
+			  "name": "peerCountResultExample",
+			  "value": "0x5"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "net_services",
 		"summary": "Returns enabled services (for example, jsonrpc) and the host and port for each service.",
 		"params": [],
 		"result": {
-		  "name": "Enabledservices",
+		  "name": "servicesResult",
 		  "schema": {
-			"type": "object"
+			"type": "object",
+			"properties": {
+			  "jsonrpc": {
+				"$ref": "#/components/schemas/HostPort"
+			  },
+			  "p2p": {
+				"$ref": "#/components/schemas/HostPort"
+			  },
+			  "metrics": {
+				"$ref": "#/components/schemas/HostPort"
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "servicesExample",
+			"params": [],
+			"result": {
+			  "name": "servicesResultExample",
+			  "value": {
+				"jsonrpc": {
+				  "host": "127.0.0.1",
+				  "port": "8545"
+				},
+				"p2p": {
+				  "host": "127.0.0.1",
+				  "port": "30303"
+				},
+				"metrics": {
+				  "host": "127.0.0.1",
+				  "port": "9545"
+				}
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "net_version",
 		"summary": "Returns the network ID.",
 		"params": [],
 		"result": {
-		  "name": "chainId",
+		  "name": "versionResult",
 		  "description": "hex format integer of the current chain id.",
 		  "schema": {
-			"title": "chainId",
-			"type": "string",
-			"pattern": "^0x[a-fA-F\\d]+$"
+			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "versiontExample",
+			"params": [],
+			"result": {
+			  "name": "versionResultExample",
+			  "value": "2018"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "trace_block",
@@ -1712,17 +3201,103 @@
 			"summary": "integer representing a block number or one of the string tags latest, earliest, or pending.",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
+			  "$ref": "#/components/schemas/BlockNumber"
 			}
 		  }
 		],
 		"result": {
-		  "name": "trace transaction",
+		  "name": "blockResult",
 		  "description": "list of calls to other contracts containing one object per call, in transaction execution order",
 		  "schema": {
-			"type": "object"
+			"type": "array",
+			"items": {
+			  "type": "object",
+			  "properties": {
+				"action": {
+				  "callType": {
+					"type": "string"
+				  },
+				  "from": {
+					"type": "string"
+				  },
+				  "gas": {
+					"type": "string"
+				  },
+				  "input": {
+					"type": "string"
+				  },
+				  "to": {
+					"type": "string"
+				  },
+				  "value": {
+					"type": "string"
+				  }
+				},
+				"blockHash": {
+				  "type": "string"
+				},
+				"blockNumber": {
+				  "type": "number"
+				},
+				"result": {
+				  "type": "object",
+				  "properties": {
+					"gasUsed": {
+					  "type": "string"
+					},
+					"output": {
+					  "type": "string"
+					}
+				  }
+				},
+				"subtraces": {
+				  "type": "number"
+				},
+				"traceAddress": {
+				  "typer": "object"
+				},
+				"transactionHash": {
+				  "type": "string"
+				},
+				"transactionPosition": {
+				  "type": "number"
+				},
+				"type": {
+				  "type": "string"
+				}
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "blockExample",
+			"params": [
+			  {
+				"name": "BlockNumber",
+				"value": "0x6"
+			  }
+			],
+			"result": {
+			  "name": "blockResultExample",
+			  "value": {
+				"action": {
+				  "author": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+				  "rewardType": "block",
+				  "value": "0x1bc16d674ec80000"
+				},
+				"blockHash": "0x3947cdf661fa81e8d66bfe8d125f857112a8c2ecdaa878aab27c50fe8f4d36ef",
+				"blockNumber": 6,
+				"result": null,
+				"subtraces": 0,
+				"traceAddress": [],
+				"transactionHash": null,
+				"transactionPosition": null,
+				"type": "reward"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "trace_replayBlockTransactions",
@@ -1733,7 +3308,7 @@
 			"summary": "integer representing a block number or one of the string tags latest, earliest, or pending.",
 			"required": true,
 			"schema": {
-			  "$ref": "#/components/contentDescriptors/BlockNumber"
+			  "$ref": "#/components/schemas/BlockNumber"
 			}
 		  },
 		  {
@@ -1748,7 +3323,7 @@
 		  }
 		],
 		"result": {
-		  "name": "list transaction trace",
+		  "name": "replayBlockTransactionsResult",
 		  "description": "the trace list items in the returned transaction trace object include the revert reason.",
 		  "schema": {
 			"type": "array",
@@ -1756,7 +3331,30 @@
 			  "type": "object"
 			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "replayBlockTransactionsExample",
+			"params": [
+			  {
+				"name": "blockNumber",
+				"value": "0x12"
+			  },
+			  {
+				"name": "options",
+				"value": [
+				  "trace",
+				  "vmTrace",
+				  "stateDiff"
+				]
+			  }
+			],
+			"result": {
+			  "name": "replayBlockTransactionsResultExample",
+			  "value": []
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_call",
@@ -1765,23 +3363,49 @@
 		  {
 			"name": "privacyGroupId",
 			"schema": {
-			  "title": "privacyGroupId",
 			  "type": "string"
 			}
 		  },
 		  {
-			"$ref": "#/components/schemas/Transaction"
+			"$ref": "#/components/contentDescriptors/Transaction"
 		  },
 		  {
-			"$ref": "#/components/schemas/BlockNumber"
+			"$ref": "#/components/contentDescriptors/BlockNumber"
 		  }
 		],
 		"result": {
-		  "name": "return value of the executed contract",
+		  "name": "callResult",
+		  "description": "return value of the executed contract",
 		  "schema": {
 			"$ref": "#/components/schemas/Bytes"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "replayBlockTransactionsExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "tb8NVyQqZnHNegf/3mYsyB+HEud4SPWn90rz3GoskRw="
+			  },
+			  {
+				"name": "Transaction",
+				"value": {
+				  "to": "0x69498dd54bd25aa0c886cf1f8b8ae0856d55ff13",
+				  "data": "0x3fa4f245"
+				}
+			  },
+			  {
+				"name": "Transaction",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "replayBlockTransactionsResultExample",
+			  "value": "0x0000000000000000000000000000000000000000000000000000000000000001"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_createPrivacyGroup",
@@ -1806,35 +3430,33 @@
 		  }
 		],
 		"result": {
-		  "name": "privacy group ID",
+		  "name": "createPrivacyGroupResult",
 		  "schema": {
 			"type": "string"
 		  }
-		}
-	  },
-	  {
-		"name": "priv_debugGetStateRoot",
-		"summary": "Returns the state root of the specified privacy group at the specified block.",
-		"params": [
+		},
+		"examples": [
 		  {
-			"name": "privacyGroupId",
-			"schema": {
-			  "type": "string"
-			}
-		  },
-		  {
-			"name": "blockNumber",
-			"schema": {
-			  "$ref": "#/components/schemas/BlockNumber"
+			"name": "createPrivacyGroupExample",
+			"params": [
+			  {
+				"name": "Group",
+				"value": {
+				  "addresses": [
+					"sTZpbQhcOfd9ZaFDnC00e/N2Ofv9p4/ZTBbEeVtXJ3E=",
+					"quhb1pQPGN1w8ZSZSyiIfncEAlVY/M/rauSyQ5wVMRE="
+				  ],
+				  "name": "Group A",
+				  "description": "Description Group A"
+				}
+			  }
+			],
+			"result": {
+			  "name": "createPrivacyGroupResultExample",
+			  "value": "ewuTVoc5nlvWMwTFdRRK/wvV0dcyQo/Pauvx5bNEbTk="
 			}
 		  }
-		],
-		"result": {
-		  "name": "State root",
-		  "schema": {
-			"type": "string"
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "priv_deletePrivacyGroup",
@@ -1848,18 +3470,34 @@
 		  }
 		],
 		"result": {
-		  "name": "deletedPrivacyGroupID",
+		  "name": "deletePrivacyGroupResult",
 		  "schema": {
 			"type": "string"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "deletePrivacyGroupExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "ewuTVoc5nlvWMwTFdRRK/wvV0dcyQo/Pauvx5bNEbTk="
+			  }
+			],
+			"result": {
+			  "name": "deletePrivacyGroupResultExample",
+			  "value": "ewuTVoc5nlvWMwTFdRRK/wvV0dcyQo/Pauvx5bNEbTk="
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_distributeRawTransaction",
 		"summary": "Distributes a signed, RLP encoded private transaction.",
 		"params": [
 		  {
-			"name": "signed RLP-encoded private transaction",
+			"name": "signedTransactionData",
+			"summary": "signed RLP-encoded private transaction",
 			"required": true,
 			"schema": {
 			  "$ref": "#/components/schemas/Bytes"
@@ -1867,12 +3505,27 @@
 		  }
 		],
 		"result": {
-		  "name": "Enclave key",
+		  "name": "distributeRawTransactionResult",
 		  "description": "the enclave key is a pointer to the private transaction in Orion.",
 		  "schema": {
 			"$ref": "#/components/schemas/Keccak"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "distributeRawTransactionExample",
+			"params": [
+			  {
+				"name": "signedTransactionData",
+				"value": "0xf869018203e882520894f17f52151ebef6c7334fad080c5704d77216b732881bc16d674ec80000801ba02da1c48b670996dcb1f447ef9ef00b33033c48a4fe938f420bec3e56bfd24071a062e0aa78a81bf0290afbc3a9d8e9a068e6d74caa66c5e0fa8a46deaae96b0833"
+			  }
+			],
+			"result": {
+			  "name": "distributeRawTransactionResultExample",
+			  "value": "0xfd0d90ab824574abc19c0776ca0210e764561d0ef6d621f2bbbea316eccfe56b"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_findPrivacyGroup",
@@ -1890,8 +3543,9 @@
 		  }
 		],
 		"result": {
-		  "name": "privacyGroupObjects containing only the specified members;",
-		  "description": " privacy group objects containing only the specified members; privacy groups are EEA-compliant or Besu-extended with types:\nLEGACY for EEA-compliant groups.\nPANTHEON for Besu-extended groups.",
+		  "name": "findPrivacyGroupResult",
+		  "summary": "privacyGroupObjects containing only the specified members;",
+		  "description": "privacy group objects containing only the specified members; privacy groups are EEA-compliant or Besu-extended with types:\nLEGACY for EEA-compliant groups.\nPANTHEON for Besu-extended groups.",
 		  "schema": {
 			"type": "object",
 			"items": [
@@ -1916,51 +3570,35 @@
 			  }
 			]
 		  }
-		}
-	  },
-	  {
-		"name": "priv_findPrivacyGroup",
-		"summary": "Returns a list of privacy groups containing only the listed members",
-		"params": [
+		},
+		"examples": [
 		  {
-			"name": "members",
-			"required": true,
-			"schema": {
-			  "type": "array",
-			  "items": {
-				"type": "string"
+			"name": "findPrivacyGroupExample",
+			"params": [
+			  {
+				"name": "member1",
+				"value": "negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk="
+			  },
+			  {
+				"name": "member2",
+				"value": "g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="
+			  }
+			],
+			"result": {
+			  "name": "findPrivacyGroupResultExample",
+			  "value": {
+				"privacyGroupId": "GpK3ErNO0xF27T0sevgkJ3+4qk9Z+E3HtXYxcKIBKX8=",
+				"name": "Group B",
+				"description": "Description of Group B",
+				"type": "PANTHEON",
+				"members": [
+				  "negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=",
+				  "g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="
+				]
 			  }
 			}
 		  }
-		],
-		"result": {
-		  "name": "privacyGroupObjects containing only the specified members;",
-		  "description": " privacy group objects containing only the specified members; privacy groups are EEA-compliant or Besu-extended with types:\nLEGACY for EEA-compliant groups.\nPANTHEON for Besu-extended groups.",
-		  "schema": {
-			"type": "object",
-			"items": [
-			  {
-				"name": "privacyGroupId",
-				"type": "string"
-			  },
-			  {
-				"name": "description",
-				"type": "string"
-			  },
-			  {
-				"name": "type",
-				"type": "string"
-			  },
-			  {
-				"name": "members",
-				"type": "object",
-				"items": {
-				  "type": "string"
-				}
-			  }
-			]
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "priv_getCode",
@@ -1989,12 +3627,35 @@
 		  }
 		],
 		"result": {
-		  "name": "bytes",
-		  "description": " code stored at the specified address",
+		  "name": "getCodeResult",
+		  "description": "Code stored at the specified address",
 		  "schema": {
 			"$ref": "#/components/schemas/Bytes"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getCodeExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "1lJxSIP4JOp6uRn9wYsPeWwqoOP1c4nPQjylB4FExUA="
+			  },
+			  {
+				"name": "address",
+				"value": "0xeaf1c1bd00ef0bec5e39fba81740f1c5d05aa201"
+			  },
+			  {
+				"name": "blockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "getCodeResultExample",
+			  "value": "0x60806040526004361060485763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633fa4f2458114604d57806355241077146071575b600080fd5b348015605857600080fd5b50605f6088565b60408051918252519081900360200190f35b348015607c57600080fd5b506086600435608e565b005b60005481565b60008190556040805182815290517f199cd93e851e4c78c437891155e2112093f8f15394aa89dab09e38d6ca0727879181900360200190a1505600a165627a7a723058209d8929142720a69bde2ab3bfa2da6217674b984899b62753979743c0470a2ea70029"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getEeaTransactionCount",
@@ -2026,76 +3687,38 @@
 		  }
 		],
 		"result": {
-		  "name": "integer representing the number of private transactions",
-		  "description": " integer representing the number of private transactions sent from the address to the specified group of sender and recipients",
+		  "name": "getEeaTransactionCountResult",
+		  "description": "integer representing the number of private transactions sent from the address to the specified group of sender and recipients",
 		  "schema": {
 			"$ref": "#/components/schemas/Integer"
 		  }
-		}
-	  },
-	  {
-		"name": "priv_getEeaTransactionCount",
-		"summary": "Returns the private transaction count for the specified account and group of sender and recipients.",
-		"params": [
+		},
+		"examples": [
 		  {
-			"name": "address",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/schemas/Address"
-			}
-		  },
-		  {
-			"name": "sender",
-			"required": true,
-			"schema": {
-			  "type": "string"
-			}
-		  },
-		  {
-			"name": "recipients",
-			"required": true,
-			"schema": {
-			  "type": "array",
-			  "items": {
-				"type": "string"
+			"name": "getEeaTransactionCountExample",
+			"params": [
+			  {
+				"name": "address",
+				"value": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
+			  },
+			  {
+				"name": "sender",
+				"value": "GGilEkXLaQ9yhhtbpBT03Me9iYa7U/mWXxrJhnbl1XY="
+			  },
+			  {
+				"name": "recipients",
+				"value": [
+				  "KkOjNLmCI6r+mICrC6l+XuEDjFEzQllaMQMpWLl4y1s=",
+				  "eLb69r4K8/9WviwlfDiZ4jf97P9czyS3DkKu0QYGLjg="
+				]
 			  }
+			],
+			"result": {
+			  "name": "getEeaTransactionCountResultExample",
+			  "value": "0x1"
 			}
 		  }
-		],
-		"result": {
-		  "name": "integer representing the number of private transactions",
-		  "description": " integer representing the number of private transactions sent from the address to the specified group of sender and recipients",
-		  "schema": {
-			"$ref": "#/components/schemas/Integer"
-		  }
-		}
-	  },
-	  {
-		"name": "priv_getFilterChanges",
-		"summary": "Polls the specified filter for a private contract and returns an array of changes that have occurred since the last poll.",
-		"params": [
-		  {
-			"name": "privacyGroupId",
-			"required": true,
-			"schema": {
-			  "type": "string"
-			}
-		  },
-		  {
-			"name": "filterId",
-			"required": true,
-			"schema": {
-			  "$ref": "#/components/schemas/FilterId"
-			}
-		  }
-		],
-		"result": {
-		  "name": "list of log ",
-		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
-		  "schema": {
-			"$ref": "#/components/schemas/Log"
-		  }
-		}
+		]
 	  },
 	  {
 		"name": "priv_getFilterChanges",
@@ -2117,12 +3740,119 @@
 		  }
 		],
 		"result": {
-		  "name": " list of log objects",
+		  "name": "getFilterChangesResult",
 		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
 		  "schema": {
-			"$ref": "#/components/contentDescriptors/Logs"
+			"$ref": "#/components/schemas/Logs"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getFilterChangesExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "4rFldHM792LeP/e2WPkTXZedjwKuTr/KwCFTt6mBbkI="
+			  },
+			  {
+				"name": "FilterId",
+				"value": "0x4a35b92809d73f4f53a2355d62125442"
+			  }
+			],
+			"result": {
+			  "name": "getFilterChangesResultExample",
+			  "value": {
+				"logIndex": "0x0",
+				"removed": false,
+				"blockNumber": "0x4d0",
+				"blockHash": "0x1c8200667a869e99b945374c37277b5ee7a7ae67943e13c82563381387553dbb",
+				"transactionHash": "0xb1966b9b372ba68952f48f3a3e78f036f5ae82ceca2de972a782d07fb88f6d88",
+				"transactionIndex": "0x0",
+				"address": "0x991cc548c154b2953cc48c02f782e1314097dfbb",
+				"data": "0x",
+				"topics": [
+				  "0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410",
+				  "0x0000000000000000000000000000000000000000000000000000000000000002"
+				]
+			  }
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "priv_getFilterLogs",
+		"summary": "Polls the specified filter for a private contract and returns an array of changes that have occurred since the last poll.",
+		"params": [
+		  {
+			"name": "privacyGroupId",
+			"required": true,
+			"schema": {
+			  "type": "string"
+			}
+		  },
+		  {
+			"name": "filterId",
+			"required": true,
+			"schema": {
+			  "$ref": "#/components/schemas/FilterId"
+			}
+		  }
+		],
+		"result": {
+		  "name": "getFilterLogsResult",
+		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
+		  "schema": {
+			"$ref": "#/components/schemas/Logs"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "getFilterLogsExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "4rFldHM792LeP/e2WPkTXZedjwKuTr/KwCFTt6mBbkI="
+			  },
+			  {
+				"name": "FilterId",
+				"value": "0x4a35b92809d73f4f53a2355d62125442"
+			  }
+			],
+			"result": {
+			  "name": "getFilterLogsResultExample",
+			  "value": [
+				{
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "blockNumber": "0x493",
+				  "blockHash": "0xd9cb3a852e1e02c95f035a2e32d57f82c10cab61faa3e8f5c010adf979bb4786",
+				  "transactionHash": "0x78866dc51fdf189d8cca74f6a8fe54f172348fbd2163bbe80fa8b106cfc7deb4",
+				  "transactionIndex": "0x0",
+				  "address": "0x991cc548c154b2953cc48c02f782e1314097dfbb",
+				  "data": "0x",
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410",
+					"0x0000000000000000000000000000000000000000000000000000000000000001"
+				  ]
+				},
+				{
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "blockNumber": "0x4d0",
+				  "blockHash": "0x1c8200667a869e99b945374c37277b5ee7a7ae67943e13c82563381387553dbb",
+				  "transactionHash": "0xb1966b9b372ba68952f48f3a3e78f036f5ae82ceca2de972a782d07fb88f6d88",
+				  "transactionIndex": "0x0",
+				  "address": "0x991cc548c154b2953cc48c02f782e1314097dfbb",
+				  "data": "0x",
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410",
+					"0x0000000000000000000000000000000000000000000000000000000000000002"
+				  ]
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getLogs",
@@ -2144,23 +3874,90 @@
 		  }
 		],
 		"result": {
-		  "name": " list of log objects",
+		  "name": "getLogsResult",
 		  "description": "list of log objects, or an empty list if nothing has changed since the last poll",
 		  "schema": {
-			"$ref": "#/components/contentDescriptors/Logs"
+			"$ref": "#/components/schemas/Logs"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getLogsExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "vGy/TZgO6y8VPMVeJAQ99MF1NaTf5ohA3TFfzoEF71k="
+			  },
+			  {
+				"name": "filterId",
+				"value": {
+				  "fromBlock": "earliest",
+				  "toBlock": "latest",
+				  "addresses": [
+					"0x630c507ff633312087dc33c513b66276abcd2fc3"
+				  ],
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410"
+				  ]
+				}
+			  }
+			],
+			"result": {
+			  "name": "getLogsResultExample",
+			  "value": [
+				{
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "blockNumber": "0x342",
+				  "blockHash": "0xf5954f068fa2f2f7741281e8c753a8e92047e27ab3c4971836d2c89fab86d92b",
+				  "transactionHash": "0xa9ba5cffde9d4ad8997c5c4352d5d49eeea0e9def8a4ea69991b8837c49d4e4f",
+				  "transactionIndex": "0x0",
+				  "address": "0x630c507ff633312087dc33c513b66276abcd2fc3",
+				  "data": "0x",
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410",
+					"0x0000000000000000000000000000000000000000000000000000000000000001"
+				  ]
+				},
+				{
+				  "logIndex": "0x0",
+				  "removed": false,
+				  "blockNumber": "0x383",
+				  "blockHash": "0x91b73a47d53e3a88d62ed091a89a4be7557ad91b552e7ff7d86bf78977d5d45d",
+				  "transactionHash": "0xc2a185faf00e87434e55b7f70cc4c38be354c2128b4b96b5f5def0b54a2173ec",
+				  "transactionIndex": "0x0",
+				  "address": "0x630c507ff633312087dc33c513b66276abcd2fc3",
+				  "data": "0x",
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410",
+					"0x0000000000000000000000000000000000000000000000000000000000000002"
+				  ]
+				}
+			  ]
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getPrivacyPrecompileAddress",
 		"summary": "Returns the address of the privacy precompiled contract. The address is derived and based on the value of the privacy-flexible-groups-enabled option.",
 		"params": [],
 		"result": {
-		  "name": "addressPrivacyPrecompile",
+		  "name": "getPrivacyPrecompileAddressResult",
 		  "schema": {
 			"$ref": "#/components/schemas/Address"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getPrivacyPrecompileAddressExample",
+			"params": [],
+			"result": {
+			  "name": "getPrivacyPrecompileAddressResultExample",
+			  "value": "0x000000000000000000000000000000000000007e"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getPrivateTransaction",
@@ -2177,9 +3974,41 @@
 		"result": {
 		  "name": "PrivateTransaction",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/Transaction"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getPrivateTransactionExample",
+			"params": [
+			  {
+				"name": "transcation",
+				"value": "0x623c4ce5275a87b91f4f1c521012d39ca19311c787bde405490f4c0426a71498"
+			  }
+			],
+			"result": {
+			  "name": "getPrivateTransactionResultExample",
+			  "value": {
+				"from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+				"gas": "0x2dc6c0",
+				"gasPrice": "0x0",
+				"hash": "0x623c4ce5275a87b91f4f1c521012d39ca19311c787bde405490f4c0426a71498",
+				"input": "0x608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610221806100606000396000f300608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680633fa4f2451461005c5780636057361d1461008757806367e404ce146100b4575b600080fd5b34801561006857600080fd5b5061007161010b565b6040518082815260200191505060405180910390f35b34801561009357600080fd5b506100b260048036038101908080359060200190929190505050610115565b005b3480156100c057600080fd5b506100c96101cb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000600254905090565b7fc9db20adedc6cf2b5d25252b101ab03e124902a73fcb12b753f3d1aaa2d8f9f53382604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018281526020019250505060405180910390a18060028190555033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050905600a165627a7a723058208efaf938851fb2d235f8bf9a9685f149129a30fe0f4b20a6c1885dc02f639eba0029",
+				"nonce": "0x0",
+				"to": null,
+				"value": "0x0",
+				"v": "0xfe8",
+				"r": "0x654a6a9663ca70bb13e27cca14b3777cc92da184e19a151cdeef2ccbbd5c6405",
+				"s": "0x5dd4667b020c8a5af7ae28d4c3126f8dcb1187f49dcf0de9d7a39b1651892eef",
+				"privateFrom": "negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=",
+				"privateFor": [
+				  "g59BmTeJIn7HIcnq8VQWgyh/pDbvbt2eyP0Ii60aDDw="
+				],
+				"restriction": "restricted"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getTransactionCount",
@@ -2205,7 +4034,26 @@
 		  "schema": {
 			"$ref": "#/components/schemas/Integer"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getTransactionCountExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
+			  },
+			  {
+				"name": "address",
+				"value": "kAbelwaVW7okoEn1+okO+AbA4Hhz/7DaCOWVQz9nx5M="
+			  }
+			],
+			"result": {
+			  "name": "getTransactionCountResultExample",
+			  "value": "0x1"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_getTransactionReceipt",
@@ -2220,11 +4068,65 @@
 		  }
 		],
 		"result": {
-		  "name": "PrivateTransactionReceipt",
+		  "name": "getTransactionReceiptResult",
 		  "schema": {
-			"type": "object"
+			"type": "object",
+			"properties": {
+			  "contractAddress": {
+				"type": "string"
+			  },
+			  "from": {
+				"type": "string"
+			  },
+			  "output": {
+				"type": "string"
+			  },
+			  "commitmentHash": {
+				"type": "string"
+			  },
+			  "transactionHash": {
+				"type": "string"
+			  },
+			  "privateFrom": {
+				"type": "string"
+			  },
+			  "privacyGroupId": {
+				"type": "string"
+			  },
+			  "status": {
+				"type": "string"
+			  },
+			  "logs": {
+				"$ref": "#/components/schemas/Logs"
+			  }
+			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "getTransactionReceiptExample",
+			"params": [
+			  {
+				"name": "transaction",
+				"value": "0xf3ab9693ad92e277bf785e1772f29fb1864904bbbe87b0470455ddb082caab9d"
+			  }
+			],
+			"result": {
+			  "name": "getTransactionReceiptResultExample",
+			  "value": {
+				"contractAddress": "0x493b76031593402e24e16faa81f677b58e2d53f3",
+				"from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+				"output": "0x6080604052600436106049576000357c010000000000000000000000000000000000000000000\n                0000000000000900463ffffffff1680633fa4f24514604e57806355241077146076575b600080fd5b3480156059\n                57600080fd5b50606060a0565b6040518082815260200191505060405180910390f35b348015608157600080fd5b\n                50609e6004803603810190808035906020019092919050505060a6565b005b60005481565b8060008190555050560\n                0a165627a7a723058202bdbba2e694dba8fff33d9d0976df580f57bff0a40e25a46c398f8063b4c00360029",
+				"commitmentHash": "0x79b9e6b0856db398ad7dc208f15b1d38c0c0b0c5f99e4a443a2c5a85510e96a5",
+				"transactionHash": "0x36219e92b5f53d4150aa9ef7d2d793118cced523de6724100da5b534e3ceb4b8",
+				"privateFrom": "negmDcN2P4ODpqn/6WkJ02zT/0w0bjhGpkZ8UP6vARk=",
+				"privacyGroupId": "cD636RZlcqVSpoxT/ExbkWQfBO7kPAZO0QlWHErNSL8=",
+				"status": "0x1",
+				"logs": []
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_newFilter",
@@ -2241,16 +4143,58 @@
 			"name": "filterOptions",
 			"required": true,
 			"schema": {
-			  "type": "object"
+			  "type": "object",
+			  "properties": {
+				"fromBlock": {
+				  "type": "string"
+				},
+				"toBlock": {
+				  "type": "string"
+				},
+				"addresses": {
+				  "$ref": "#/components/schemas/Addresses"
+				},
+				"topics": {
+				  "$ref": "#/components/schemas/Topics"
+				}
+			  }
 			}
 		  }
 		],
 		"result": {
-		  "name": "filterID",
+		  "name": "newFilterResult",
 		  "schema": {
 			"$ref": "#/components/schemas/Bytes"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "newFilterExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "4rFldHM792LeP/e2WPkTXZedjwKuTr/KwCFTt6mBbkI="
+			  },
+			  {
+				"name": "filterOptions",
+				"value": {
+				  "fromBlock": "earliest",
+				  "toBlock": "latest",
+				  "addresses": [
+					"0x991cc548c154b2953cc48c02f782e1314097dfbb"
+				  ],
+				  "topics": [
+					"0x85bea11d86cefb165374e0f727bacf21dc2f4ea816493981ecf72dcfb212a410"
+				  ]
+				}
+			  }
+			],
+			"result": {
+			  "name": "newFilterResultExample",
+			  "value": "0x4a35b92809d73f4f53a2355d62125442"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "priv_uninstallFilter",
@@ -2272,11 +4216,73 @@
 		  }
 		],
 		"result": {
-		  "name": "isSuccessfullyUninstalled",
+		  "name": "uninstallFilterResult",
 		  "schema": {
 			"type": "boolean"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "uninstallFilterExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "4rFldHM792LeP/e2WPkTXZedjwKuTr/KwCFTt6mBbkI="
+			  },
+			  {
+				"name": "filterId",
+				"value": "0x4a35b92809d73f4f53a2355d62125442"
+			  }
+			],
+			"result": {
+			  "name": "uninstallFilterResultExample",
+			  "value": true
+			}
+		  }
+		]
+	  },
+	  {
+		"name": "priv_debugGetStateRoot",
+		"summary": "Returns the state root of the specified privacy group at the specified block.",
+		"params": [
+		  {
+			"name": "privacyGroupId",
+			"schema": {
+			  "type": "string"
+			}
+		  },
+		  {
+			"name": "blockNumber",
+			"schema": {
+			  "$ref": "#/components/schemas/BlockNumber"
+			}
+		  }
+		],
+		"result": {
+		  "name": "debugGetStateRootResult",
+		  "schema": {
+			"type": "string"
+		  }
+		},
+		"examples": [
+		  {
+			"name": "debugGetStateRootExample",
+			"params": [
+			  {
+				"name": "privacyGroupId",
+				"value": "xJdxvWOEmrs2MCkKWlgArTzWIXFfU/tmVxI3EKssVTk="
+			  },
+			  {
+				"name": "blockNumber",
+				"value": "latest"
+			  }
+			],
+			"result": {
+			  "name": "debugGetStateRootResultExample",
+			  "value": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "txpool_besuPendingTransactions",
@@ -2293,23 +4299,77 @@
 			"name": "fields",
 			"required": true,
 			"schema": {
-			  "type": "object"
+			  "type": "object",
+			  "properties": {
+				"from": {
+				  "type": "object"
+				},
+				"gas": {
+				  "type": "object"
+				},
+				"nonce": {
+				  "type": "object"
+				}
+			  }
 			}
 		  }
 		],
 		"result": {
-		  "name": "details of the pending transaction",
+		  "name": "besuPendingTransactionsResult",
+		  "summary": "details of the pending transaction",
 		  "schema": {
-			"type": "object"
+			"$ref": "#/components/schemas/TxTransaction"
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "besuPendingTransactionsExample",
+			"params": [
+			  {
+				"name": "numResults",
+				"value": 2
+			  },
+			  {
+				"name": "fields",
+				"value": {
+				  "from": {
+					"eq": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
+				  },
+				  "gas": {
+					"lt": "0x5209"
+				  },
+				  "nonce": {
+					"gt": "0x1"
+				  }
+				}
+			  }
+			],
+			"result": {
+			  "name": "besuPendingTransactionsResultExample",
+			  "value": {
+				"from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+				"gas": "0x5208",
+				"gasPrice": "0xab5d04c00",
+				"hash": "0xb7b2f4306c1c228ec94043da73b582594007091a7dfe024b1f8d6d772284e54b",
+				"input": "0x",
+				"nonce": "0x2",
+				"to": "0xf8be4ebda7f62d79a665294ec1263bfdb59aabf2",
+				"value": "0x0",
+				"v": "0xfe8",
+				"r": "0x5beb711e652c6cf0a589d3cea904eefc4f45ce4372652288701d08cc4412086d",
+				"s": "0x3af14a56e63aa5fb7dcb444a89708363a9d2c1eba1f777c67690288415080ded"
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "txpool_besuStatistics",
 		"summary": "Lists statistics about the node transaction pool.",
 		"params": [],
 		"result": {
-		  "name": "transaction pool statistics",
+		  "name": "besuStatisticsResult",
+		  "summary": "transaction pool statistics",
 		  "schema": {
 			"type": "object",
 			"items": [
@@ -2327,14 +4387,29 @@
 			  }
 			]
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "besuStatisticsExample",
+			"params": [],
+			"result": {
+			  "name": "besuStatisticsResultExample",
+			  "value": {
+				"maxSize": 4096,
+				"localCount": 0,
+				"remoteCount": 0
+			  }
+			}
+		  }
+		]
 	  },
 	  {
 		"name": "txpool_besuTransactions",
 		"summary": "Lists transactions in the node transaction pool.",
 		"params": [],
 		"result": {
-		  "name": "list of transactions",
+		  "name": "besuTransactionsResult",
+		  "summary": "list of transactions",
 		  "schema": {
 			"title": "transactions",
 			"type": "array",
@@ -2353,11 +4428,109 @@
 			  }
 			}
 		  }
-		}
+		},
+		"examples": [
+		  {
+			"name": "besuTransactionsExample",
+			"params": [],
+			"result": {
+			  "name": "besuTransactionsResultExample",
+			  "value": [
+				{
+				  "hash": "0x8a66830098be4006a3f63a03b6e9b67aa721e04bd6b46d420b8f1937689fb4f1",
+				  "isReceivedFromLocalSource": true,
+				  "addedToPoolAt": "2019-03-21T01:35:50.911Z"
+				},
+				{
+				  "hash": "0x41ee803c3987ceb5bcea0fad7a76a8106a2a6dd654409007d9931032ea54579b",
+				  "isReceivedFromLocalSource": true,
+				  "addedToPoolAt": "2019-03-21T01:36:00.374Z"
+				}
+			  ]
+			}
+		  }
+		]
 	  }
 	],
 	"components": {
 	  "schemas": {
+		"TransactionWithSender": {
+		  "title": "Transaction object with sender",
+		  "type": "object",
+		  "allOf": [
+			{
+			  "required": [
+				"from"
+			  ],
+			  "properties": {
+				"from": {
+				  "title": "from",
+				  "$ref": "#/components/schemas/Address"
+				}
+			  }
+			},
+			{
+			  "$ref": "#/components/schemas/Transaction"
+			}
+		  ]
+		},
+		"HostPort": {
+		  "type": "object",
+		  "properties": {
+			"host": {
+			  "type": "string"
+			},
+			"port": {
+			  "type": "number"
+			}
+		  }
+		},
+		"TraceObject": {
+		  "type": "object",
+		  "properties": {
+			"gas": {
+			  "type": "number"
+			},
+			"failed": {
+			  "type": "boolean"
+			},
+			"returnValue": {
+			  "type": "string"
+			},
+			"structLogs": {
+			  "type": "array",
+			  "items": {
+				"type": "object",
+				"properties": {
+				  "pc": {
+					"type": "number"
+				  },
+				  "op": {
+					"type": "string"
+				  },
+				  "gas": {
+					"type": "number"
+				  },
+				  "gasCost": {
+					"type": "number"
+				  },
+				  "depth": {
+					"type": "number"
+				  },
+				  "stack": {
+					"type": "object"
+				  },
+				  "memory": {
+					"type": "object"
+				  },
+				  "storage": {
+					"type": "boolean"
+				  }
+				}
+			  }
+			}
+		  }
+		},
 		"timestamp": {
 		  "title": "blockTimeStamp",
 		  "type": "string",
@@ -2610,6 +4783,14 @@
 			}
 		  }
 		},
+		"Logs": {
+		  "title": "logs",
+		  "type": "array",
+		  "description": "An array of all the logs triggered during the transaction",
+		  "items": {
+			"$ref": "#/components/schemas/Log"
+		  }
+		},
 		"Topics": {
 		  "title": "LogTopics",
 		  "description": "Topics are order-dependent. Each topic can also be an array of DATA with 'or' options.",
@@ -2860,6 +5041,61 @@
 			"$ref": "#/components/schemas/Transaction"
 		  }
 		},
+		"TxTransaction": {
+		  "title": "transaction",
+		  "type": "object",
+		  "required": [
+			"gas",
+			"gasPrice",
+			"nonce"
+		  ],
+		  "properties": {
+			"from": {
+			  "$ref": "#/components/schemas/From"
+			},
+			"gas": {
+			  "title": "transactionGas",
+			  "type": "string",
+			  "description": "The gas limit provided by the sender in Wei"
+			},
+			"gasPrice": {
+			  "title": "transactionGasPrice",
+			  "type": "string",
+			  "description": "The gas price willing to be paid by the sender in Wei"
+			},
+			"hash": {
+			  "$ref": "#/components/schemas/TransactionHash"
+			},
+			"input": {
+			  "title": "transactionInput",
+			  "type": "string",
+			  "description": "The data field sent with the transaction"
+			},
+			"nonce": {
+			  "title": "transactionNonce",
+			  "description": "The total number of prior transactions made by the sender",
+			  "$ref": "#/components/schemas/Nonce"
+			},
+			"to": {
+			  "$ref": "#/components/schemas/To"
+			},
+			"v": {
+			  "title": "transactionSigV",
+			  "type": "string",
+			  "description": "ECDSA recovery id"
+			},
+			"r": {
+			  "title": "transactionSigR",
+			  "type": "string",
+			  "description": "ECDSA signature r"
+			},
+			"s": {
+			  "title": "transactionSigS",
+			  "type": "string",
+			  "description": "ECDSA signature s"
+			}
+		  }
+		},
 		"TransactionHash": {
 		  "title": "transactionHash",
 		  "type": "string",
@@ -2932,12 +5168,36 @@
 		}
 	  },
 	  "contentDescriptors": {
+		"Addresses": {
+		  "name": "addresses",
+		  "schema": {
+			"type": "array",
+			"description": "List of addresses",
+			"items": {
+			  "$ref": "#/components/schemas/Address"
+			}
+		  }
+		},
 		"Block": {
 		  "name": "block",
 		  "summary": "A block",
 		  "description": "A block object",
 		  "schema": {
 			"$ref": "#/components/schemas/Block"
+		  }
+		},
+		"startBlock": {
+		  "name": "startBlock",
+		  "required": true,
+		  "schema": {
+			"$ref": "#/components/schemas/BlockNumber"
+		  }
+		},
+		"endBlock": {
+		  "name": "endBlock",
+		  "required": true,
+		  "schema": {
+			"$ref": "#/components/schemas/BlockNumber"
 		  }
 		},
 		"Null": {
@@ -2990,10 +5250,10 @@
 			  "currentBlock": {
 				"$ref": "#/components/schemas/BlockNumber"
 			  },
-			  "indexing": {
+			  "requestAccepted": {
 				"type": "boolean"
 			  },
-			  "requestAccepted": {
+			  "caching": {
 				"type": "boolean"
 			  }
 			}
